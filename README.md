@@ -1,19 +1,9 @@
-# webapp
+# Euphorux 2023
 
-## Project setup
-```
-npm install
-```
+## A Small Website to Facilitate Euphorux 2023 Operations
 
 ### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
