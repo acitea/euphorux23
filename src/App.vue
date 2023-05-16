@@ -1,30 +1,53 @@
+<script setup>
+import headerMain from "./components/Header.vue";
+import sideBar from "./components/sideBar.vue";
+</script>
+
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+<!-- <nav>
+  <router-link to="/">Home</router-link> |
+  <router-link to="/about">About</router-link>
+  <template>
+  </nav> -->
+  <div class="mainBack">
+    <headerMain/>
+    <router-view/>
+    <sideBar v-if="this.$store.state.showSideBar"/>
+  </div>
 </template>
 
+
 <style>
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+@font-face {
+  font-family: "Zuuma";
+  font-weight: 400;
+  src: local("Zuuma"), url("assets/fonts/Zuuma/ZuumeRough-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Zuuma";
+  font-weight: bold;
+  src: local("Zuuma"), url("assets/fonts/Zuuma/ZuumeRough-Bold.ttf") format("truetype");
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Zuuma, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #fff;
 }
 
-nav {
-  padding: 30px;
+.mainBack {
+  outline: red dashed 1px;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
