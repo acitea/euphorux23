@@ -124,7 +124,7 @@ border-radius: 1em;
 
 }
 .SUBMIT {
-position: fixed;
+position: absolute;
 bottom: 2em;
 width: 40vw;
 height: 6vh;
@@ -139,7 +139,7 @@ font-size: 2em;
 
 -webkit-text-stroke-color: #151515;
 -webkit-text-stroke-width: 0.02em;
-text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 
 }
 </style>
