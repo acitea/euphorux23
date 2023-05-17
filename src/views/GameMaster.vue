@@ -89,8 +89,9 @@ export default {
 }
 
 .options {
-    flex:2;
+    flex: 2;
     text-align: center;
+    text-align: -webkit-center;
     font-family: "Secular One";
     font-size: 1em;
     color: #fff;
