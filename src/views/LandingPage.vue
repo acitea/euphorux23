@@ -32,8 +32,6 @@
 
 <script>
 
-//import
-
 export default {
     name: "landingPage",
     components: {
@@ -169,7 +167,7 @@ p {
     line-height: 29px;
 
     color: #fff;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 
 }
 
@@ -179,7 +177,7 @@ p {
 
     color: #fff;
 
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 }
 
 .time {

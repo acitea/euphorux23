@@ -1,15 +1,10 @@
 <script setup>
 import headerMain from "./components/Header.vue";
 import sideBar from "./components/sideBar.vue";
-
+import { mapState } from "vuex";
 </script>
 
 <template>
-<!-- <nav>
-  <router-link to="/">Home</router-link> |
-  <router-link to="/about">About</router-link>
-  <template>
-  </nav> -->
     <headerMain/>
     <router-view/>
     <Transition name="sideEnter">
@@ -53,11 +48,6 @@ import sideBar from "./components/sideBar.vue";
 .sideEnter-leave-to{
   translate: -66vw
 }
-
-/* .sideEnter-enter-to,
-.sideEnter-leave-from{
-  translate: 55vw
-} */
 
 .sideEnter-enter-active,
 .sideEnter-leave-active {

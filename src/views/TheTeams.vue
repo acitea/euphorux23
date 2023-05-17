@@ -15,7 +15,6 @@ export default {
     },
     mounted () {
         console.log('ROUTE CHANGED');
-        setTimeout(() => {this.$store.commit('toggleSideBar')}, 300);
         return
     },
     watch: {

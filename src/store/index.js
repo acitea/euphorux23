@@ -11,10 +11,6 @@ export default createStore({
       'JOIN SMU-X!' : '/',
       'SCOREBOARD' : '/scoreboard',
       'YOUR TEAM' : '/yourteam'},
-      // days : days,
-      // hours : hours,
-      // minutes : minutes,
-      // seconds : seconds,
     }
   },
   getters: {
