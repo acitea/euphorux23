@@ -27,10 +27,10 @@
         <div class="field" v-if="['Skate', 'XSeed'].includes(this.game)"><div class="fieldName">Survivors</div> <input class="options num" type="number" :v-model="survivors" id=""></div>
         
         <div class="field" v-if="this.game == 'Kayak'"><div class="fieldName">Timing</div> <input class="options num" type="number" :v-model="timing" id="" placeholder="in minutes"></div>
-        <div class="field" v-if="this.game == 'Bingo'"><div class="fieldName">Completed</div> <input class="options" type="radio" :v-model="bingoCompleted" id=""></div>
+        <div class="field" v-if="this.game == 'Bingo'"><div class="fieldName">Completed</div> <input class="options rad" type="radio" :v-model="bingoCompleted" id=""></div>
 
         <div class="field" v-if="this.game == 'Trek'"><div class="fieldName">Found</div> <input class="options num" type="number" :v-model="trekFound" id="" max="5"></div>
-        <div class="field" v-if="this.game == 'Trek'"><div class="fieldName">Bonus</div> <input class="options" type="radio" :v-model="trekBonus" id=""></div>
+        <div class="field" v-if="this.game == 'Trek'"><div class="fieldName">Bonus</div> <input class="options rad" type="radio" :v-model="trekBonus" id=""></div>
 
 
         <div class="SUBMIT">SUBMIT</div>
@@ -96,6 +96,7 @@ export default {
     color: #fff;
     background: #45454580;
     border: 0.05em solid #fff;
+    margin: 0 auto;
 }
 
 .num {
@@ -122,7 +123,6 @@ border: 0.15em solid #454545;
 border-radius: 1em;
 
 }
-
 .SUBMIT {
 position: fixed;
 bottom: 2em;
