@@ -1,10 +1,10 @@
 <template>
-<div @click="() => {this.$store.commit('toggleSideBar')}" class="wrapper">
+<div @click="() => {this.$store.commit('toggleSideBar')}" class="wrapper" :style="{position: (this.$store.state.showSideBar) ? 'fixed' : 'absolute'}">
     <!-- on click update the view sidebar value -->
     <div class="hamburgerMenu">
+        <div :class="(this.$store.state.showSideBar) ? 'bar top' : 'bar'"></div>
         <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
+        <div :class="(this.$store.state.showSideBar) ? 'bar bot' : 'bar'"></div>
     </div>
 </div>
 </template>
@@ -17,14 +17,13 @@ export default {
     },
     mounted () {
         return
-    }
+    },
 }
 </script>
 
 <style scoped>
 
 .wrapper {
-    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,7 +33,7 @@ export default {
     margin: 1em;
     border-radius: 1em;
     z-index: 3;
-    /* background: #fff; */
+    background: none;
 }
 .hamburgerMenu {
 
@@ -52,6 +51,22 @@ height: 0px;
 border: 0.15em solid #fff;
 border-radius: 1em;
 
+}
+
+.top {
+    position: relative;
+    transform: rotate(-45deg);
+    left: -0.6em;
+    top: 0.2em;
+    width: 1em;
+}
+
+.bot {
+    position: relative;
+    transform: rotate(45deg);
+    left: -0.6em;
+    bottom: 0.2em;
+    width: 1em;
 }
 
 </style>

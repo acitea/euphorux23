@@ -1,16 +1,23 @@
 <template>
 <div class="sidebar">
-    <p id="back">ARROW BACK</p>
+    <p @click="() => {this.$store.commit('toggleSideBar')}" id="back">BACK</p>
     <div class="bar"></div>
     <div class="navLinks">
-        <router-link to="/" class="links">HOME</router-link>
+        <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/" class="links">HOME</router-link>
         <router-link to="/" class="links">THE STORY</router-link>
-        <router-link to="/theteams" class="links">THE TEAMS</router-link>
+        <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/theteams" class="links">THE TEAMS</router-link>
         <router-link to="/" class="links">OUR SOCIALS</router-link>
         <router-link to="/" class="links">JOIN SMU-X!</router-link>
-        <router-link to="/scoreboard" class="links">SCOREBOARD</router-link>
+        <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/scoreboard" class="links">SCOREBOARD</router-link>
         <router-link to="/" class="links">YOUR TEAM</router-link>
+        <!-- somehow not working -->
+        <!-- <div v-for="link in Object.keys(this.navLinks)" class="links">
+            <router-link @click="() => {this.$store.commit('toggleSideBar')}" :to="this.navLinks[link]">{{ link }}</router-link>
+        </div> -->
     </div>
+
+    <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/gamemaster" class="ops">Game Masters</router-link>
+    
 </div>
 </template>
 
@@ -22,6 +29,9 @@ export default {
     name: "sidebar",
     components: {
         
+    },
+    data () {
+        return {navLinks : this.$store.state.navLinks};
     },
     mounted () {
         return
@@ -46,13 +56,14 @@ border: 0.06em solid #fff;
 border-radius: 1em;
 
 margin: 1em auto;
+margin-top: 0.5em;
 }
 .sidebar {
-    /* Rectangle 7 */
 
 position: fixed;
 top: 0;
 width: 66vw;
+
 height: 100vh;
 
 background: #454545cc;
@@ -62,11 +73,23 @@ border-right: 0.25em solid #333;
 
 }
 
+.ops {
+    color: #888;
+    /* outline: red dashed 1px; */
+    width: 66vw;
+    font-size: 0.8em;
+    position: absolute;
+    left: 0;
+    margin: 0 auto;
+    bottom: 2vh;
+}
+
 #back {
     position: relative;
     width: 100%;
     margin: 0.5em auto;
-
+    left: -0.5em;
+    margin-top: 0.4em;
 }
 
 .navLinks {
@@ -94,5 +117,6 @@ border-right: 0.25em solid #333;
     translate: 0.5em 0em;
     background-size: 80% 0.15em;
 }
+
 
 </style>

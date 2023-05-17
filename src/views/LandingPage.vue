@@ -10,6 +10,13 @@
                 <p>{{ minutes }}</p>
                 <p>:</p>
                 <p>{{ seconds }}</p>
+                <!-- <p>{{ days }} </p>
+                <p>:</p>
+                <p>{{ hours }} </p>
+                <p>:</p>
+                <p>{{ minutes }}</p>
+                <p>:</p>
+                <p>{{ seconds }}</p> -->
         </div>
 
         <div class="named">
@@ -74,16 +81,6 @@ export default {
 </script>
 
 <style scoped>
-
-
-
-.landingPage {
-    position: absolute;
-    width: 390px;
-    height: 1000px;
-
-    background: #151515;
-}
 
 * {
     margin: 0 auto;

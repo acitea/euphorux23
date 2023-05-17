@@ -9,11 +9,11 @@ import sideBar from "./components/sideBar.vue";
   <router-link to="/about">About</router-link>
   <template>
   </nav> -->
-  <div class="mainBack">
     <headerMain/>
     <router-view/>
-    <sideBar v-if="this.$store.state.showSideBar"/>
-  </div>
+    <Transition name="sideEnter">
+      <sideBar v-if="this.$store.state.showSideBar"/>
+    </Transition>
 </template>
 
 
@@ -44,10 +44,23 @@ import sideBar from "./components/sideBar.vue";
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #fff;
+  height: 100vh;
+  background: #151515
 }
 
-.mainBack {
-  outline: red dashed 1px;
+.sideEnter-enter-from,
+.sideEnter-leave-to{
+  translate: -66vw
+}
+
+/* .sideEnter-enter-to,
+.sideEnter-leave-from{
+  translate: 55vw
+} */
+
+.sideEnter-enter-active,
+.sideEnter-leave-active {
+  transition: translate 0.3s;
 }
 
 </style>
