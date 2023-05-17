@@ -81,7 +81,7 @@ border-right: 0.25em solid #333;
     position: absolute;
     left: 0;
     margin: 0 auto;
-    bottom: 2vh;
+    bottom: 8vh;
 }
 
 #back {
