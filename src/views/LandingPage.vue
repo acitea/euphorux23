@@ -10,13 +10,6 @@
                 <p>{{ minutes }}</p>
                 <p>:</p>
                 <p>{{ seconds }}</p>
-                <!-- <p>{{ days }} </p>
-                <p>:</p>
-                <p>{{ hours }} </p>
-                <p>:</p>
-                <p>{{ minutes }}</p>
-                <p>:</p>
-                <p>{{ seconds }}</p> -->
         </div>
 
         <div class="named">
@@ -47,12 +40,23 @@ export default {
         
     },
     data () {
-        return {days : "00",
-                hours : "00",
-                minutes : "00",
-                seconds : "00"}
+        return {days : "",
+                hours : "",
+                minutes : "",
+                seconds : ""}
     },
     mounted () {
+        const till = new Date(this.$store.state.upcomingRun)
+        const now = new Date();
+        const msleft = till - now;
+        const left = new Date(msleft);
+
+        // ALL THIS TO PRELOAD FIRST
+        this.days = String(Math.floor(msleft / (1000 * 3600 * 24))).padStart(2, '0');
+        this.hours = String(left.getHours()).padStart(2, '0');
+        this.minutes = String(left.getMinutes()).padStart(2, '0');
+        this.seconds = String(left.getSeconds()).padStart(2, '0');
+
         return 
     },
     created() {
@@ -60,22 +64,22 @@ export default {
     },
     methods: {
         countdown() {
-            const till = new Date(this.$store.state.upcomingRun)
-            const now = new Date();
-            const msleft = till - now;
-            let days = msleft / (1000 * 3600 * 24)
-            const left = new Date(msleft);
-            
-            this.days = String(Math.floor(days)).padStart(2, '0');
-            this.hours = String(left.getHours()).padStart(2, '0');
-            this.minutes = String(left.getMinutes()).padStart(2, '0');
-            this.seconds = String(left.getSeconds()).padStart(2, '0');
-        }
+            if (this.seconds > 0) {
+                this.seconds = String(this.seconds - 1).padStart(2, '0');
+            } else if (this.minutes > 0) {
+                this.seconds = '59';
+                this.minutes = String(this.minutes - 1).padStart(2, '0');
+            } else if (this.hours > 0) {
+                this.seconds = '59';
+                this.minutes = '59';
+                this.hours = String(this.hours - 1).padStart(2, '0');
+            }
+        },
     },
     watch: {
-        $route (to, from) {
-            this.$store.commit('toggleSideBar');
-        }
+        // $route (to, from) {
+        //     this.$store.commit('toggleSideBar');
+        // }
     }
 }
 </script>

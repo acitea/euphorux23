@@ -4,27 +4,34 @@
     <div class="bar"></div>
 
     <div class="form">
-        <div class="field"><div class="fieldName">Event</div> <select class="options" name="event" id="">
-            <option value="Trek" selected>Trek</option>
+        <div class="field"><div class="fieldName">Event</div> <select class="options" name="event" :v-model="game" @change="chosenGame">
+            <option value="" selected disabled hidden></option>
+            <option value="Trek">Trek</option>
             <option value="Bingo">Bingo</option>
             <option value="Kayak">Kayak</option>
             <option value="Skate">Skate</option>
             <option value="XSeed">XSeed</option>
         </select></div>
-        <div class="field"><div class="fieldName">Clan</div> <select class="options" name="event" id="">
-            <option value="Clan" selected>Clan</option>
+        <div class="field"><div class="fieldName">Clan</div> <select class="options" :v-model="clan" id="">
+            <option value="" selected disabled hidden></option>
+            <option value="Clan">Clan</option>
             <!-- TODO: Implement v-for -->
         </select></div>
-        <div class="field"><div class="fieldName">Team</div> <select class="options" name="event" id="">
-            <option value="Team" selected>Team</option>
+        <div class="field"><div class="fieldName">Team</div> <select class="options" :v-model="team" id="">
+            <option value="" selected disabled hidden></option>
+            <option value="Team">Team</option>
             <!-- TODO: Implement v-for -->
         </select></div>
 
-        <!-- implement v-if to show relevant fields -->
-        <div class="field"><div class="fieldName">Team</div> <select class="options" name="event" id="">
-            <option value="Team" selected>Team</option>
-            <!-- TODO: Implement v-for -->
-        </select></div>
+        <div class="field" v-show="['Skate', 'XSeed'].includes(this.game)"><div class="fieldName">Players</div> <input class="options num" type="number" :v-model="players" id=""></div>
+        <div class="field" v-show="['Skate', 'XSeed'].includes(this.game)"><div class="fieldName">Survivors</div> <input class="options num" type="number" :v-model="survivors" id=""></div>
+        
+        <div class="field" v-show="this.game == 'Kayak'"><div class="fieldName">Timing</div> <input class="options num" type="number" :v-model="timing" id="" placeholder="in minutes"></div>
+        <div class="field" v-show="this.game == 'Bingo'"><div class="fieldName">Completed</div> <input class="options" type="radio" :v-model="bingoCompleted" id=""></div>
+
+        <div class="field" v-show="this.game == 'Trek'"><div class="fieldName">Found</div> <input class="options num" type="number" :v-model="trekFound" id="" max="5"></div>
+        <div class="field" v-show="this.game == 'Trek'"><div class="fieldName">Bonus</div> <input class="options" type="radio" :v-model="trekBonus" id=""></div>
+
 
         <div class="SUBMIT">SUBMIT</div>
     </div>
@@ -40,8 +47,20 @@ export default {
     components: {
         
     },
+    data () {
+        return {
+            game : "",
+            clans : [],
+            teams : [],
+        }
+    },
     mounted () {
         return
+    },
+    methods : {
+        chosenGame(event) {
+            this.game = event.target.value
+        }
     }
 }
 </script>
@@ -53,7 +72,6 @@ export default {
     margin: 0 auto;
 }
 .form {
-    outline: red dashed 1px;
     width: 80vw;
 }
 
@@ -78,6 +96,10 @@ export default {
     color: #fff;
     background: #45454580;
     border: 0.05em solid #fff;
+}
+
+.num {
+    width: 20vw;
 }
 
 .title {
