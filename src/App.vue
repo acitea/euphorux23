@@ -8,7 +8,7 @@ import { mapState } from "vuex";
     <headerMain/>
     <router-view/>
     <Transition name="sideEnter">
-      <sideBar v-if="this.$store.state.showSideBar"/>
+      <sideBar v-if="$store.state.showSideBar"/>
     </Transition>
 </template>
 
