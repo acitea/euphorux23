@@ -2,7 +2,7 @@
 <div class="teamCard">
     <div class="bar"></div>
     <div class="title"><span style="color:#F37520">{{ this.team.substring(0, 1) }}</span><span>{{ this.team.substring(1) }}</span></div>
-    <img :src="require(`@/assets/${team}.jpg`)" alt="">
+    <img :src="`/${team}.jpg`" :alt="this.teamteam">
     
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla gravida et est id convallis. In quis semper dui. Nulla magna ex, efficitur nec libero ac, venenatis porta libero. Vivamus rutrum, dolor sed maximus facilisis, nisl lacus iaculis lacus, nec vulputate risus risus eget elit. 
@@ -12,7 +12,6 @@
 
 <script>
 
-//import
 
 export default {
     name: "teamCard",
@@ -53,6 +52,7 @@ p {
 img {
     display: block;
     max-width: 100%;
+    min-height: 40%;
     border: 2px solid #fff;
     margin-top: 1em;
     margin-bottom: 2em;
