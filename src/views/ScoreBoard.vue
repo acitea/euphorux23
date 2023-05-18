@@ -4,30 +4,46 @@
     <h1 class="title">SCOREBOARD</h1>
     <div class="bar"></div>
 
-    <div class="yourTeamBox">
-        <div id="placement">
-        <p id="numeric">4th</p><div class="sep"></div>
-        </div>
-        <div id="team">TEAM</div>
-    </div>
+    <teamBox :placement="5" :teamname="'SHEEESH'"/>
     
     <div class="overallScore">
-        <!-- IMPLEMENT V-FOR HERE -->
+        <teamBox class="inList" v-for="num in 20" :placement="num" :class="(this.yours == num) ? 'yourTeam' : ''"/>
     </div>
 </div>
 </template>
 
 <script>
 
-//import
+import axios from 'axios';
+import teamBox from '../components/teamBox.vue'
 
 export default {
     name: "scoreBoard",
     components: {
-        
+        teamBox
+    },
+    data() {
+        return {
+            teams: [],
+            yours: 5
+        }
     },
     mounted () {
         return
+    },
+    created() {
+        // this.getTeams();
+    },
+    methods: {
+        async getTeams() {
+            try {
+                const response = (await axios.get("http://localhost:8080/teams")).data;
+                
+                console.log(response)
+            } catch (err) {
+                console.log(err);
+            }
+        }
     }
 }
 </script>
@@ -69,55 +85,26 @@ border: 0.15em solid #454545;
 border-radius: 1em;
 
 }
-
-.yourTeamBox {
-    display: flex;
-    background: #45454580;
-    border: 2px solid #FFFFFF;
-
-    width: 80vw;
-    height: 5vh;
-
-    justify-content: space-around;
-    align-items: center;
-}
-
-#placement {
-    flex: 1;
-    display: flex;
-    align-items: center;
-}
-
-#numeric {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    left: 2vw;
-}
-
-.sep {
-    transform: rotate(90deg);
-    width: 2em;
-    height: 0px;
-    margin: 0;
-
-    border: 0.1em solid #FFFFFF;
-    border-radius: 1em;
-}
-
-#team {
-    flex: 2;
-    font-family: 'Secular One';
-    font-size: 1.5em;
-
-}
-
 .overallScore {
     margin: 2em auto;
     width: 80vw;
-    height: 80vh;
+    height: auto;
+    max-height: 80vh;
+    overflow: scroll;
     border: 2px solid #FFFFFF;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    align-items: center;
 }
 
+.yourTeam {
+    background: red;
+}
+
+.inList {
+    border: 1.5px solid #fff;
+    border-left: 0;
+    border-right: 0;
+}
 </style>
