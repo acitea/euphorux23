@@ -71,6 +71,10 @@ export default {
 * {
     margin: 0 auto;
 }
+
+.gameMaster {
+    height: 80vh;
+}
 .form {
     width: 80vw;
 }

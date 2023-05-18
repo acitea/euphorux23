@@ -18,11 +18,6 @@ export default {
     components: {
         
     },
-    data () {
-        return {
-            // path: '@/assets/'+this.team+'.jpg'
-        }
-    },
     props: {
         team: String,
         desc: String
