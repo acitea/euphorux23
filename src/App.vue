@@ -1,7 +1,8 @@
 <script setup>
 import headerMain from "./components/Header.vue";
 import sideBar from "./components/sideBar.vue";
-import { mapState } from "vuex";
+import footerMain from "./components/footerMain.vue"
+
 </script>
 
 <template>
@@ -10,6 +11,7 @@ import { mapState } from "vuex";
     <Transition name="sideEnter">
       <sideBar v-if="$store.state.showSideBar"/>
     </Transition>
+    <footerMain/>
 </template>
 
 
@@ -35,12 +37,13 @@ import { mapState } from "vuex";
 }
 
 #app {
+  
   font-family: Zuuma, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #fff;
-  height: 100vh;
+  height: auto;
   background: #151515
 }
 
