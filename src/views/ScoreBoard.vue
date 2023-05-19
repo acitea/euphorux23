@@ -3,11 +3,19 @@
     
     <h1 class="title">SCOREBOARD</h1>
     <div class="bar"></div>
-
-    <teamBox :placement="5" :teamname="'SHEEESH'"/>
     
-    <div class="overallScore">
-        <teamBox class="inList" v-for="num in 20" :placement="num" :class="(this.yours == num) ? 'yourTeam' : ''"/>
+    <div class="show" v-if="teams">
+        <!-- BUG: WEIRD ASS BUG HERE -->
+        <!-- IT WAS RESOLVED BY HAVING V-IF FIRST BEFORE THIS SHIT. -->
+        <scoreBox :placement="place+1" :teamname="yours"/>
+    
+        <div class="overallScore">
+            <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
+            <scoreBox class="inList" v-for="(team, index) in teams" :placement="index+1" :teamname="team.teamName" :class="(place === index) ? 'yourTeam' : ''"/>
+        </div>
+    </div>
+    <div class="noTeams" v-if="!teams">
+        <h1>THERE ARE NO TEAMS PLAYING NOW</h1>
     </div>
 </div>
 </template>
@@ -15,34 +23,41 @@
 <script>
 
 import axios from 'axios';
-import teamBox from '../components/teamBox.vue'
+import scoreBox from '../components/scoreBox.vue'
+
 
 export default {
     name: "scoreBoard",
     components: {
-        teamBox
+        scoreBox
+    },
+    async created() {
+        await this.loadData();
+        // const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
+    //     const teams = res.data;
+    //     this.teams = teams;
+    //     this.yours = teams[1].teamName;
+    //     this.place = 2
     },
     data() {
         return {
-            teams: [],
-            yours: 5
+            teams: null,
+            // BUG: WHAT THE FLYING FUCK. If yours is null, it doesn't work?????
+            yours: [],
+            place: 5
         }
     },
     mounted () {
         return
     },
-    created() {
-        // this.getTeams();
-    },
     methods: {
-        async getTeams() {
-            try {
-                const response = (await axios.get("http://localhost:8080/teams")).data;
-                
-                console.log(response)
-            } catch (err) {
-                console.log(err);
-            }
+        async loadData() {
+            const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
+            const teams = res.data;
+            console.log(teams)
+            this.teams = teams;
+            this.yours = teams[1].teamName;
+            this.place = 1
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-<div class="teamBox">
+<div class="scoreBox">
     <div id="placement">
     <p id="numeric">{{ ordinal }}</p><div class="sep"></div>
     </div>
@@ -12,7 +12,7 @@
 //import
 
 export default {
-    name: "teamBox",
+    name: "scoreBox",
     components: {
         
     },
@@ -32,9 +32,6 @@ export default {
             default: "TEAM HERE"
         }
     },
-    mounted () {
-        return
-    },
     created () {
         this.ordinal = this.placement in this.pos ? this.placement + this.pos[this.placement] : this.placement + "th";
     }
@@ -42,7 +39,7 @@ export default {
 </script>
 
 <style scoped>
-.teamBox {
+.scoreBox {
     display: flex;
     background: #45454580;
     border: 2px solid #FFFFFF;
