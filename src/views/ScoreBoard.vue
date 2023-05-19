@@ -14,8 +14,11 @@
             <scoreBox class="inList" v-for="(team, index) in teams" :placement="index+1" :teamname="team.teamName" :class="(place === index) ? 'yourTeam' : ''"/>
         </div>
     </div>
-    <div class="noTeams" v-if="!teams">
+    <div class="noTeams" v-if="teams === []">
         <h1>THERE ARE NO TEAMS PLAYING NOW</h1>
+    </div>
+    <div class="noTeams" v-if="teams === null">
+        <h1>Loading Data</h1>
     </div>
 </div>
 </template>
