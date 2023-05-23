@@ -7,11 +7,11 @@
     <div class="show" v-if="teams">
         <!-- BUG: WEIRD ASS BUG HERE -->
         <!-- IT WAS RESOLVED BY HAVING V-IF FIRST BEFORE THIS SHIT. -->
-        <scoreBox :placement="place+1" :teamname="yours"/>
+        <scoreBox :placement="place+1" :teamname="yours.teamName" :points="yours.teamPoints"/>
     
         <div class="overallScore">
             <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
-            <scoreBox class="inList" v-for="(team, index) in teams" :placement="index+1" :teamname="team.teamName" :class="(place === index) ? 'yourTeam' : ''"/>
+            <scoreBox class="inList" v-for="(team, index) in teams" :placement="index+1" :teamname="team.teamName" :points="team.teamPoints" :class="(place === index) ? 'yourTeam' : ''"/>
         </div>
     </div>
     <div class="noTeams" v-if="teams === []">
@@ -35,12 +35,14 @@ export default {
         scoreBox
     },
     async created() {
-        await this.loadData();
+
+        const res = await axios.get("http://localhost:8080"+"/teams");
         // const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
-    //     const teams = res.data;
-    //     this.teams = teams;
-    //     this.yours = teams[1].teamName;
-    //     this.place = 2
+        const teams = res.data;
+        console.log(teams)
+        this.teams = teams;
+        this.yours = teams[1];
+        this.place = 1
     },
     data() {
         return {
@@ -54,14 +56,6 @@ export default {
         return
     },
     methods: {
-        async loadData() {
-            const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
-            const teams = res.data;
-            console.log(teams)
-            this.teams = teams;
-            this.yours = teams[1].teamName;
-            this.place = 1
-        }
     }
 }
 </script>
