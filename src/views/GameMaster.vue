@@ -142,7 +142,7 @@ export default {
         },
 
         dismiss() {
-            response = '';
+            this.response = '';
             this.$router.go(0);
         }
     }
