@@ -127,14 +127,14 @@ export default {
                     this.response = `DUPLICATE ENTRY FOUND OF ${filtered.team} FROM ${filtered.clan}`;
                     this.pass = "ERROR";
                 } else {
-                    var time = 5;
+                    var time = 3;
                     this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;
                     this.pass = "SUCCESS";
-                    setInterval(() => {
-                        time--;
-                        this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;
-                    }, 1000)
-                    setTimeout(() => {this.$router.go(0)}, 5000)
+                    setTimeout(() => {this.$router.go(0)}, 3000)
+                    // setInterval(() => {
+                    //     time--;
+                    //     this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;
+                    // }, 1000)
                 }
             })
             
@@ -143,7 +143,9 @@ export default {
 
         dismiss() {
             this.response = '';
-            this.$router.go(0);
+            if (this.pass == "SUCCESS") {
+                this.$router.go(0)
+            }
         }
     }
 }
