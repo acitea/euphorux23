@@ -35,9 +35,7 @@ export default {
         scoreBox
     },
     async created() {
-
-        const res = await axios.get("http://localhost:8080"+"/teams");
-        // const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
+        const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
         const teams = res.data;
         console.log(teams)
         this.teams = teams;
