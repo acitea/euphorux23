@@ -43,6 +43,7 @@ import footerMain from "./components/footerMain.vue"
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #fff;
+  min-height: 100vh;
   height: auto;
   background: #151515
 }
