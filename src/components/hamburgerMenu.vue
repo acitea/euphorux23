@@ -32,7 +32,7 @@ export default {
 
     margin: 1em;
     border-radius: 1em;
-    z-index: 3;
+    z-index: 1;
     background: none;
 }
 .hamburgerMenu {
