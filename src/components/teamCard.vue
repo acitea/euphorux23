@@ -2,10 +2,9 @@
 <div class="teamCard">
     <div class="bar"></div>
     <div class="title"><span style="color:#F37520">{{ this.team.substring(0, 1) }}</span><span>{{ this.team.substring(1) }}</span></div>
-    <img :src="`/${team}.jpg`" :alt="this.teamteam">
+    <img :src="`/${team}.jpg`" alt="">
     
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla gravida et est id convallis. In quis semper dui. Nulla magna ex, efficitur nec libero ac, venenatis porta libero. Vivamus rutrum, dolor sed maximus facilisis, nisl lacus iaculis lacus, nec vulputate risus risus eget elit. 
+    <p style="text-align: justify;" v-html="desc">
     </p>
 </div>
 </template>
@@ -20,7 +19,10 @@ export default {
     },
     props: {
         team: String,
-        desc: String
+        desc: {
+            type : String,
+            default : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla gravida et est id convallis. In quis semper dui. Nulla magna ex, efficitur nec libero ac, venenatis porta libero. Vivamus rutrum, dolor sed maximus facilisis, nisl lacus iaculis lacus, nec vulputate risus risus eget elit. "
+        }
     },
     mounted () {
         return
