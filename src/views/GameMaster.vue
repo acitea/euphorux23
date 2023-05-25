@@ -22,7 +22,7 @@
 
         <div class="field"><div class="fieldName">Clan</div> <select class="options" v-model="form.clan" id="" required @change="chosenClan">
             <option value="" selected disabled hidden></option>
-            <option v-for="clan in Object.keys(clanteams)" :value="clan">{{ clan }}</option>
+            <option v-for="clan in clans" :value="clan">{{ clan }}</option>
             </select>
         </div>
 
@@ -57,23 +57,10 @@ export default {
     components: {
         
     },
-    async created() {
-
-        // TODO: Optimise this thing
-        const resClans = await axios.get(process.env.VUE_APP_API_NAME+"/clans");
-        resClans.data.forEach(element => {
-            this.clanteams[element.clanName] = [];
-        });
-        
-        const resTeams = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
-        resTeams.data.forEach(element => {
-            this.clanteams[element.clanName].push(element.teamName)
-        })
-
-    },
+    
     data () {
         return {
-            clanteams : {},
+            clans : null,
             teams : [],
             response: '',
             pass: '',
@@ -90,7 +77,19 @@ export default {
             }
         }
     },
-    mounted () {
+    beforeMount() {
+        if (!['orgc', 'game'].includes(this.$store.state.role)) {
+            this.$router.push('/');
+            return
+        }
+        
+        if (!this.$store.state.clansteams) {
+            this.$store.commit('getClansTeams');
+        }
+        this.clans = Object.keys(this.$store.state.clansteams);
+    },
+    created () {
+        
         return
     },
     methods : {
@@ -102,7 +101,7 @@ export default {
         },
 
         chosenClan(event) {
-            this.teams = this.clanteams[event.target.value]
+            this.teams = this.$store.state.clansteams[event.target.value]
         },
 
         async processSubmit() {
@@ -117,9 +116,9 @@ export default {
 
             console.log(filtered)
 
-            axios.post(process.env.VUE_APP_API_NAME + '/' + this.form.game, {
+            axios.post(process.env.VUE_APP_API_NAME + '/' + this.form.game, filtered, {
                 headers: {"Content-Type" : 'application/json'},
-                data: filtered,
+                withCredentials: true,
             })
             .then((res) => {
                 console.log(res.data)
