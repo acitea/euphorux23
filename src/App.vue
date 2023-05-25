@@ -2,11 +2,13 @@
 import headerMain from "./components/Header.vue";
 import sideBar from "./components/sideBar.vue";
 import footerMain from "./components/footerMain.vue"
+import login from "./components/login.vue";
 
 </script>
 
 <template>
     <headerMain/>
+    <login v-if="$store.state.showLogin"/>
     <router-view/>
     <Transition name="sideEnter">
       <sideBar v-if="$store.state.showSideBar"/>

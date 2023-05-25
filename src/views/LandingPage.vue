@@ -23,7 +23,7 @@
 
         <div class="bar"></div>
 
-        <button @click="() => {console.log(this.$store.state.showSideBar)}" class="cta"><p id="ctatext">READY TO EXPLORE</p><p id="subtext">sign in with Google</p></button>
+        <button @click="checkLogin" class="cta"><p id="ctatext">READY TO EXPLORE</p><p id="subtext">sign in with Google</p></button>
 
         <div class="bar"></div>
         <p>Check Out Our Past Years</p>
@@ -43,7 +43,7 @@ export default {
                 minutes : "",
                 seconds : ""}
     },
-    mounted () {
+    async mounted () {
         const till = new Date(this.$store.state.upcomingRun)
         const now = new Date();
         const msleft = till - now;
@@ -54,7 +54,10 @@ export default {
         this.hours = String(left.getHours()).padStart(2, '0');
         this.minutes = String(left.getMinutes()).padStart(2, '0');
         this.seconds = String(left.getSeconds()).padStart(2, '0');
-
+        
+        if (!this.$store.state.clansteams) {
+            this.$store.commit('getClansTeams');
+        }
         return 
     },
     created() {
@@ -73,6 +76,11 @@ export default {
                 this.hours = String(this.hours - 1).padStart(2, '0');
             }
         },
+        checkLogin() {
+            if (!this.$store.state.showLogin) {
+                this.$store.state.showLogin = true;
+            }
+        }
     },
     watch: {
         // $route (to, from) {
