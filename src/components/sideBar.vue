@@ -9,7 +9,7 @@
         <router-link to="/" class="links">OUR SOCIALS</router-link>
         <router-link to="/" class="links">JOIN SMU-X!</router-link>
         <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/scoreboard" class="links">SCOREBOARD</router-link>
-        <router-link to="/" class="links">YOUR TEAM</router-link>
+        <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/yourteam" class="links">YOUR TEAM</router-link>
         <!-- somehow not working -->
         <!-- <div v-for="link in Object.keys(this.navLinks)" class="links">
             <router-link @click="() => {this.$store.commit('toggleSideBar')}" :to="this.navLinks[link]">{{ link }}</router-link>

@@ -3,6 +3,7 @@ import LandingPage from '../views/LandingPage.vue'
 import GameMaster from '../views/GameMaster.vue'
 import ScoreBoard from '../views/ScoreBoard.vue'
 import TheTeams from '../views/TheTeams.vue'
+import YourTeam from '../views/YourTeam.vue'
 
 
 const routes = [
@@ -28,6 +29,11 @@ const routes = [
     path: '/theteams',
     name: 'TheTeams',
     component: TheTeams
+  },
+  {
+    path: '/yourteam',
+    name: 'YourTeam',
+    component: YourTeam
   },
 ]
 

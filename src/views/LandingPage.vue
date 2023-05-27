@@ -1,6 +1,5 @@
 <template>
     <div class="landingPage">
-        <div class="bar"></div>
         <p id="title">Are You Ready For Euphorux 2023?</p>
         <div class="time">
                 <p>{{ days }} </p>
@@ -54,7 +53,6 @@ export default {
         this.hours = String(left.getHours()).padStart(2, '0');
         this.minutes = String(left.getMinutes()).padStart(2, '0');
         this.seconds = String(left.getSeconds()).padStart(2, '0');
-        
         if (!this.$store.state.clansteams) {
             this.$store.commit('getClansTeams');
         }
