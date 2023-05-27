@@ -65,16 +65,6 @@ img {
     width: 80vw;
     margin: 0 auto;
 }
-.bar {
 
-width: 100%;
-height: 0px;
-
-margin: 2em auto;
-margin-bottom: 1em;
-border: 0.15em solid #454545;
-border-radius: 1em;
-
-}
 
 </style>

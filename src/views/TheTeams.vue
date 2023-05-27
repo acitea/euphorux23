@@ -50,7 +50,7 @@ p {
 .title {
     position: relative;
     width: auto;
-    top: 0.5em;
+    top: 0.1em;
 
     font-weight: bold;
     font-size: 4em;

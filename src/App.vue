@@ -60,4 +60,14 @@ import login from "./components/login.vue";
   transition: translate 0.3s;
 }
 
+.bar {
+
+width: 80%;
+height: 0px;
+
+margin: 2em auto;
+margin-bottom: 1em;
+border: 0.15em solid #454545;
+border-radius: 1em;
+}
 </style>

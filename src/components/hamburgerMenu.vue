@@ -2,9 +2,9 @@
 <div @click="() => {this.$store.commit('toggleSideBar')}" class="wrapper" :style="{position: (this.$store.state.showSideBar) ? 'fixed' : 'absolute'}">
     <!-- on click update the view sidebar value -->
     <div class="hamburgerMenu">
-        <div :class="(this.$store.state.showSideBar) ? 'bar top' : 'bar'"></div>
-        <div class="bar"></div>
-        <div :class="(this.$store.state.showSideBar) ? 'bar bot' : 'bar'"></div>
+        <div :class="(this.$store.state.showSideBar) ? 'menubar top' : 'menubar'"></div>
+        <div class="menubar"></div>
+        <div :class="(this.$store.state.showSideBar) ? 'menubar bot' : 'menubar'"></div>
     </div>
 </div>
 </template>
@@ -44,7 +44,7 @@ export default {
     height: 2em;
     
 }
-.bar {
+.menubar {
 
 width: 2em;
 height: 0px;

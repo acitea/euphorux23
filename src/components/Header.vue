@@ -1,7 +1,7 @@
 <template>
     <hamburgerMenu id="menu"/>
     <div class="headerMain"><img id="logo" src="../assets/SMUXLogoWHITE.png" width="246" alt=""></div>
-
+    <div class="bar"></div>
 </template>
 
 <script>
@@ -28,9 +28,15 @@ export default {
     margin: 2em auto;
     margin-bottom: 0;
 }
+.bar {
 
-/* #menu {
-    float: left;
-    left: 3em;
-} */
+width: 80%;
+height: 0px;
+
+margin: 2em auto;
+margin-bottom: 1em;
+border: 0.15em solid #454545;
+border-radius: 1em;
+
+}
 </style>
