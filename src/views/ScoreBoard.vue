@@ -7,11 +7,11 @@
     <div class="show" v-if="teams">
         <!-- BUG: WEIRD ASS BUG HERE -->
         <!-- IT WAS RESOLVED BY HAVING V-IF FIRST BEFORE THIS SHIT. -->
-        <scoreBox :placement="place+1" :teamname="yours.teamName" :points="yours.teamPoints"/>
+        <scoreBox v-if="display" :placement="$store.state.profile.position" :teamname="$store.state.profile.teamName" :points="$store.state.profile.teamPoints"/>
     
         <div class="overallScore">
             <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
-            <scoreBox class="inList" v-for="(team, index) in teams" :placement="index+1" :teamname="team.teamName" :points="team.teamPoints" :class="(place === index) ? 'yourTeam' : ''"/>
+            <scoreBox class="inList" v-for="(team, index) in teams" :placement="index+1" :teamname="team.teamName" :points="team.teamPoints" :class="($store.state.profile && $store.state.profile.position === index+1) ? 'yourTeam' : ''"/>
         </div>
     </div>
     <div class="noTeams" v-if="teams === []">
@@ -29,30 +29,27 @@ import axios from 'axios';
 import scoreBox from '../components/scoreBox.vue'
 
 
+
 export default {
     name: "scoreBoard",
     components: {
         scoreBox
     },
-    async created() {
-        const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
-        const teams = res.data;
-        console.log(teams)
-        this.teams = teams;
-        this.yours = teams[1];
-        this.place = 1
-    },
     data() {
         return {
+            display: false,
             teams: null,
-            // BUG: WHAT THE FLYING FUCK. If yours is null, it doesn't work?????
-            yours: [],
-            place: 5
         }
     },
-    mounted () {
-        return
+    computed: {
+
     },
+    async beforeMount() {
+        this.display = await this.$store.getters.hasValidToken;
+        const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
+        this.teams = res.data;
+    },
+    
     methods: {
     }
 }
@@ -78,7 +75,6 @@ p {
 .title {
     position: relative;
     width: auto;
-    top: 0.5em;
 
     font-weight: bold;
     font-size: 4em;
@@ -87,12 +83,8 @@ p {
 
 .bar {
 
-width: 80%;
-height: 0px;
-
-margin: 2em auto;
-border: 0.15em solid #454545;
-border-radius: 1em;
+margin: 1em auto;
+margin-bottom: 2em;
 
 }
 .overallScore {

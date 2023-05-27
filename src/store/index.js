@@ -4,10 +4,9 @@ import axios from 'axios'
 export default createStore({
   state () {
     return {
+      profile: null,
+      auth: false,
       showSideBar : false,
-      role: null,
-      yourteam: null,
-      yourclan: null,
       showLogin : false,
       upcomingRun: '4 July 2023',
       navLinks: {'HOME' : '/',
@@ -21,6 +20,27 @@ export default createStore({
     }
   },
   getters: {
+    async hasValidToken(state) {
+
+        // CHECKS IF HAVE A VALID COOKIE ALREADY
+        return await axios.get(process.env.VUE_APP_API_NAME + '/verify', {
+            withCredentials: true,
+        }).then((res) => {
+            console.log('found token!')
+            console.log(res.data)
+            if (!state.auth) {
+              console.log('setting userinfo...')
+              state.profile = res.data;
+            }
+            return true
+
+        }).catch((e) => {
+
+            console.log('No token found or invalid token')
+            return false
+        })
+
+    }
   },
   mutations: {
     toggleSideBar(state) {
@@ -49,9 +69,9 @@ export default createStore({
     },
 
     setUserInfo(state, userinfo) {
-      state.role = userinfo.role;
-      state.yourteam = userinfo.teamName;
-      state.yourclan = userinfo.clanName;
+      console.log('setting userinfo...')
+      console.log(userinfo);
+      state.profile = userinfo
     }
   },
   actions: {

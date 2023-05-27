@@ -78,11 +78,11 @@ export default {
         }
     },
     beforeMount() {
-        if (!['orgc', 'game'].includes(this.$store.state.role)) {
+        if (!['orgc', 'game'].includes(this.$store.state.profile.role)) {
             this.$router.push('/');
             return
         }
-        
+
         if (!this.$store.state.clansteams) {
             this.$store.commit('getClansTeams');
         }
@@ -215,7 +215,7 @@ export default {
 .title {
     position: relative;
     width: auto;
-    top: 0.5em;
+    top: 0.1em;
 
     font-weight: bold;
     font-size: 4em;
@@ -224,12 +224,7 @@ export default {
 
 .bar {
 
-width: 80%;
-height: 0px;
-
 margin: 2em auto;
-border: 0.15em solid #454545;
-border-radius: 1em;
 
 }
 .SUBMIT {
