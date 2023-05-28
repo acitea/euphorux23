@@ -50,20 +50,25 @@ export default createStore({
     async getClansTeams(state) {
       state.clansteams = {};
       // TODO: IF A PAGE IS LOADED THAT REQUIRES DATA, LOAD IT IN AND STORE IT FOR FUTURE USE. TEMPORILY
-      const resClans = await axios.get(process.env.VUE_APP_API_NAME+"/clans", {
+      console.log('calling for clans...')
+      await axios.get(process.env.VUE_APP_API_NAME+"/clans", {
         withCredentials: true, 
+      }).then((res) => {
+        res.data.forEach(element => {
+            state.clansteams[element.clanName] = [];
+        });
       });
-              resClans.data.forEach(element => {
-                  state.clansteams[element.clanName] = [];
-              });
-              
-      console.log('calling for');
-      const resTeams = await axios.get(process.env.VUE_APP_API_NAME+"/teams", {
+
+      console.log('calling for teams...');
+      await axios.get(process.env.VUE_APP_API_NAME+"/teams", {
         withCredentials: true, 
+      }).then((res) => {
+
+        res.data.forEach(element => {
+          state.clansteams[element.clanName].push(element.teamName)
+        })
+
       });
-      resTeams.data.forEach(element => {
-        state.clansteams[element.clanName].push(element.teamName)
-      })
       
       console.log(state.clansteams);
     },
