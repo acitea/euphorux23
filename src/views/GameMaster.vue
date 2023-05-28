@@ -78,7 +78,7 @@ export default {
         }
     },
     beforeMount() {
-        if (!['orgc', 'game'].includes(this.$store.state.profile.role)) {
+        if (!this.$store.state.profile || !['orgc', 'game'].includes(this.$store.state.profile.role)) {
             this.$router.push('/');
             return
         }

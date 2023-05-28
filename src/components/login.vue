@@ -4,7 +4,7 @@
         
         <div v-if="true" class="wrapper">
             <h1 style="font-size: 3em; margin-top: 10%;">Enter your</h1>
-            <form @submit="submitHandler" style="width: 100%;">
+            <form @submit="async () => {await submitHandler()}" style="width: 100%;">
     
                 <input id="user" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.matricId" placeholder=" Matriculation ID">
                 <input id="SUBMIT" type="submit" value="SUBMIT">
@@ -34,9 +34,9 @@ export default {
         return
     },
     methods: {
-        submitHandler() {
-            axios.post(process.env.VUE_APP_API_NAME + '/login', this.form, {
-                headers: {"Content-Type" : 'application/json'},
+        async submitHandler() {
+            await axios.post(process.env.VUE_APP_API_NAME + '/login', this.form, {
+                headers: {"Content-Type" : 'application/json', "Access-Control-Allow-Origin" : process.env.VUE_APP_API_NAME},
                 withCredentials: true,
             }).then((res) => {
                 if (res.status == 200) {
