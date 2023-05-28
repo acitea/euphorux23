@@ -54,6 +54,7 @@ export default createStore({
       await axios.get(process.env.VUE_APP_API_NAME+"/clans", {
         withCredentials: true, 
       }).then((res) => {
+        console.log(res)
         res.data.forEach(element => {
             state.clansteams[element.clanName] = [];
         });
