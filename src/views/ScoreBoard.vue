@@ -69,7 +69,6 @@ p {
 
 .scoreBoard {
     height: 100vh;
-    background: #151515;
 }
 
 .title {

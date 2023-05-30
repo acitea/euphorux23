@@ -25,7 +25,7 @@ export default {
     name: "yourTeam",
     async mounted () {
         if(this.$store.state.auth || await this.$store.getters.hasValidToken) {
-            await this.pullPersonal()
+            // await this.pullPersonal()
         } else {
             console.log('not verified')
             this.$store.state.showLogin = true;
@@ -43,12 +43,15 @@ export default {
             await axios.post(process.env.VUE_APP_API_NAME + '/team', {
                     clanName: this.$store.state.profile.clanName,
                     teamName: this.$store.state.profile.teamName
+                    }, {
+                        withCredentials: true,
                     }).then((res) => {
                             this.$store.state.profile.schedule = res.data.schedule
                             this.$store.state.profile.teamPoints = res.data.teamPoints
                             this.$store.state.profile.position = res.data.position
                             this.$store.state.auth = true
                         })
+
         }
     },
 }

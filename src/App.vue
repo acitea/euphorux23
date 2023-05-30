@@ -47,7 +47,8 @@ import login from "./components/login.vue";
   color: #fff;
   min-height: 100vh;
   height: auto;
-  background: #151515
+  background: url("/public/bg.png");
+  background-size: 540px 960px;
 }
 
 .sideEnter-enter-from,

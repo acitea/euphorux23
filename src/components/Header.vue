@@ -20,9 +20,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-    background: #151515;
-}
 
 #logo {
     margin: 2em auto;

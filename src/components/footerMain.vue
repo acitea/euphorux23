@@ -23,7 +23,6 @@ export default {
 
 .footerMain {
     height: 10vh;
-    background: #151515;
 }
 
 </style>

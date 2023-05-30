@@ -61,7 +61,7 @@ export default createStore({
       // "Access-Control-Allow-Origin": "*",
       console.log('calling for teams...');
       await axios.get(process.env.VUE_APP_API_NAME+"/teams", {
-        withCredentials: true, 
+        withCredentials: true,
       }).then((res) => {
 
         res.data.forEach(element => {
