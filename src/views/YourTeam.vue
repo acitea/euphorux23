@@ -26,6 +26,7 @@ export default {
     async mounted () {
         if(this.$store.state.auth || await this.$store.getters.hasValidToken) {
             // await this.pullPersonal()
+            
         } else {
             console.log('not verified')
             this.$store.state.showLogin = true;
