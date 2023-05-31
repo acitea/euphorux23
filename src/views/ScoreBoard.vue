@@ -7,7 +7,7 @@
     <div class="show" v-if="teams">
         <!-- BUG: WEIRD ASS BUG HERE -->
         <!-- IT WAS RESOLVED BY HAVING V-IF FIRST BEFORE THIS SHIT. -->
-        <scoreBox v-if="display" :placement="$store.state.profile.position" :teamname="$store.state.profile.teamName" :points="$store.state.profile.teamPoints"/>
+        <scoreBox v-if="$store.getters.hasValidToken" :placement="$store.state.profile.position" :teamname="$store.state.profile.teamName" :points="$store.state.profile.teamPoints"/>
     
         <div class="overallScore">
             <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
@@ -45,11 +45,11 @@ export default {
 
     },
     async beforeMount() {
-        this.display = await this.$store.getters.hasValidToken;
         const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
         this.teams = res.data;
+        await this.$store.getters.refreshScore;
     },
-    
+
     methods: {
     }
 }

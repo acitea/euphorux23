@@ -21,7 +21,6 @@ export default createStore({
   },
   getters: {
     async hasValidToken(state) {
-
         // CHECKS IF HAVE A VALID COOKIE ALREADY
         return await axios.get(process.env.VUE_APP_API_NAME + '/verify', {
             withCredentials: true,
@@ -39,7 +38,24 @@ export default createStore({
             console.log('No token found or invalid token')
             return false
         })
-
+    },
+    async refreshScore(state) {
+      await axios.post(process.env.VUE_APP_API_NAME + '/refresh', {
+        clanName:state.profile.clanName,
+        teamName:state.profile.teamName,
+      }, {
+        headers: {"Content-Type" : 'application/json'},
+        withCredentials: true,
+      }).then((res) => {
+        if (state.profile.teamPoints != res.data.teamPoints) {
+          var updatecookie = axios.post(process.env.VUE_APP_API_NAME + '/login', {matricId:state.profile.matricId}, {
+            headers: {"Content-Type" : 'application/json'},
+            withCredentials: true,
+          })
+        }
+        state.profile.teamPoints = res.data.teamPoints;
+        state.profile.position = res.data.position;
+      })
     }
   },
   mutations: {
