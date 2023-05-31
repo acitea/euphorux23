@@ -78,10 +78,10 @@ export default {
         }
     },
     beforeMount() {
-        // if (!this.$store.state.profile || !['orgc', 'game'].includes(this.$store.state.profile.role)) {
-        //     this.$router.push('/');
-        //     return
-        // }
+        if (!this.$store.state.profile || !['orgc', 'game'].includes(this.$store.state.profile.role)) {
+            this.$router.push('/');
+            return
+        }
 
         if (!this.$store.state.clansteams) {
             this.$store.commit('getClansTeams');

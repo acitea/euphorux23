@@ -25,8 +25,7 @@ export default {
     name: "yourTeam",
     async mounted () {
         if(this.$store.state.auth || await this.$store.getters.hasValidToken) {
-            // await this.pullPersonal()
-            
+            this.$router.go()
         } else {
             console.log('not verified')
             this.$store.state.showLogin = true;

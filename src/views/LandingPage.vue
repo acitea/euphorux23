@@ -1,6 +1,7 @@
 <template>
     <div class="landingPage">
-        <p id="title">Are You Ready For Euphorux 2023?</p>
+        <img id="logo" src="../../public/euphoruxlogo.png" alt="">
+        <p id="title">Are You Ready For<br>Euphorux 2023?</p>
         <div class="time">
                 <p>{{ days }} </p>
                 <p>:</p>
@@ -53,9 +54,9 @@ export default {
         this.hours = String(left.getHours()).padStart(2, '0');
         this.minutes = String(left.getMinutes()).padStart(2, '0');
         this.seconds = String(left.getSeconds()).padStart(2, '0');
-        if (!this.$store.state.clansteams) {
-            this.$store.commit('getClansTeams');
-        }
+        // if (!this.$store.state.clansteams) {
+        //     this.$store.commit('getClansTeams');
+        // }
         return 
     },
     created() {
@@ -118,7 +119,27 @@ p {
 }
 
 #title {
+    font-size: 4em;
     margin: 0.5em auto;
+    z-index: 1;
+}
+
+.landingPage {
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+#logo {
+    display: block;
+    max-width: 140%;
+    position: absolute;
+    top: -10%;
+    left: -9999px;
+    right: -9999px;
+    margin: auto;
+    opacity: 0.2;
+    z-index: -1;
 }
 
 .named {
@@ -189,9 +210,7 @@ p {
 .time {
     width: 80%;
     height: auto;
-
     display: flex;
-
 } 
 
 .time p {
