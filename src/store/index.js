@@ -51,10 +51,11 @@ export default createStore({
           var updatecookie = axios.post(process.env.VUE_APP_API_NAME + '/login', {matricId:state.profile.matricId}, {
             headers: {"Content-Type" : 'application/json'},
             withCredentials: true,
+          }).then((res2) => {
+            state.profile.teamPoints = res2.data.teamPoints;
+            state.profile.position = res2.data.position;
           })
         }
-        state.profile.teamPoints = res.data.teamPoints;
-        state.profile.position = res.data.position;
       })
     }
   },
