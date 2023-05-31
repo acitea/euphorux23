@@ -27,10 +27,10 @@ export default createStore({
             withCredentials: true,
         }).then((res) => {
             console.log('found token!')
-            console.log(res.data)
             if (!state.auth) {
               console.log('setting userinfo...')
               state.profile = res.data;
+              state.auth = true;
             }
             return true
 

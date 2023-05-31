@@ -22,7 +22,7 @@
 
         <div class="field"><div class="fieldName">Clan</div> <select class="options" v-model="form.clan" id="" required @change="chosenClan">
             <option value="" selected disabled hidden></option>
-            <option v-for="clan in clans" :value="clan">{{ clan }}</option>
+            <option v-for="clan in Object.keys($store.state.clansteams)" :value="clan">{{ clan }}</option>
             </select>
         </div>
 
@@ -77,20 +77,17 @@ export default {
             }
         }
     },
-    beforeMount() {
-        if (!this.$store.state.profile || !['orgc', 'game'].includes(this.$store.state.profile.role)) {
+    async beforeMount() {
+
+        if (!await this.$store.getters.hasValidToken || !['orgc', 'game'].includes(this.$store.state.profile.role)) {
             this.$router.push('/');
-            return
         }
 
         if (!this.$store.state.clansteams) {
-            this.$store.commit('getClansTeams');
+            await this.$store.commit('getClansTeams');
         }
-        this.clans = Object.keys(this.$store.state.clansteams);
-    },
-    created () {
-        
-        return
+
+        // this.clans = Object.keys(this.$store.state.clansteams);
     },
     methods : {
         chosenGame(event) {
@@ -129,7 +126,7 @@ export default {
                     var time = 3;
                     this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;
                     this.pass = "SUCCESS";
-                    setTimeout(() => {this.$router.go(0)}, 3000)
+                    setTimeout(() => {this.$router.push('/gamemaster')}, 3000)
                     // setInterval(() => {
                     //     time--;
                     //     this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;
@@ -143,7 +140,7 @@ export default {
         dismiss() {
             this.response = '';
             if (this.pass == "SUCCESS") {
-                this.$router.go(0)
+                location.reload()
             }
         }
     }

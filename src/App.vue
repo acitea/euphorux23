@@ -6,14 +6,16 @@ import login from "./components/login.vue";
 
 </script>
 
-<template>
-    <headerMain/>
-    <login v-if="$store.state.showLogin"/>
-    <router-view/>
-    <Transition name="sideEnter">
-      <sideBar v-if="$store.state.showSideBar"/>
-    </Transition>
-    <footerMain/>
+<template><div :style="[$route.path == '/' ? {'background' : 'url(\'landing.png\')', 'background-size' : '200px 960px'} : {'background' : 'url(\'bg.png\')', 'background-size' : '540px 960px'}]" id="app">
+  
+      <headerMain/>
+      <login v-if="$store.state.showLogin"/>
+      <router-view/>
+      <Transition name="sideEnter">
+        <sideBar v-if="$store.state.showSideBar"/>
+      </Transition>
+      <footerMain/>
+</div>
 </template>
 
 
@@ -39,7 +41,6 @@ import login from "./components/login.vue";
 }
 
 #app {
-  
   font-family: Zuuma, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -47,8 +48,6 @@ import login from "./components/login.vue";
   color: #fff;
   min-height: 100vh;
   height: auto;
-  background: url("/public/bg.png");
-  background-size: 540px 960px;
 }
 
 .sideEnter-enter-from,

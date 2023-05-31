@@ -23,7 +23,7 @@
 
         <div class="bar"></div>
 
-        <button @click="checkLogin" class="cta"><p id="ctatext">READY TO EXPLORE</p><p id="subtext">sign in with Google</p></button>
+        <button @click="checkLogin" class="cta"><p id="ctatext">READY TO EXPLORE</p></button>
 
         <div class="bar"></div>
         <p>Check Out Our Past Years</p>
@@ -54,10 +54,9 @@ export default {
         this.hours = String(left.getHours()).padStart(2, '0');
         this.minutes = String(left.getMinutes()).padStart(2, '0');
         this.seconds = String(left.getSeconds()).padStart(2, '0');
-        // if (!this.$store.state.clansteams) {
-        //     this.$store.commit('getClansTeams');
-        // }
-        return 
+        if (!this.$store.state.clansteams) {
+            this.$store.commit('getClansTeams');
+        }
     },
     created() {
         setInterval(() => {this.countdown();}, 1000)
