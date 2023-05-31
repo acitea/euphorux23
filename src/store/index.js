@@ -39,6 +39,13 @@ export default createStore({
             return false
         })
     },
+    
+  },
+  mutations: {
+    toggleSideBar(state) {
+      state.showSideBar = !state.showSideBar;
+    },
+
     async refreshScore(state) {
       await axios.post(process.env.VUE_APP_API_NAME + '/refresh', {
         clanName:state.profile.clanName,
@@ -47,21 +54,18 @@ export default createStore({
         headers: {"Content-Type" : 'application/json'},
         withCredentials: true,
       }).then((res) => {
+        console.log('retrieved latest scores...')
         if (state.profile.teamPoints != res.data.teamPoints) {
           var updatecookie = axios.post(process.env.VUE_APP_API_NAME + '/login', {matricId:state.profile.matricId}, {
             headers: {"Content-Type" : 'application/json'},
             withCredentials: true,
           }).then((res2) => {
+            console.log('updating scores...')
             state.profile.teamPoints = res2.data.teamPoints;
             state.profile.position = res2.data.position;
           })
         }
       })
-    }
-  },
-  mutations: {
-    toggleSideBar(state) {
-      state.showSideBar = !state.showSideBar;
     },
 
     async getClansTeams(state) {
