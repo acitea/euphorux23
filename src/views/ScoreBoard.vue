@@ -43,6 +43,10 @@ export default {
     },
 
     created() {
+
+    },
+
+    beforeMount() {
         axios.get(process.env.VUE_APP_API_NAME+"/teams").then((res) => {
             this.teams = res.data;
         });
@@ -61,9 +65,6 @@ export default {
             console.log(this.teamPoints)
         }
 
-    },
-
-    beforeMount() {
         console.log('before setting all elements, the data to load is')
         console.log(this.display)
         console.log(this.teams)
