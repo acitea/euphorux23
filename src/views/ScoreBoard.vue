@@ -46,11 +46,11 @@ export default {
         const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
         this.teams = res.data;
 
-        if (this.$store.state.profile) {
+        if (this.$store.state.profile !== null) {
             await this.$store.getters.refreshScore;
-            this.position = this.$store.state.profile.position;
-            this.teamPoints = this.$store.state.profile.teamPoints;
         }
+        this.position = this.$store.state.profile.position;
+        this.teamPoints = this.$store.state.profile.teamPoints;
 
     },
 
