@@ -46,8 +46,8 @@ export default createStore({
       state.showSideBar = !state.showSideBar;
     },
 
-    async refreshScore(state) {
-      await axios.post(process.env.VUE_APP_API_NAME + '/refresh', {
+    refreshScore(state) {
+      axios.post(process.env.VUE_APP_API_NAME + '/refresh', {
         clanName:state.profile.clanName,
         teamName:state.profile.teamName,
       }, {
