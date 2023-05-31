@@ -24,7 +24,7 @@ import axios from 'axios'
 export default {
     name: "yourTeam",
     async mounted () {
-        if(this.$store.state.auth || await this.$store.getters.hasValidToken) {
+        if(this.$store.state.auth || this.$store.getters.hasValidToken) {
             console.log('verified')
             console.log(this.$store.state.auth)
             if (localStorage.getItem('reloaded')) {

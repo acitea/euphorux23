@@ -79,7 +79,7 @@ export default {
     },
     async beforeMount() {
 
-        if (!await this.$store.getters.hasValidToken || !['orgc', 'game', 'faci'].includes(this.$store.state.profile.role)) {
+        if (!this.$store.getters.hasValidToken || !['orgc', 'game', 'faci'].includes(this.$store.state.profile.role)) {
             this.$router.push('/');
         }
 
