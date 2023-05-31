@@ -11,7 +11,7 @@
     
         <div class="overallScore">
             <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
-            <scoreBox class="inList" v-for="(team, index) in teams" :placement="index+1" :teamname="team.teamName" :points="team.teamPoints" :class="($store.state.profile && teamName === team.teamName) ? 'yourTeam' : ''"/>
+            <scoreBox class="inList" v-for="team in teams" :placement="team.position" :teamname="team.teamName" :points="team.teamPoints" :class="($store.state.profile && teamName === team.teamName) ? 'yourTeam' : ''"/>
         </div>
     </div>
     <div class="noTeams" v-if="teams === []">
