@@ -42,19 +42,15 @@ export default {
         }
     },
 
-    created() {
-
-    },
-
-    beforeMount() {
-        axios.get(process.env.VUE_APP_API_NAME+"/teams").then((res) => {
+    async beforeMount() {
+        await axios.get(process.env.VUE_APP_API_NAME+"/teams").then((res) => {
             this.teams = res.data;
         });
 
-        if (this.$store.getters.hasValidToken) {
+        if (await this.$store.getters.hasValidToken) {
             console.log('there is valid profile')
             console.log(this.$store.state.profile)
-            this.$store.getters.refreshScore
+            await this.$store.getters.refreshScore
             this.position = this.$store.state.profile.position;
             this.teamPoints = this.$store.state.profile.teamPoints;
             this.display = true;

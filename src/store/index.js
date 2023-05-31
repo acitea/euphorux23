@@ -20,9 +20,9 @@ export default createStore({
     }
   },
   getters: {
-    hasValidToken(state) {
+    async hasValidToken(state) {
         // CHECKS IF HAVE A VALID COOKIE ALREADY
-        return axios.get(process.env.VUE_APP_API_NAME + '/verify', {
+        return await axios.get(process.env.VUE_APP_API_NAME + '/verify', {
             withCredentials: true,
         }).then((res) => {
             console.log('found token!')
@@ -40,17 +40,17 @@ export default createStore({
         })
     },
 
-    refreshScore(state) {
-      axios.post(process.env.VUE_APP_API_NAME + '/refresh', {
+    async refreshScore(state) {
+      return await axios.post(process.env.VUE_APP_API_NAME + '/refresh', {
         clanName:state.profile.clanName,
         teamName:state.profile.teamName,
       }, {
         headers: {"Content-Type" : 'application/json'},
         withCredentials: true,
-      }).then((res) => {
+      }).then(async (res) => {
         console.log('retrieved latest scores...')
         if (state.profile.teamPoints != res.data.teamPoints) {
-          axios.post(process.env.VUE_APP_API_NAME + '/login', {matricId:state.profile.matricId}, {
+          return await axios.post(process.env.VUE_APP_API_NAME + '/login', {matricId:state.profile.matricId}, {
             headers: {"Content-Type" : 'application/json'},
             withCredentials: true,
           }).then((res2) => {
