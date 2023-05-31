@@ -27,9 +27,6 @@
 
 import axios from 'axios';
 import scoreBox from '../components/scoreBox.vue'
-import { onMounted } from 'vue';
-
-
 
 export default {
     name: "scoreBoard",
@@ -44,19 +41,17 @@ export default {
             teamPoints : null,
         }
     },
-    computed: {
 
-    },
     async mounted() {
         const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
         this.teams = res.data;
 
         if (this.$store.state.profile) {
             await this.$store.getters.refreshScore;
+            this.position = this.$store.state.profile.position;
+            this.teamPoints = this.$store.state.profile.teamPoints;
         }
 
-        this.position = this.$store.state.profile.position;
-        this.teamPoints = this.$store.state.profile.teamPoints;
     },
 
     methods: {
