@@ -47,15 +47,16 @@ export default {
         this.teams = res.data;
 
         if (this.$store.state.profile !== null) {
+            console.log('there is valid profile')
+            console.log(this.$store.state.profile)
             await this.$store.getters.refreshScore;
         }
+
         this.position = this.$store.state.profile.position;
         this.teamPoints = this.$store.state.profile.teamPoints;
 
     },
 
-    methods: {
-    }
 }
 </script>
 
