@@ -42,17 +42,19 @@ export default {
         }
     },
 
-    async created() {
-        const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
-        this.teams = res.data;
+    created() {
+        axios.get(process.env.VUE_APP_API_NAME+"/teams").then((res) => {
+            this.teams = res.data;
+        });
 
         if (this.$store.state.profile !== null) {
             console.log('there is valid profile')
             console.log(this.$store.state.profile)
-            await this.$store.getters.refreshScore;
-            this.position = this.$store.state.profile.position;
-            this.teamPoints = this.$store.state.profile.teamPoints;
-            this.display = true;
+            this.$store.getters.refreshScore.then(() => {
+                this.position = this.$store.state.profile.position;
+                this.teamPoints = this.$store.state.profile.teamPoints;
+                this.display = true;
+            });
         }
 
     },
