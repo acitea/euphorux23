@@ -7,11 +7,11 @@
     <div class="show" v-if="teams">
         <!-- BUG: WEIRD ASS BUG HERE -->
         <!-- IT WAS RESOLVED BY HAVING V-IF FIRST BEFORE THIS SHIT. -->
-        <scoreBox v-if="$store.getters.hasValidToken" :placement="position" :teamname="$store.state.profile.teamName" :points="teamPoints"/>
+        <scoreBox v-if="display" :placement="position" :teamname="$store.state.profile.teamName" :points="teamPoints"/>
     
         <div class="overallScore">
             <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
-            <scoreBox class="inList" v-for="(team, index) in teams" :placement="index+1" :teamname="team.teamName" :points="team.teamPoints" :class="($store.state.profile && $store.state.profile.position === index+1) ? 'yourTeam' : ''"/>
+            <scoreBox class="inList" v-for="(team, index) in teams" :placement="index+1" :teamname="team.teamName" :points="team.teamPoints" :class="($store.state.profile && position === index+1) ? 'yourTeam' : ''"/>
         </div>
     </div>
     <div class="noTeams" v-if="teams === []">
@@ -50,12 +50,21 @@ export default {
             console.log('there is valid profile')
             console.log(this.$store.state.profile)
             await this.$store.getters.refreshScore;
+            this.position = this.$store.state.profile.position;
+            this.teamPoints = this.$store.state.profile.teamPoints;
+            this.display = true;
         }
 
-        this.position = this.$store.state.profile.position;
-        this.teamPoints = this.$store.state.profile.teamPoints;
-
     },
+
+    beforeMount() {
+        console.log('before setting all elements, the data to load is')
+        console.log(this.display)
+        console.log(this.teams)
+        console.log(this.position)
+        console.log(this.teamPoints)
+        console.log('that is all.')
+    }
 
 }
 </script>
