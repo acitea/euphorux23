@@ -47,6 +47,7 @@ import login from "./components/login.vue";
   text-align: center;
   color: #fff;
   min-height: 100vh;
+  background: #151515;
   height: auto;
 }
 
