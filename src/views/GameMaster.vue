@@ -87,7 +87,6 @@ export default {
             await this.$store.commit('getClansTeams');
         }
 
-        // this.clans = Object.keys(this.$store.state.clansteams);
     },
     methods : {
         chosenGame(event) {
@@ -226,7 +225,7 @@ margin: 2em auto;
 }
 .SUBMIT {
 position: absolute;
-bottom: 2em;
+bottom: 1em;
 width: 40vw;
 height: 6vh;
 left: 30vw;

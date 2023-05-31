@@ -54,6 +54,11 @@ export default {
                 this.position = this.$store.state.profile.position;
                 this.teamPoints = this.$store.state.profile.teamPoints;
                 this.display = true;
+                console.log('supposed to set display to true and other stuff...')
+                console.log(this.display)
+                console.log(this.teams)
+                console.log(this.position)
+                console.log(this.teamPoints)
             });
         }
 
