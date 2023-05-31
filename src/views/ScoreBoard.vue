@@ -7,8 +7,8 @@
     <div class="show" v-if="teams">
         <!-- BUG: WEIRD ASS BUG HERE -->
         <!-- IT WAS RESOLVED BY HAVING V-IF FIRST BEFORE THIS SHIT. -->
-        <scoreBox v-if="display" :placement="position" :teamname="$store.state.profile.teamName" :points="teamPoints"/>
-    
+        <!-- <scoreBox v-if="display" :placement="position" :teamname="$store.state.profile.teamName" :points="teamPoints"/>
+    -->
         <div class="overallScore">
             <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
             <scoreBox class="inList" v-for="team in teams" :placement="team.position" :teamname="team.teamName" :points="team.teamPoints" :class="($store.state.profile.teamName == team.teamName) ? 'yourTeam' : ''"/>
