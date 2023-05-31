@@ -42,7 +42,7 @@ export default {
         }
     },
 
-    async mounted() {
+    async beforeMount() {
         const res = await axios.get(process.env.VUE_APP_API_NAME+"/teams");
         this.teams = res.data;
 
