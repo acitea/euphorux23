@@ -50,7 +50,7 @@ export default createStore({
       }).then(async (res) => {
         console.log('retrieved latest scores...')
         if (state.profile.teamPoints != res.data.teamPoints) {
-          return await axios.post(process.env.VUE_APP_API_NAME + '/login', {matricId:state.profile.matricId}, {
+          return await axios.post(process.env.VUE_APP_API_NAME + '/login', {'matricId' : state.profile.matricId}, {
             headers: {"Content-Type" : 'application/json'},
             withCredentials: true,
           }).then((res2) => {

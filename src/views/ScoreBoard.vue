@@ -4,7 +4,7 @@
     <h1 class="title">SCOREBOARD</h1>
     <div class="bar"></div>
     
-    <div class="show" v-if="teams">
+    <!-- <div class="show" v-if="teams"> -->
         <!-- BUG: WEIRD ASS BUG HERE -->
         <!-- IT WAS RESOLVED BY HAVING V-IF FIRST BEFORE THIS SHIT. -->
         <!-- <scoreBox v-if="display" :placement="position" :teamname="$store.state.profile.teamName" :points="teamPoints"/>
@@ -13,7 +13,7 @@
             <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
             <scoreBox class="inList" v-for="team in teams" :placement="team.position" :teamname="team.teamName" :points="team.teamPoints" :class="($store.state.profile.teamName == team.teamName) ? 'yourTeam' : ''"/>
         </div>
-    </div>
+    <!-- </div> -->
     <div class="noTeams" v-if="teams === []">
         <h1>THERE ARE NO TEAMS PLAYING NOW</h1>
     </div>
@@ -56,7 +56,6 @@ export default {
             this.display = true;
             console.log('supposed to set display to true and other stuff...')
             console.log(this.display)
-            console.log(this.teams)
             console.log(this.position)
             console.log(this.teamPoints)
         }
