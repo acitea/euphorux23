@@ -44,13 +44,13 @@ export default {
                     this.$store.state.showLogin = false;
                     this.$store.state.auth = true;
                     console.log('login successful. redirecting...')
-                    if (res.data.role == 'ppnt') {
+                    if (res.data.role != 'game') {
                         if (this.$route.path == '/yourteam') {
                             this.$router.go()
                         } else {
                             this.$router.push('/yourteam')
                         }
-                    } else if (res.data.role == 'game') {
+                    } else {
                         this.$router.push('/gamemaster')
                     }
                 }

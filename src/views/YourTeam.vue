@@ -2,17 +2,35 @@
 <div class="yourTeam">
     <div v-if="!$store.state.auth" class="nologin">
         YOU ARE NOT LOGGED IN.
+        <br>
         <button @click="$store.state.showLogin = true"> LOGIN HERE </button>
     </div>
+    <div v-if="$store.state.auth">
+        <div class='profile' :class="$store.state.profile.role == 'orgc' ? 'orgc' : ''">
+            <p style="font-size: 2em; font-weight: bold; letter-spacing: 0.1em; text-align: center;" class="team">
+                {{ $store.state.profile.teamName }}
+            </p>
+            <div class="bar"></div>
+            <div class="details">
+                Hi {{ $store.state.profile.name }},
+            </div>
+            <div v-if="$store.state.profile.schedule" class="schedule">
+                <p>What's <span style="color: #F37520;">Up Next</span>?</p>
+                {{ $store.state.profile.schedule[0] }}
+            </div>
+            <div v-if="$store.state.profile.role != 'orgc'" class="played">
+                Activities <span style="color: #F37520;">Completed</span>
+                <div style="margin-bottom: -6px;" v-for="(activity, name) in activities">
+                    <gamesCard :name="name.toUpperCase()" :table="activity"/>
+                </div>
+                <div style="margin-top: 0.5em;">Total &hairsp; <span style="color: #F37520">{{ $store.state.profile.teamPoints }}</span> &hairsp; pts</div>
+            </div>
 
-    <div v-if="$store.state.auth" class="profile">
-        THANKS FOR LOGGING IN {{ $store.state.profile.name }} <br><br>
-    FROM {{ $store.state.profile.clanName }}, {{ $store.state.profile.teamName }} <br><br>
-    HERES YOUR SCHEDULE <br>
-    {{ $store.state.profile.schedule }}
-    <br><br>
-    HERES YOUR POINTS <br>
-    {{ $store.state.profile.teamPoints }}
+            <div v-if="$store.state.profile.role == 'orgc'" class="updates">
+                Hello big boss
+                There will be some more shit here in the future
+            </div>
+        </div>
     </div>
 
 </div>
@@ -20,13 +38,34 @@
 
 <script>
 import axios from 'axios'
+import gamesCard from '@/components/gamesCard.vue'
 
 export default {
     name: "yourTeam",
+    components: {
+        gamesCard
+    },
+    data () {
+        return {
+            activities: null,
+        }
+    },
     async mounted () {
-        if(this.$store.state.auth || this.$store.getters.hasValidToken) {
+        if(this.$store.state.auth || await this.$store.getters.hasValidToken) {
             console.log('verified')
-            console.log(this.$store.state.auth)
+            this.$store.state.auth = true;
+            console.log(this.$store.state.auth);
+            await axios.post(process.env.VUE_APP_API_NAME + '/results', {
+                clanName: this.$store.state.profile.clanName,
+                teamName: this.$store.state.profile.teamName
+            }, {
+                withCredentials: true,
+            }
+            ).then((res) => {
+                console.log(res.data)
+                this.activities = res.data;
+            });
+
             if (localStorage.getItem('reloaded')) {
         // The page was just reloaded. Clear the value from local storage
         // so that it will reload the next time this page is visited.
@@ -72,18 +111,33 @@ export default {
 <style scoped>
 
 .profile {
-    font-size: 3em;
+    width: 92%;
+    font-size: 2em;
+    margin: 0 auto;
+    padding: 0.5em 0;
+    border: 0.1em solid blue;
+    border-radius: 0.7em;
+    box-shadow: 0px 0px 48px 0px blue, inset 0px 0px 48px 0px blue;
+}
+
+.orgc {
+    border: 0.1em solid white;
+    box-shadow: 0px 0px 48px 0px white, inset 0px 0px 48px 0px white;
+}
+
+.profile div {
+    max-width: 95%;
+    font-family: 'Secular One';
+    margin: 0.3em auto;
+}
+
+.details {
+    padding: 0 0.5em;
+    text-align: left;
 }
 .bar {
-
-width: 100%;
-height: 0px;
-
-margin: 2em auto;
-margin-bottom: 1em;
-border: 0.15em solid #454545;
-border-radius: 1em;
-
+border: 0.08em solid #454545;
+margin: 0.5em auto;
 }
 
 </style>

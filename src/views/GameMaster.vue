@@ -16,32 +16,33 @@
             <option value="Bingo">Bingo</option>
             <option value="Kayak">Kayak</option>
             <option value="Skate">Skate</option>
-            <option value="Xseed">XSeed</option>
             </select>
         </div>
 
-        <div class="field"><div class="fieldName">Clan</div> <select class="options" v-model="form.clan" id="" required @change="chosenClan">
+        <div class="field"><div class="fieldName">Clan</div> <select class="options" v-model="form.clan" required @change="chosenClan">
             <option value="" selected disabled hidden></option>
-            <option v-for="clan in Object.keys($store.state.clansteams)" :value="clan">{{ clan }}</option>
+            <option v-for="(teams, clan) in $store.state.clansteams" :value="clan">{{ clan }}</option>
             </select>
         </div>
 
         <!-- BUG: Select box gets bigger when long name appears -->
-        <div class="field"><div class="fieldName">Team</div> <select class="options" v-model="form.team" id="" required>
+        <div class="field"><div class="fieldName">Team</div> <select class="options" v-model="form.team" required>
             <option value="" selected disabled hidden></option>
             <option v-for="team in teams" :value="team">{{ team }}</option>
 
             </select>
         </div>
 
-        <div class="field" v-if="['Skate', 'Xseed'].includes(this.form.game)"><div class="fieldName">Players</div> <input class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.players" id="" required></div>
-        <div class="field" v-if="['Skate', 'Xseed'].includes(this.form.game)"><div class="fieldName">Survivors</div> <input class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.survivors" id="" required></div>
+        <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Players</div> <input class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.players" required></div>
+        <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Survivors</div> <input class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.survivors" required></div>
         
-        <div class="field" v-if="this.form.game == 'Kayak'"><div class="fieldName">Timing</div> <input class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.timing" id="" placeholder="in minutes"></div>
-        <div class="field" v-if="this.form.game == 'Bingo'"><div class="fieldName">Completed</div> <input class="options rad" type="checkbox" v-model="form.bingoCompleted" id=""></div>
-
-        <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Found</div> <input required class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.trekFound" id="" max="5"></div>
-        <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Bonus</div> <input class="options rad" type="checkbox" v-model="form.trekBonus" id=""></div>
+        <div class="field" v-if="this.form.game == 'Kayak'"><div class="fieldName">Timing</div> <input class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.timing" placeholder="in seconds"></div>
+        
+        <div class="field" v-if="this.form.game == 'Bingo'"><div class="fieldName">Completed</div> <input maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.bingoCompleted" max="10" default="0"></div>
+        
+        <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Found</div> <input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekFound" max="5"></div>
+        <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Buffed</div> <input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekBuffed" max="5" default="0"></div>
+        <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Bruce</div> <input class="options rad" type="checkbox" v-model="form.trekBonus"></div>
 
         <input type="submit" class="SUBMIT" value="SUBMIT"/>
     </form>
@@ -73,6 +74,7 @@ export default {
                 timing : null,
                 bingoCompleted : null,
                 trekFound : null,
+                trekBuffed : null,
                 trekBonus : null,
             }
         }
@@ -92,7 +94,6 @@ export default {
         chosenGame(event) {
             let chosen = event.target.value
             this.game = chosen
-            this.form.bingoCompleted = chosen == 'Bingo' ? false : null;
             this.form.trekBonus = chosen == 'Trek' ? false : null;
         },
 
@@ -205,7 +206,7 @@ export default {
 }
 
 .num {
-    width: 20vw;
+    width: 10vw;
 }
 
 .title {
@@ -224,11 +225,10 @@ margin: 2em auto;
 
 }
 .SUBMIT {
-position: absolute;
-bottom: 1em;
+position: relative;
+top: 1em;
 width: 40vw;
 height: 6vh;
-left: 30vw;
 color: #fff;
 
 background: #F37520;
