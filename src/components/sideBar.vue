@@ -6,7 +6,6 @@
         <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/" class="links">HOME</router-link>
         <router-link to="/" class="links">THE STORY</router-link>
         <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/theteams" class="links">THE TEAMS</router-link>
-        <router-link to="/" class="links">OUR SOCIALS</router-link>
         <a href="" class="links">JOIN SMUX!</a>
         <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/scoreboard" class="links">SCOREBOARD</router-link>
         <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/yourteam" class="links">YOUR TEAM</router-link>

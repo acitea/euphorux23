@@ -55,7 +55,7 @@ export default {
     border: 2px solid #FFFFFF;
 
     width: 80vw;
-    min-height: 6vh;
+    min-height: 8vh;
     flex-direction: row;
 
     justify-content: space-around;
