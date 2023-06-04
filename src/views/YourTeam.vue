@@ -13,7 +13,13 @@
             <div class="bar"></div>
             <div class="details">
                 Hi {{ $store.state.profile.name }},
+                <div class="handbook" v-if="$store.state.profile.role == 'faci'">
+                    HANDBOOK
+                </div>
             </div>
+
+            <attendance @finalised="(finalised) => {this.finalised = finalised}" v-if="$store.state.profile.role != 'ppnt' && !finalised" />
+
             <div v-if="$store.state.profile.schedule" class="schedule">
                 <p>What's <span style="color: #F37520;">Up Next</span>?</p>
                 {{ $store.state.profile.schedule[0] }}
@@ -39,15 +45,18 @@
 <script>
 import axios from 'axios'
 import gamesCard from '@/components/gamesCard.vue'
+import attendance from '@/components/attendance.vue'
 
 export default {
     name: "yourTeam",
     components: {
-        gamesCard
+        gamesCard,
+        attendance
     },
     data () {
         return {
             activities: null,
+            finalised: false
         }
     },
     async mounted () {
@@ -92,8 +101,8 @@ export default {
             console.log('getting team data...')
             // PASSES HAVING A VALID COOKIE AND AFTER SETTING USERINFO, WE GET THE SCHEDULE FOR THIS FELLA
             await axios.post(process.env.VUE_APP_API_NAME + '/team', {
-                    clanName: this.$store.state.profile.clanName,
-                    teamName: this.$store.state.profile.teamName
+                    clanName : this.$store.state.profile.clanName,
+                    teamName : this.$store.state.profile.teamName
                     }, {
                         withCredentials: true,
                     }).then((res) => {
@@ -134,10 +143,24 @@ export default {
 .details {
     padding: 0 0.5em;
     text-align: left;
+    float: left;
+    width: 100%;
 }
 .bar {
 border: 0.08em solid #454545;
 margin: 0.5em auto;
 }
 
+.details {
+    display: flex;
+    align-items: center;
+}
+.handbook {
+    font-size: 0.5em;
+    position: relative;
+    float: right;
+    background: #F37520;
+    padding: 0.2em 0.5em;
+    border-radius: 0.5em;
+}
 </style>
