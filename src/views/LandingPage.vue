@@ -23,7 +23,8 @@
 
         <div class="bar"></div>
 
-        <button @click="checkLogin" class="cta"><p id="ctatext">READY TO EXPLORE</p></button>
+        <button @click="checkLogin" class="cta"><p id="ctatext">READY TO EXPLORE?</p><span class="subtext">sign up here!</span></button>
+        <!-- <div class="subtext" style="font-size: 1em; margin-top: 0.5em; text-decoration: underline; font-style: italic; color: #ccc;">Already signed up?</div> -->
 
         <div class="bar"></div>
         <p>Check Out Our Past Years</p>
@@ -74,9 +75,10 @@ export default {
                 this.hours = String(this.hours - 1).padStart(2, '0');
             }
         },
-        checkLogin() {
-            if (!this.$store.state.showLogin) {
-                this.$store.state.showLogin = true;
+        async checkLogin() {
+            if (! await this.$store.getters.hasValidToken) {
+                // this.$store.state.showLogin = true;
+                window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzycWtZzE7TA2Jm8vA5d6rNuqWdzThf-HkUgZt1aBW-Cqzug/viewform')
             }
         }
     },
@@ -180,8 +182,9 @@ p {
 }
 
 .cta {
-    width: 201px;
-    height: 60px;
+    display: block;
+    width: 60%;
+    height: 70px;
 
     background: #F37520;
     border: 2px solid #454545;
@@ -197,9 +200,9 @@ p {
 
 }
 
-#subtext {
+.subtext {
     font-family: 'Secular One';
-    font-size: 0.8em;
+    font-size: 1.2em;
 
     color: #fff;
 

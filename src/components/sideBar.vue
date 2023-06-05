@@ -3,16 +3,17 @@
     <p @click="() => {this.$store.commit('toggleSideBar')}" id="back">BACK</p>
     <div class="bar"></div>
     <div class="navLinks">
-        <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/" class="links">HOME</router-link>
-        <router-link to="/" class="links">THE STORY</router-link>
-        <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/theteams" class="links">THE TEAMS</router-link>
-        <a href="" class="links">JOIN SMUX!</a>
-        <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/scoreboard" class="links">SCOREBOARD</router-link>
+        <router-link v-for="(link, nav) in navLinks" class="links" @click="() => {this.$store.commit('toggleSideBar')}" :to="link" >{{nav}}</router-link>
+        <!-- <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/" class="links">HOME</router-link> -->
+        <!-- <router-link to="/" class="links">THE STORY</router-link> -->
+        <!-- <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/theteams" class="links">THE TEAMS</router-link>
         <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/yourteam" class="links">YOUR TEAM</router-link>
+        <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/scoreboard" class="links">SCOREBOARD</router-link> -->
         <!-- somehow not working -->
-        <!-- <div v-for="link in Object.keys(this.navLinks)" class="links">
+        <!-- <div v-for="(link, nav) in navLinks" class="links">
             <router-link @click="() => {this.$store.commit('toggleSideBar')}" :to="this.navLinks[link]">{{ link }}</router-link>
         </div> -->
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdbya6WOiKa22B3OQYv26kYozasVCxbsRNReSyHXI2UFcimiw/viewform" target="_blank" class="links">JOIN SMUX!</a>
     </div>
 
     <router-link @click="() => {this.$store.commit('toggleSideBar')}" to="/gamemaster" class="ops">Game Masters</router-link>

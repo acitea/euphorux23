@@ -3,7 +3,7 @@
     <h1 class="title">THE TEAMS</h1>
     <div class="bar"></div>
     <p>Introducing the <span style="color: #F37520; font-weight: bold; font-size: 1.3em;">6</span> teams, the core of SMUXploration Crew <br><br>
-    You will be trying out what they have to offer and get to know them better. Seek the adventure, Explore the horizons</p>
+    You will be trying out what they have to offer and get to know them better. Seek the adventure, Explore the horizons.</p>
     <teamCard v-for="(attr, team) in teams" :team="team" :desc="attr.desc" :links="attr.links"/>
 </div>
 </template>
