@@ -27,16 +27,18 @@
         <!-- <div class="subtext" style="font-size: 1em; margin-top: 0.5em; text-decoration: underline; font-style: italic; color: #ccc;">Already signed up?</div> -->
 
         <div class="bar"></div>
-        <p>Check Out Our Past Years</p>
+        <gallery/>
     </div>
 </template>
 
 <script>
 
+import gallery from '@/components/gallery.vue'
+
 export default {
     name: "landingPage",
     components: {
-        
+        gallery
     },
     data () {
         return {days : "",

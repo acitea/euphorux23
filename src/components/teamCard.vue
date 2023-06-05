@@ -1,8 +1,7 @@
 <template>
 <div class="teamCard">
     <div class="bar"></div>
-    <div class="title"><span style="color:#F37520">{{ team.substring(0, 1) }}</span><span>{{ team.substring(1) }}</span>
-    <img src="" alt=""></div>
+    <div class="title"><span style="color:#F37520">{{ team.substring(0, 1) }}</span><span>{{ team.substring(1) }}</span></div>
     <img :src="`/${team}.jpg`" alt="">
     
     <p style="text-align: justify;" v-html="desc">

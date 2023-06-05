@@ -10,7 +10,7 @@ export default createStore({
       showLogin : false,
       upcomingRun: '6 July 2023',
       navLinks: {'HOME' : '/',
-      'THE STORY' : '/story',
+      // 'THE STORY' : '/story',
       'THE TEAMS' : '/theteams',
       'SCOREBOARD' : '/scoreboard',
       'YOUR TEAM' : '/yourteam'},

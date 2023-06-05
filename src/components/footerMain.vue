@@ -22,7 +22,7 @@ export default {
 <style scoped>
 
 .footerMain {
-    height: 100vh;
+    height: 20vh;
 }
 
 </style>
