@@ -11,6 +11,9 @@ const routes = [
     path: '/',
     name: 'landingPage',
     component: LandingPage,
+    meta: {
+      scrollToTop: true,
+    }
   },
   {
     path: '/gamemaster',

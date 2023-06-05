@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <attendance @finalised="(finalised) => {this.finalised = finalised}" v-if="$store.state.profile.role != 'ppnt' && !finalised" />
+            <attendance />
 
             <div v-if="$store.state.profile.schedule" class="schedule">
                 <p>What's <span style="color: #F37520;">Up Next</span>?</p>
@@ -36,6 +36,8 @@
                 Hello big boss
                 There will be some more shit here in the future
             </div>
+
+            <button @click="logOut">Log Out</button>
         </div>
     </div>
 
@@ -46,6 +48,7 @@
 import axios from 'axios'
 import gamesCard from '@/components/gamesCard.vue'
 import attendance from '@/components/attendance.vue'
+import router from '@/router'
 
 export default {
     name: "yourTeam",
@@ -59,6 +62,7 @@ export default {
             finalised: false
         }
     },
+    
     async mounted () {
         if(this.$store.state.auth || await this.$store.getters.hasValidToken) {
             console.log('verified')
@@ -95,6 +99,13 @@ export default {
         }
     },
     methods: {
+        logOut() {
+            axios.get(process.env.VUE_APP_API_NAME + '/logout', {
+                        withCredentials: true,
+                    }).then((res) => {
+                        router.push('/')
+                    })
+        },
 
         async pullPersonal() {
 
