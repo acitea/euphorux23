@@ -137,7 +137,7 @@ p {
     display: block;
     max-width: 140%;
     position: absolute;
-    top: -10%;
+    top: -4em;
     left: -9999px;
     right: -9999px;
     margin: auto;
