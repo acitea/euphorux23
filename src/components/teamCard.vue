@@ -1,11 +1,15 @@
 <template>
 <div class="teamCard">
     <div class="bar"></div>
-    <div class="title"><span style="color:#F37520">{{ this.team.substring(0, 1) }}</span><span>{{ this.team.substring(1) }}</span></div>
+    <div class="title"><span style="color:#F37520">{{ team.substring(0, 1) }}</span><span>{{ team.substring(1) }}</span>
+    <img src="" alt=""></div>
     <img :src="`/${team}.jpg`" alt="">
     
     <p style="text-align: justify;" v-html="desc">
     </p>
+    <ul>
+        <li v-for="(link, social) in links"><a target="_blank" :href="link"><img style="border: none; margin: 0;" :src="'/' + social + 'iconwhite.png'" alt="" height="32" width="32"></a></li>
+    </ul>
 </div>
 </template>
 
@@ -22,6 +26,10 @@ export default {
         desc: {
             type : String,
             default : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla gravida et est id convallis. In quis semper dui. Nulla magna ex, efficitur nec libero ac, venenatis porta libero. Vivamus rutrum, dolor sed maximus facilisis, nisl lacus iaculis lacus, nec vulputate risus risus eget elit. "
+        },
+        links: {
+            type : Object,
+            
         }
     },
     mounted () {
@@ -32,12 +40,27 @@ export default {
 
 <style scoped>
 
+ul {
+    display: flex;
+    list-style: none;
+    height: 32px;
+    width: 50%;
+    padding: 0;
+    margin-bottom: -1em;
+    margin-top: 1em;
+    position: relative;
+}
+li {
+    margin-right: 1.5em;
+    list-style: none;
+    display: inline-block;
+}
+
 span {
     position: relative;
     font-size: 4em;
     font-weight: bold;
     letter-spacing: 0.1em;
-    /* float: left; */
 }
 
 p {
