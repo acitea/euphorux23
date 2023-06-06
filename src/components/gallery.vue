@@ -1,6 +1,6 @@
 <template>
 <div class="gallery">
-    <h1 style="margin-bottom: 0.5em;">Check Out Last Year's</h1>
+    <h1 style="margin-bottom: 0.5em;">2022's Euphorux</h1>
     <img v-for="image in images" :src="image.pathLong" alt="">
     <div>
         <!-- <stack :column-min-width="320" :gutter-width="8" :gutter-height="8" monitor-images-loaded>

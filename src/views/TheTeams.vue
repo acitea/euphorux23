@@ -3,7 +3,8 @@
     <h1 class="title">THE TEAMS</h1>
     <div class="bar"></div>
     <p>Introducing the <span style="color: #F37520; font-weight: bold; font-size: 1.3em;">6</span> teams, the core of SMUXploration Crew <br><br>
-    You will be trying out what they have to offer and get to know them better. Seek the adventure, Explore the horizons.</p>
+    You will be trying out what they have to offer and get to know them better.</p>
+    <h1 style="font-size: 3.5em; margin-top: 0.5em;">Seek the adventure,<br> Explore the horizons.</h1>
     <teamCard v-for="(attr, team) in teams" :team="team" :desc="attr.desc" :links="attr.links"/>
 </div>
 </template>
@@ -31,17 +32,17 @@ export default {
                         tele : 'https://t.me/smuxdiving',
                         insta : 'https://www.instagram.com/smuxdiving/'
                     }},
-                    'kayak' : {desc: `We are a family of new and seasoned kayakers who are always looking forward to our next adventure together. <br><br>As a team, we embark on weekly adventures around Marina Reservoir, Pasir Ris, Sembawang and many more locations! Our club also seeks to take on expeditions beyond Singapore’s shores. We’ve kayaked in the calm rivers in Perth, scenic waters of Lake Toba and Taiwan as well as white water rafting together with our fellow SMUX Xseed friends!`,
+                    'kayaking' : {desc: `We are a family of new and seasoned kayakers who are always looking forward to our next adventure together. <br><br>As a team, we embark on weekly adventures around Marina Reservoir, Pasir Ris, Sembawang and many more locations! Our club also seeks to take on expeditions beyond Singapore’s shores. We’ve kayaked in the calm rivers in Perth, scenic waters of Lake Toba and Taiwan as well as white water rafting together with our fellow SMUX Xseed friends!`,
                     links: {
                         tele: 'https://t.me/SMUXKayaking',
                         insta: 'https://www.instagram.com/smuxkayaking/'
                     }},
-                    'skate' : {desc: `We are an inline skating team in SMU that is open to all students. Whether you’re a pro or have never picked up a pair of skates before, we welcome everyone to the SMUX Skating family! <br><br>Our weekly Friday sessions have a training segment where we teach beginners how to skate from scratch and give intermediates a space to have some fun and learn new tricks. After training, we bring skaters who are urban-proficient to skate in the city for dinner before skating back to school. Our urban locations vary from week to week, bringing you to signature food spots in Singapore nearby school!`,
+                    'skating' : {desc: `We are an inline skating team in SMU that is open to all students. Whether you’re a pro or have never picked up a pair of skates before, we welcome everyone to the SMUX Skating family! <br><br>Our weekly Friday sessions have a training segment where we teach beginners how to skate from scratch and give intermediates a space to have some fun and learn new tricks. After training, we bring skaters who are urban-proficient to skate in the city for dinner before skating back to school. Our urban locations vary from week to week, bringing you to signature food spots in Singapore nearby school!`,
                     links: {
                         tele: 'https://t.me/+gOk06YkoXzQzODg1',
                         insta: 'https://www.instagram.com/smuxskating/'
                     }},
-                    'trek' : {desc: `Got an Attitude for Altitude? <br><br>The SMUX Trekking Team was started as a platform for members passionate about trekking to prepare and build camaraderie for treks together.  <br><br>Join us on our Wednesday runs or Saturday hikes, to meet new people and get your weekly dose of exercise! We also organise exciting events during the midterm, winter and summer breaks that will bring you and your friends to interesting places around Singapore! Look out for our upcoming orienteering sessions, campfires and even an overseas expedition!`,
+                    'trekking' : {desc: `Got an Attitude for Altitude? <br><br>The SMUX Trekking Team was started as a platform for members passionate about trekking to prepare and build camaraderie for treks together.  <br><br>Join us on our Wednesday runs or Saturday hikes, to meet new people and get your weekly dose of exercise! We also organise exciting events during the midterm, winter and summer breaks that will bring you and your friends to interesting places around Singapore! Look out for our upcoming orienteering sessions, campfires and even an overseas expedition!`,
                     links: {
                         tele: 'https://t.me/smuxtrekkers',
                         insta: 'https://www.instagram.com/smuxtrekking/'
