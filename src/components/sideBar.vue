@@ -70,6 +70,7 @@ background: #454545cc;
 backdrop-filter: blur(4px);
 
 border-right: 0.25em solid #333;
+z-index: 1;
 
 }
 
@@ -90,6 +91,7 @@ border-right: 0.25em solid #333;
     margin: 0.5em auto;
     left: -0.5em;
     margin-top: 0.4em;
+    z-index: 0;
 }
 
 .navLinks {

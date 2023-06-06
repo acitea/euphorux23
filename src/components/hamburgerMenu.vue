@@ -29,10 +29,8 @@ export default {
     justify-content: center;
     width: 3em;
     height: 3em;
-
     margin: 1em;
     border-radius: 1em;
-    z-index: 1;
     background: none;
 }
 .hamburgerMenu {

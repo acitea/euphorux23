@@ -3,12 +3,12 @@ import headerMain from "./components/Header.vue";
 import sideBar from "./components/sideBar.vue";
 import footerMain from "./components/footerMain.vue"
 import login from "./components/login.vue";
-
 </script>
 
-<template><div :style="[$route.path == '/' ? {'background' : 'url(\'landing.png\')', 'background-size' : '200px 960px'} : {'background' : 'url(\'bg.png\')', 'background-size' : '540px 960px'}]" id="app">
-  
-      <headerMain/>
+<template>
+  <div :style="[$route.path == '/' ? {'background' : 'url(\'landing.png\')', 'background-size' : '200px 960px'} : {'background' : 'url(\'bg.png\')', 'background-size' : '540px 960px'}]" id="app">
+    <headerMain style="z-index: 1;"/>
+  <!-- <hamburgerMenu style="z-index: 2; position: fixed; top: 0;"/> -->
       <login v-if="$store.state.showLogin"/>
       <router-view/>
       <Transition name="sideEnter">
