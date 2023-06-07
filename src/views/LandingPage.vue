@@ -47,9 +47,11 @@ export default {
                 seconds : ""}
     },
     async mounted () {
+        window.scrollTo(0, 0)
+
         const till = new Date(this.$store.state.upcomingRun)
         const now = new Date();
-        const msleft = till - now;
+        const msleft = till - now - 1000 * 3600 * 8;
         const left = new Date(msleft);
 
         // ALL THIS TO PRELOAD FIRST
@@ -129,8 +131,8 @@ p {
 
 .landingPage {
     position: relative;
-    overflow: hidden;
     z-index: 0;
+    height: 100%;
 }
 
 #logo {
