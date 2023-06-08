@@ -84,7 +84,7 @@ export default {
                 this.finalised = true;
             }
         } else {
-            await axios.post(process.env.VUE_APP_API_NAME + '/facis', {
+            await axios.get(process.env.VUE_APP_API_NAME + '/facis', {
                             clanName : this.$store.state.profile.clanName,
                             teamName : this.$store.state.profile.teamName,
                             }, {
