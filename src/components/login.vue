@@ -75,7 +75,7 @@ export default {
     width: 100vw;
     z-index: 10;
 
-    background: rgba(153, 153, 153, 0.4);
+    background: rgba(20, 20, 20, 0.4);
     backdrop-filter: blur(4px);
     z-index: 1;
 }

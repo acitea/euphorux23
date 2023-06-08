@@ -47,6 +47,7 @@ export default {
             this.teams = res.data;
         });
 
+        // TODO: CLEANUP
         if (await this.$store.getters.hasValidToken) {
             console.log('there is valid profile')
             console.log(this.$store.state.profile)

@@ -39,11 +39,8 @@ export default createStore({
     },
 
     async refreshScore(state) {
-      return await axios.post(process.env.VUE_APP_API_NAME + '/refresh', {
-        clanName:state.profile.clanName,
-        teamName:state.profile.teamName,
-      }, {
-        headers: {"Content-Type" : 'application/json'},
+      return await axios.get(process.env.VUE_APP_API_NAME + '/refresh', {
+        // headers: {"Content-Type" : 'application/json'},
         withCredentials: true,
       }).then(async (res) => {
         console.log('retrieved latest scores...')
@@ -92,14 +89,17 @@ export default createStore({
         })
 
       });
-      
-      console.log(state.clansteams);
     },
 
     setUserInfo(state, userinfo) {
       console.log('setting userinfo...')
       console.log(userinfo);
-      state.profile = userinfo
+      state.profile = userinfo;
+    },
+
+    reset(state) {
+      state.profile = null
+      state.auth = false
     }
   },
   actions: {

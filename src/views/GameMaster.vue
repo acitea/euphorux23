@@ -29,7 +29,6 @@
         <div class="field"><div class="fieldName">Team</div> <select class="options" v-model="form.team" required>
             <option value="" selected disabled hidden></option>
             <option v-for="team in teams" :value="team">{{ team }}</option>
-
             </select>
         </div>
 

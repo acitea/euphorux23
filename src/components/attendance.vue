@@ -1,6 +1,6 @@
 <template>
 <div class="attendance">
-    <div class="forfaci" v-if="this.$store.state.profile.role != 'ppnt'">
+    <div class="forfaci" v-if="this.$store.state.profile.role != 'ppnt' && show">
         <div style="border-bottom: 0.1em solid #ccc; margin: 0.7em auto;" class="head" @click="show = !show">{{ !finalised ? 'Attendance for Today' : 'Your Members'}} </div>
         <div class="toshow" v-if="show">
             <table border="2" style="margin: 0 auto; width: 100%;">
@@ -64,15 +64,19 @@ export default {
     async mounted () {
 
         if (this.$store.state.profile.role != 'ppnt') {
-            await axios.post(process.env.VUE_APP_API_NAME + '/attendance', {
-                            clanName : this.$store.state.profile.clanName,
-                            teamName : this.$store.state.profile.teamName,
-                            }, {
+            await axios.get(process.env.VUE_APP_API_NAME + '/attendance', {
                                 withCredentials: true,
                             }).then((res) => {
                                     this.participants = res.data;
-                                    console.log('setting participants')
+                                    console.log('participants set')
                                 })
+            
+            if (this.participants == []) {
+                console.log('no participants yet');
+                this.show = false;
+                return
+            }
+            
             if (this.$store.state.profile.role == 'faci' && this.participants.filter(participant => {
                 return participant.day === null
             }).length == 0) {

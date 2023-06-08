@@ -40,10 +40,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-}
-
-.gamesCard div {
-    /* outline: red dashed 1px; */
+    z-index: 0;
 }
 
 .gameName {
