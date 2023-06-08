@@ -85,9 +85,6 @@ export default {
             }
         } else {
             await axios.get(process.env.VUE_APP_API_NAME + '/facis', {
-                            clanName : this.$store.state.profile.clanName,
-                            teamName : this.$store.state.profile.teamName,
-                            }, {
                                 withCredentials: true,
                             }).then((res) => {
                                     this.participants = res.data;
