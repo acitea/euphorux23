@@ -24,6 +24,9 @@
                 <p>What's <span style="color: #F37520;">Up Next</span>?</p>
                 {{ $store.state.profile.schedule[0] }}
             </div>
+
+            <bingoCard/>
+
             <div v-if="$store.state.profile.role != 'orgc'" class="played">
                 Activities <span style="color: #F37520;">Completed</span>
                 <div style="margin-bottom: -6px;" v-for="(activity, name) in activities">
@@ -48,13 +51,15 @@
 import axios from 'axios'
 import gamesCard from '@/components/gamesCard.vue'
 import attendance from '@/components/attendance.vue'
+import bingoCard from '@/components/bingoCard.vue'
 import router from '@/router'
 
 export default {
     name: "yourTeam",
     components: {
         gamesCard,
-        attendance
+        attendance,
+        bingoCard
     },
     data () {
         return {
@@ -64,14 +69,11 @@ export default {
     },
     
     async mounted () {
-        if(this.$store.state.auth || await this.$store.getters.hasValidToken) {
+        if(await this.$store.getters.hasValidToken) {
             console.log('verified')
             this.$store.state.auth = true;
             console.log(this.$store.state.auth);
-            await axios.post(process.env.VUE_APP_API_NAME + '/results', {
-                clanName: this.$store.state.profile.clanName,
-                teamName: this.$store.state.profile.teamName
-            }, {
+            await axios.get(process.env.VUE_APP_API_NAME + '/results', {
                 withCredentials: true,
             }
             ).then((res) => {
@@ -79,23 +81,26 @@ export default {
                 this.activities = res.data;
             });
 
-            if (localStorage.getItem('reloaded')) {
-        // The page was just reloaded. Clear the value from local storage
-        // so that it will reload the next time this page is visited.
-                localStorage.removeItem('reloaded');
-            } else {
-                // Set a flag so that we know not to reload the page twice.
-                localStorage.setItem('reloaded', '1');
-                console.log('reloading...')
-                location.reload();
 
-            }
         } else {
             console.log('not verified')
             this.$store.state.showLogin = true;
             if(this.$store.state.auth) {
                 this.$store.state.auth = false
             }
+
+        }
+
+        if (localStorage.getItem('reloaded')) {
+    // The page was just reloaded. Clear the value from local storage
+    // so that it will reload the next time this page is visited.
+            localStorage.removeItem('reloaded');
+        } else {
+            // Set a flag so that we know not to reload the page twice.
+            localStorage.setItem('reloaded', '1');
+            console.log('reloading...')
+            location.reload();
+
         }
     },
     methods: {
@@ -105,25 +110,27 @@ export default {
                     }).then((res) => {
                         router.push('/')
                     })
+            
+            this.$store.commit('reset')
         },
 
-        async pullPersonal() {
+        // async pullPersonal() {
 
-            console.log('getting team data...')
-            // PASSES HAVING A VALID COOKIE AND AFTER SETTING USERINFO, WE GET THE SCHEDULE FOR THIS FELLA
-            await axios.post(process.env.VUE_APP_API_NAME + '/team', {
-                    clanName : this.$store.state.profile.clanName,
-                    teamName : this.$store.state.profile.teamName
-                    }, {
-                        withCredentials: true,
-                    }).then((res) => {
-                            this.$store.state.profile.schedule = res.data.schedule
-                            this.$store.state.profile.teamPoints = res.data.teamPoints
-                            this.$store.state.profile.position = res.data.position
-                            this.$store.state.auth = true
-                        })
+        //     console.log('getting team data...')
+        //     // PASSES HAVING A VALID COOKIE AND AFTER SETTING USERINFO, WE GET THE SCHEDULE FOR THIS FELLA
+        //     await axios.post(process.env.VUE_APP_API_NAME + '/team', {
+        //             clanName : this.$store.state.profile.clanName,
+        //             teamName : this.$store.state.profile.teamName
+        //             }, {
+        //                 withCredentials: true,
+        //             }).then((res) => {
+        //                     this.$store.state.profile.schedule = res.data.schedule
+        //                     this.$store.state.profile.teamPoints = res.data.teamPoints
+        //                     this.$store.state.profile.position = res.data.position
+        //                     this.$store.state.auth = true
+        //                 })
 
-        }
+        // }
     },
 }
 </script>
