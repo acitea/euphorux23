@@ -3,7 +3,7 @@
     <div v-if="show" class="detailsbg" @click.self="show = !show">
         <div class="details">
             {{ content.long }}
-            <div class="completed" v-if="!completed">
+            <div class="completed" v-if="!completed && $store.state.profile.role != 'ppnt'">
                 <checkbox style="display: inline-block; margin-left: 0.5em;" @checked="(out) => {done = out}"/>
                     <div class="button" :class="{'disabled' : !done}" @click="submitbingo(boxno)">DONE? </div>
             </div>
