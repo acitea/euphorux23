@@ -22,6 +22,9 @@ export default createStore({
         // CHECKS IF HAVE A VALID COOKIE ALREADY
         return await axios.get(process.env.VUE_APP_API_NAME + '/verify', {
             withCredentials: true,
+            headers : {
+              'authorization' : localStorage.getItem('token')
+            }
         }).then((res) => {
             console.log('found token!')
             if (!state.auth) {

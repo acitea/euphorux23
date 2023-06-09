@@ -66,6 +66,9 @@ export default {
         if (this.$store.state.profile.role != 'ppnt') {
             await axios.get(process.env.VUE_APP_API_NAME + '/attendance', {
                                 withCredentials: true,
+                                headers : {
+                                    'authorization' : localStorage.getItem('token')
+                                }
                             }).then((res) => {
                                     this.participants = res.data;
                                     console.log('participants set')
@@ -86,6 +89,9 @@ export default {
         } else {
             await axios.get(process.env.VUE_APP_API_NAME + '/facis', {
                                 withCredentials: true,
+                                headers : {
+                                    'cookie' : localStorage.getItem('token')
+                                }
                             }).then((res) => {
                                     this.participants = res.data;
                                     this.finalised = true;

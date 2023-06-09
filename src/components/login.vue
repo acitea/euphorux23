@@ -40,23 +40,23 @@ export default {
                 withCredentials: true,
                 credentials: 'include'
             }).then((res) => {
-                if (res.status == 200) {
-                    this.$store.commit('setUserInfo', res.data);
-                    this.$store.state.showLogin = false;
-                    this.$store.state.auth = true;
-                    console.log('login successful. redirecting...')
-                    setTimeout(() => {
-                        if (res.data.role != 'game') {
-                            if (this.$route.path == '/yourteam') {
-                                this.$router.go()
-                            } else {
-                                this.$router.push('/yourteam')
-                            }
+                localStorage.setItem('token', res.data.token);
+                delete res.data.token
+                this.$store.commit('setUserInfo', res.data);
+                this.$store.state.showLogin = false;
+                this.$store.state.auth = true;
+                console.log('login successful. redirecting...')
+                setTimeout(() => {
+                    if (res.data.role != 'game') {
+                        if (this.$route.path == '/yourteam') {
+                            this.$router.go()
                         } else {
-                            this.$router.push('/gamemaster')
+                            this.$router.push('/yourteam')
                         }
-                    }, 500)
-                }
+                    } else {
+                        this.$router.push('/gamemaster')
+                    }
+                }, 500)
             }).catch((e) => {
                 console.log('somehow theres an error')
                 console.log(e)
@@ -80,7 +80,7 @@ export default {
 
     background: rgba(20, 20, 20, 0.4);
     backdrop-filter: blur(4px);
-    z-index: 1;
+    z-index: 2;
 }
 
 .card {

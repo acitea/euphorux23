@@ -79,6 +79,9 @@ export default {
 
             await axios.get(process.env.VUE_APP_API_NAME + '/results', {
                 withCredentials: true,
+                headers : {
+                    'authorization' : localStorage.getItem('token')
+                }
             }
             ).then((res) => {
                 console.log(res.data)
