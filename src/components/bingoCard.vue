@@ -176,6 +176,9 @@ export default {
             console.log(data)
             axios.post(process.env.VUE_APP_API_NAME + '/swapbingo', data, {
                 withCredentials: true,
+                headers : {
+                    'authorization' : localStorage.getItem('token')
+                }
             }).then((res) => {
                 location.reload()
             })
@@ -187,6 +190,9 @@ export default {
             console.log(data)
             axios.put(process.env.VUE_APP_API_NAME + '/zapbingo', data, {
                 withCredentials: true,
+                headers : {
+                    'authorization' : localStorage.getItem('token')
+                }
             }).then((res) => {
                 location.reload()
             })
