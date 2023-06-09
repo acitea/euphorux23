@@ -38,6 +38,7 @@ export default {
             axios.post(process.env.VUE_APP_API_NAME + '/login', this.form, {
                 headers: {"Content-Type" : 'application/json'},
                 withCredentials: true,
+                credentials: 'include'
             }).then((res) => {
                 if (res.status == 200) {
                     this.$store.commit('setUserInfo', res.data);
