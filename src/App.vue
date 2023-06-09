@@ -15,7 +15,7 @@ import login from "./components/login.vue";
         <sideBar v-if="$store.state.showSideBar"/>
       </Transition>
       <footerMain/>
-</div>
+  </div>
 </template>
 
 
@@ -41,6 +41,8 @@ import login from "./components/login.vue";
 }
 
 #app {
+  overflow-x: hidden;
+  max-width: 100vw;
   font-family: Zuuma, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
