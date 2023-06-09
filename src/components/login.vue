@@ -45,15 +45,17 @@ export default {
                     this.$store.state.showLogin = false;
                     this.$store.state.auth = true;
                     console.log('login successful. redirecting...')
-                    if (res.data.role != 'game') {
-                        if (this.$route.path == '/yourteam') {
-                            this.$router.go()
+                    setTimeout(() => {
+                        if (res.data.role != 'game') {
+                            if (this.$route.path == '/yourteam') {
+                                this.$router.go()
+                            } else {
+                                this.$router.push('/yourteam')
+                            }
                         } else {
-                            this.$router.push('/yourteam')
+                            this.$router.push('/gamemaster')
                         }
-                    } else {
-                        this.$router.push('/gamemaster')
-                    }
+                    }, 500)
                 }
             }).catch((e) => {
                 console.log('somehow theres an error')
@@ -121,19 +123,20 @@ export default {
 }
 
 #SUBMIT {
-width: 85%;
-color: #fff;
+    position: relative;
+    width: 85%;
+    color: #fff;
 
-background: #F37520;
-border: 2px solid #454545;
+    background: #F37520;
+    border: 2px solid #454545;
 
-text-align: center;
-font-family: "Secular One";
-font-size: 2em;
+    text-align: center;
+    font-family: "Secular One";
+    font-size: 2em;
 
--webkit-text-stroke-color: #151515;
--webkit-text-stroke-width: 0.02em;
-text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    -webkit-text-stroke-color: #151515;
+    -webkit-text-stroke-width: 0.02em;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 }
 
 #response {

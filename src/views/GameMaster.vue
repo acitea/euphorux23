@@ -80,7 +80,24 @@ export default {
     },
     async mounted() {
 // if does not have valid token or the profile role is not one of those
-        if (!(await this.$store.getters.hasValidToken && ['orgc', 'game', 'faci'].includes(this.$store.state.profile.role))) {
+        var pass = await this.$store.getters.hasValidToken;
+        try {
+            if (['orgc', 'game', 'faci'].includes(this.$store.state.profile.role)) {
+                console.log('role passed')
+            } else {
+                if (pass) {
+                    console.log('token passed')
+                    location.reload()
+                } else {
+                    console.log('token failed')
+                    this.$router.push('/');
+                }
+                this.$router.push('/');
+            }
+            console.log(pass)
+
+
+        } catch (e) {
             this.$router.push('/');
         }
 
@@ -125,7 +142,9 @@ export default {
                     var time = 3;
                     this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;
                     this.pass = "SUCCESS";
-                    setTimeout(() => {this.$router.push('/gamemaster')}, 3000)
+                    setTimeout(() => {
+                        console.log('refreshing...')
+                        location.reload()}, 3000)
                     // setInterval(() => {
                     //     time--;
                     //     this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;

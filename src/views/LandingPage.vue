@@ -24,6 +24,7 @@
         <div class="bar"></div>
 
         <button @click="checkLogin" class="cta"><p id="ctatext">READY TO EXPLORE?</p><span class="subtext">sign up here!</span></button>
+        <div style="font-family: 'Secular One'; font-size: 0.8em; margin-top: 1em; margin-bottom: -1em; width: fit-content;" @click="$store.state.showLogin = true">or login here</div>
         <!-- <div class="subtext" style="font-size: 1em; margin-top: 0.5em; text-decoration: underline; font-style: italic; color: #ccc;">Already signed up?</div> -->
 
         <div class="bar"></div>

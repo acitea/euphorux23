@@ -113,24 +113,6 @@ export default {
             
             this.$store.commit('reset')
         },
-
-        // async pullPersonal() {
-
-        //     console.log('getting team data...')
-        //     // PASSES HAVING A VALID COOKIE AND AFTER SETTING USERINFO, WE GET THE SCHEDULE FOR THIS FELLA
-        //     await axios.post(process.env.VUE_APP_API_NAME + '/team', {
-        //             clanName : this.$store.state.profile.clanName,
-        //             teamName : this.$store.state.profile.teamName
-        //             }, {
-        //                 withCredentials: true,
-        //             }).then((res) => {
-        //                     this.$store.state.profile.schedule = res.data.schedule
-        //                     this.$store.state.profile.teamPoints = res.data.teamPoints
-        //                     this.$store.state.profile.position = res.data.position
-        //                     this.$store.state.auth = true
-        //                 })
-
-        // }
     },
 }
 </script>
@@ -142,11 +124,11 @@ export default {
     font-size: 2em;
     margin: 0 auto;
     padding: 0.5em 0;
-    border: 0.1em solid blue;
+    border: 0.1em solid darkorchid;
     border-radius: 0.7em;
-    box-shadow: 0px 0px 48px 0px blue, inset 0px 0px 48px 0px blue;
+    box-shadow: 0px 0px 48px 0px darkorchid, inset 0px 0px 48px 0px darkorchid;
 }
-
+/* Trailblazer greenyellow Wanderlust darkorchid Daredevils cyan */
 .orgc {
     border: 0.1em solid white;
     box-shadow: 0px 0px 48px 0px white, inset 0px 0px 48px 0px white;
