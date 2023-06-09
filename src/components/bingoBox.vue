@@ -46,6 +46,7 @@ export default {
             console.log('submitting for ' + this.boxno)
             axios.put(process.env.VUE_APP_API_NAME + '/updatebingo', {boxno : this.boxno}, {
                 withCredentials: true,
+                credentials: 'include'
             }).then((res) => {
                 location.reload()
             })

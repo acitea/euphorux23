@@ -111,6 +111,7 @@ export default {
         
         let found = axios.get(process.env.VUE_APP_API_NAME + '/getbingo', {
             withCredentials: true,
+            credentials: 'include'
         }).then((res) => {
             if (res.data === '') {
                 console.log('no bingo found')
@@ -135,6 +136,7 @@ export default {
                 combination : this.combination.join(','),
             }, {
                 withCredentials: true,
+                credentials: 'include'
             })
         }
 

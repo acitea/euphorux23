@@ -1,7 +1,7 @@
 <template>
 <div class="gallery">
     <h1 style="margin-bottom: 0.5em;">2022's Euphorux</h1>
-    <img v-for="image in images" :src="image.pathLong" alt="">
+    <img v-for="image in images" :src="image.pathLong" loading="lazy">
     <div>
         <!-- <stack :column-min-width="320" :gutter-width="8" :gutter-height="8" monitor-images-loaded>
             <stack-item class="img-container" v-for="image in images">
