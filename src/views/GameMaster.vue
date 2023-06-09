@@ -78,8 +78,8 @@ export default {
             }
         }
     },
-    async beforeMount() {
-
+    async mounted() {
+// if does not have valid token or the profile role is not one of those
         if (! await this.$store.getters.hasValidToken || !['orgc', 'game', 'faci'].includes(this.$store.state.profile.role)) {
             this.$router.push('/');
         }
