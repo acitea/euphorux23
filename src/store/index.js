@@ -43,14 +43,19 @@ export default createStore({
 
     async refreshScore(state) {
       return await axios.get(process.env.VUE_APP_API_NAME + '/refresh', {
-        // headers: {"Content-Type" : 'application/json'},
+        headers : {
+          'authorization' : localStorage.getItem('token')
+        },
         withCredentials: true,
       }).then(async (res) => {
         console.log('retrieved latest scores...')
         if (state.profile.teamPoints != res.data.teamPoints) {
           var data = {'matricId' : state.profile.matricId};
           return await axios.post(process.env.VUE_APP_API_NAME + '/login', data, {
-            headers: {"Content-Type" : 'application/json'},
+            headers: {
+              "Content-Type" : 'application/json',
+              'authorization' : localStorage.getItem('token')
+              },
             withCredentials: true,
           }).then((res2) => {
             console.log('updating scores...')
@@ -103,7 +108,9 @@ export default createStore({
     reset(state) {
       state.profile = null
       state.auth = false
+      localStorage.removeItem('token')
       location.reload()
+      console.log('data cleared.')
     }
   },
   actions: {

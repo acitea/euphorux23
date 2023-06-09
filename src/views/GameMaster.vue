@@ -130,7 +130,10 @@ export default {
             console.log(filtered)
 
             axios.post(process.env.VUE_APP_API_NAME + '/' + this.form.game, filtered, {
-                headers: {"Content-Type" : 'application/json'},
+                headers: {
+                    "Content-Type" : 'application/json',
+                    'authorization' : localStorage.getItem('token')
+                },
                 withCredentials: true,
             })
             .then((res) => {

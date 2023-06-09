@@ -90,7 +90,7 @@ export default {
             await axios.get(process.env.VUE_APP_API_NAME + '/facis', {
                                 withCredentials: true,
                                 headers : {
-                                    'cookie' : localStorage.getItem('token')
+                                    'authorization' : localStorage.getItem('token')
                                 }
                             }).then((res) => {
                                     this.participants = res.data;
@@ -108,6 +108,9 @@ export default {
                         present : this.present,
                         }, {
                             withCredentials: true,
+                            headers : {
+                                'authorization' : localStorage.getItem('token')
+                            }
                         }).then((res) => {
                                 console.log(res.data);
                             })
@@ -130,6 +133,9 @@ export default {
                         absent : absent
                         }, {
                             withCredentials: true,
+                            headers : {
+                                'authorization' : localStorage.getItem('token')
+                            }
                         }).then((res) => {
                                 console.log(res.data);
                             })
