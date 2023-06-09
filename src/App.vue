@@ -6,11 +6,11 @@ import login from "./components/login.vue";
 </script>
 
 <template>
-  <div :style="[$route.path == '/' ? {'background' : 'url(\'landing.png\')', 'background-size' : '200px 960px'} : {'background' : 'url(\'bg.png\')', 'background-size' : '540px 960px'}]" id="app">
-    <headerMain style="z-index: 1;"/>
-  <!-- <hamburgerMenu style="z-index: 2; position: fixed; top: 0;"/> -->
-      <login v-if="$store.state.showLogin"/>
-      <router-view/>
+  <div :class="{'noscroll' : $store.state.showLogin}" :style="[$route.path == '/' ? {'background' : 'url(\'landing.png\')', 'background-size' : '200px 960px'} : {'background' : 'url(\'bg.png\')', 'background-size' : '540px 960px'}]" id="app">
+    <!-- <hamburgerMenu style="z-index: 2; position: fixed; top: 0;"/> -->
+    <headerMain style="z-index: 1; "/>
+    <login v-if="$store.state.showLogin"/>
+    <router-view/>
       <Transition name="sideEnter">
         <sideBar v-if="$store.state.showSideBar"/>
       </Transition>
@@ -41,7 +41,8 @@ import login from "./components/login.vue";
 }
 
 #app {
-  overflow-x: hidden;
+  /* THIS IS A SAVIOR */
+  overflow-x: clip;
   max-width: 100vw;
   font-family: Zuuma, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -72,5 +73,10 @@ margin: 2em auto;
 margin-bottom: 1em;
 border: 0.15em solid #454545;
 border-radius: 1em;
+}
+
+.noscroll {
+  overflow-y: hidden;
+  max-height: 100vh;
 }
 </style>

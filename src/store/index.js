@@ -31,7 +31,7 @@ export default createStore({
             }
             return true
 
-        }).catch((e) => {
+          }).catch((e) => {
 
             console.log('No token found or invalid token')
             return false
@@ -100,6 +100,7 @@ export default createStore({
     reset(state) {
       state.profile = null
       state.auth = false
+      location.reload()
     }
   },
   actions: {
