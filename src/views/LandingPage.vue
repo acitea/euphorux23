@@ -81,11 +81,11 @@ export default {
             }
         },
         async redirect() {
-            if (await this.$store.getters.hasValidToken) {
-                this.$router.push('/yourteam')
-            } else {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzycWtZzE7TA2Jm8vA5d6rNuqWdzThf-HkUgZt1aBW-Cqzug/viewform')
-            }
+            window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzycWtZzE7TA2Jm8vA5d6rNuqWdzThf-HkUgZt1aBW-Cqzug/viewform')
+            // if (await this.$store.getters.hasValidToken) {
+            //     this.$router.push('/yourteam')
+            // } else {
+            // }
         }
     },
     watch: {
