@@ -69,7 +69,7 @@ export default {
 <style scoped>
 
 .login {
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;

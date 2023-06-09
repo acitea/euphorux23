@@ -72,7 +72,11 @@ export default {
         if(await this.$store.getters.hasValidToken) {
             console.log('verified')
             this.$store.state.auth = true;
-            console.log(this.$store.state.auth);
+
+            if (this.$store.state.profile.role == 'game') {
+                this.$router.push('/gamemaster')
+            }
+
             await axios.get(process.env.VUE_APP_API_NAME + '/results', {
                 withCredentials: true,
             }
