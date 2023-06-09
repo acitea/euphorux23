@@ -111,10 +111,7 @@ export default {
         logOut() {
             axios.get(process.env.VUE_APP_API_NAME + '/logout', {
                         withCredentials: true,
-                    }).then((res) => {
-                        router.push('/')
                     })
-            
             this.$store.commit('reset')
         },
     },

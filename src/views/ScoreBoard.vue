@@ -50,23 +50,22 @@ export default {
         // TODO: CLEANUP
         if (await this.$store.getters.hasValidToken) {
             console.log('there is valid profile')
-            console.log(this.$store.state.profile)
             await this.$store.getters.refreshScore
             this.position = this.$store.state.profile.position;
             this.teamPoints = this.$store.state.profile.teamPoints;
             this.display = true;
-            console.log('supposed to set display to true and other stuff...')
-            console.log(this.display)
-            console.log(this.position)
-            console.log(this.teamPoints)
+            // console.log('supposed to set display to true and other stuff...')
+            // console.log(this.display)
+            // console.log(this.position)
+            // console.log(this.teamPoints)
         }
 
-        console.log('before setting all elements, the data to load is')
-        console.log(this.display)
-        console.log(this.teams)
-        console.log(this.position)
-        console.log(this.teamPoints)
-        console.log('that is all.')
+        // console.log('before setting all elements, the data to load is')
+        // console.log(this.display)
+        // console.log(this.teams)
+        // console.log(this.position)
+        // console.log(this.teamPoints)
+        // console.log('that is all.')
     }
 
 }

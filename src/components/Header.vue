@@ -76,7 +76,5 @@ transition: 0.3s;
     position: -webkit-sticky;
     top: 0;
     z-index: 1;
-    /* background: none; */
-
 }
 </style>
