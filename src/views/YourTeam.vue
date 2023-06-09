@@ -6,7 +6,7 @@
         <button @click="$store.state.showLogin = true"> LOGIN HERE </button>
     </div>
     <div v-if="$store.state.auth">
-        <div class='profile' :class="$store.state.profile.role == 'orgc' ? 'orgc' : ''">
+        <div class='profile' :class="$store.state.profile.role == 'orgc' ? 'orgc' : $store.state.profile.clanName">
             <p style="font-size: 2em; font-weight: bold; letter-spacing: 0.1em; text-align: center;" class="team">
                 {{ $store.state.profile.teamName }}
             </p>
@@ -137,14 +137,26 @@ export default {
     font-size: 2em;
     margin: 0 auto;
     padding: 0.5em 0;
-    border: 0.1em solid darkorchid;
+    border: 0.1em solid grey;
     border-radius: 0.7em;
-    box-shadow: 0px 0px 48px 0px darkorchid, inset 0px 0px 48px 0px darkorchid;
+    box-shadow: 0px 0px 48px 0px grey, inset 0px 0px 48px 0px grey;
 }
 /* Trailblazer greenyellow Wanderlust darkorchid Daredevils cyan */
 .orgc {
     border: 0.1em solid white;
     box-shadow: 0px 0px 48px 0px white, inset 0px 0px 48px 0px white;
+}
+.Trailblazers {
+    border: 0.1em solid greenyellow;
+    box-shadow: 0px 0px 48px 0px greenyellow, inset 0px 0px 48px 0px greenyellow;
+}
+.Wanderlusts {
+    border: 0.1em solid darkorchid;
+    box-shadow: 0px 0px 48px 0px darkorchid, inset 0px 0px 48px 0px darkorchid;
+}
+.Daredevils {
+    border: 0.1em solid cyan;
+    box-shadow: 0px 0px 48px 0px cyan, inset 0px 0px 48px 0px cyan;
 }
 
 .profile div {
