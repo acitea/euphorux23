@@ -80,9 +80,10 @@ export default {
                 this.hours = String(this.hours - 1).padStart(2, '0');
             }
         },
-        async checkLogin() {
-            if (! await this.$store.getters.hasValidToken) {
-                // this.$store.state.showLogin = true;
+        async redirect() {
+            if (await this.$store.getters.hasValidToken) {
+                this.$router.push('/yourteam')
+            } else {
                 window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzycWtZzE7TA2Jm8vA5d6rNuqWdzThf-HkUgZt1aBW-Cqzug/viewform')
             }
         }

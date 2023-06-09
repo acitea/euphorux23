@@ -13,17 +13,17 @@
             <div class="bar"></div>
             <div class="details">
                 Hi {{ $store.state.profile.name }},
-                <div class="handbook" v-if="$store.state.profile.role == 'faci'">
+                <div class="handbook" v-if="$store.state.profile.role == 'faci'" @click="handbook">
                     HANDBOOK
                 </div>
             </div>
 
             <attendance />
 
-            <div v-if="$store.state.profile.schedule" class="schedule">
+            <!-- <div v-if="$store.state.profile.schedule" class="schedule">
                 <p>What's <span style="color: #F37520;">Up Next</span>?</p>
                 {{ $store.state.profile.schedule[0] }}
-            </div>
+            </div> -->
 
             <bingoCard/>
 
@@ -31,6 +31,9 @@
                 Activities <span style="color: #F37520;">Completed</span>
                 <div style="margin-bottom: -6px;" v-for="(activity, name) in activities">
                     <gamesCard :name="name.toUpperCase()" :table="activity"/>
+                </div>
+                <div style="font-style: italic;" v-if="!activities" class="none">
+                    Nothing Yet! <br>
                 </div>
                 <div style="margin-top: 0.5em;">Total &hairsp; <span style="color: #F37520">{{ $store.state.profile.teamPoints }}</span> &hairsp; pts</div>
             </div>
@@ -52,7 +55,6 @@ import axios from 'axios'
 import gamesCard from '@/components/gamesCard.vue'
 import attendance from '@/components/attendance.vue'
 import bingoCard from '@/components/bingoCard.vue'
-import router from '@/router'
 
 export default {
     name: "yourTeam",
@@ -85,7 +87,11 @@ export default {
             }
             ).then((res) => {
                 console.log(res.data)
-                this.activities = res.data;
+                if (res.data[0] == undefined) {
+                        this.activities = false;
+                    } else {
+                    this.activities = res.data;
+                }
             });
 
 
@@ -117,6 +123,9 @@ export default {
                     })
             this.$store.commit('reset')
         },
+        handbook() {
+            window.open('https://docs.google.com/document/d/1EBrsm8l3ZFMjfltTYNazD42p7XTcKa03/edit?usp=sharing&ouid=113761800715372644569&rtpof=true&sd=true')
+        }
     },
 }
 </script>
