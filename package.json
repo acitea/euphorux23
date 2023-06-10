@@ -14,7 +14,6 @@
     "vue-cookies": "^1.8.3",
     "vue-images-loaded": "^1.1.2",
     "vue-router": "^4.0.3",
-    "vue-slick-carousel": "^1.0.6",
     "vue-stack-grid": "^1.2.2",
     "vuex": "^4.0.0"
   },

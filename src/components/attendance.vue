@@ -23,8 +23,8 @@
                 </tr>
                 <tr v-if="finalised" v-for="row in participants">
                     <td>{{ row.name }}</td>
-                    <td><a target="_blank" style="color: white;" :href="(row.contact ? 'https://t.me/' + row.contact.slice(1) : 'about:blank') ">
-                        <div class="contact"><div class="telecontact" style=" margin-right: 0.3em;" >{{ row.contact }}</div><img src="/teleiconwhite.png" alt="" height="32" width="32"></div>
+                    <td><a target="_blank" style="text-decoration: none; color: white;" :href="(row.contact ? 'https://t.me/' + row.contact.slice(1) : 'about:blank') ">
+                        <div class="contact"><div>@</div><div class="telecontact" style="text-decoration: underline; margin-right: 0.3em;" >{{ row.contact.slice(1) }}</div><img src="/teleiconwhite.png" alt="" height="32" width="32"></div>
                     </a></td>
                 </tr>
             </table>

@@ -4,6 +4,7 @@ import GameMaster from '../views/GameMaster.vue'
 import ScoreBoard from '../views/ScoreBoard.vue'
 import TheTeams from '../views/TheTeams.vue'
 import YourTeam from '../views/YourTeam.vue'
+import test from '../components/tabManager.vue'
 
 
 const routes = [
@@ -38,6 +39,11 @@ const routes = [
     name: 'YourTeam',
     component: YourTeam
   },
+  {
+    path: '/test',
+    name: 'testing',
+    component: test
+  }
 ]
 
 

@@ -9,58 +9,58 @@
         <h1 class="title">GAMEMASTER</h1>
         <div class="bar"></div>
 
-    <form @submit.prevent="processSubmit" class="form">
-        <div class="field"><div class="fieldName">Event</div> <div class="input">
-            <select class="options" name="event" v-model="form.game" required @change="chosenGame">
-                <option value="" selected disabled hidden></option>
-                <option value="Trek">Trek</option>
-                <option value="Bingo">Bingo</option>
-                <option value="Kayak">Kayak</option>
-                <option value="Skate">Skate</option>
-                </select>
-        </div>
-        </div>
+        <tabManager @selectedTab="(tab) => {changeTab(tab)}"/>
 
-        <div class="field"><div class="fieldName">Clan</div> <div class="input">
-            <select class="options" v-model="form.clan" required @change="chosenClan">
-                <option value="" selected disabled hidden></option>
-                <option v-for="(teams, clan) in $store.state.clansteams" :value="clan">{{ clan }}</option>
-                </select>
-        </div>
-        </div>
+            <form @submit.prevent="processSubmit" id="form">
+                <div v-if="selectedTab == 'game'">
+                    <div class="field"><div class="fieldName">Event</div>
+                        <div class="input">
+                        <select class="options" name="event" v-model="form.game" required @change="chosenGame">
+                            <option value="" selected disabled hidden></option>
+                            <option value="Trek">Trek</option>
+                            <option value="Bingo">Bingo</option>
+                            <option value="Kayak">Kayak</option>
+                            <option value="Skate">Skate</option>
+                        </select>
+                        </div>
+                    </div>
+                </div>
+                
+                    <div class="field"><div class="fieldName">Clan</div>
+                        <div class="input">
+                        <select class="options" v-model="form.clan" required @change="chosenClan">
+                            <option value="" selected disabled hidden></option>
+                            <option v-for="(teams, clan) in $store.state.clansteams" :value="clan">{{ clan }}</option>
+                        </select>
+                        </div>
+                    </div>
+                
+                    <div class="field"><div class="fieldName">Team</div>
+                        <div class="input">
+                        <select class="options" v-model="form.team" required>
+                            <option value="" selected disabled hidden></option>
+                            <option v-for="team in teams" :value="team">{{ team }}</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Players</div> <div class="input"><input class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.players" required></div></div>
+                    <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Survivors</div> <div class="input"><input class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.survivors" required></div></div>
+                    <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Skilled</div><div class="input check"><checkbox v-model="form.skill"/></div></div>
+                    <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Double</div><div class="input check"><checkbox v-model="form.double"/></div> </div>
+                    <div class="field" v-if="this.form.game == 'Kayak'"><div class="fieldName">Timing</div> <div class="input"><input class="options" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.timing" placeholder="in seconds"></div></div>
+                    <div class="field" v-if="this.form.game == 'Kayak'"><div class="fieldName">Clairvoyance</div><div class="input check"><checkbox v-model="form.clair"/></div></div>
+                    <div class="field" v-if="this.form.game == 'Bingo'"><div class="fieldName">Completed</div> <div class="input"><input maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.bingoCompleted" max="10" default="0"></div></div>
+                    <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Found</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekFound" max="5"></div></div>
+                    <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Buffed</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekBuffed" max="5" default="0"></div></div>
+                    <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Bruce</div> <div class="input check"><checkbox v-model="form.trekBonus"/></div></div>
+                
+                    <input type="submit" class="SUBMIT" value="SUBMIT"/>
+                </form>
+            
+            <div v-if="selectedTab == 'power'">
+                POWERS WILL BE HERE
+            </div>
 
-        <!-- BUG: Select box gets bigger when long name appears -->
-        <div class="field"><div class="fieldName">Team</div> <div class="input">
-            <select class="options" v-model="form.team" required>
-                <option value="" selected disabled hidden></option>
-                <option v-for="team in teams" :value="team">{{ team }}</option>
-                </select>
-        </div>
-        </div>
-
-        <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Players</div> <div class="input"><input class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.players" required></div></div>
-        <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Survivors</div> <div class="input"><input class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.survivors" required></div></div>
-        <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Skilled</div>
-        <div class="input check"><checkbox v-model="form.skill"/></div>
-    </div>
-
-        <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Double</div><div class="input check"><checkbox v-model="form.double"/></div> </div>
-        
-        <div class="field" v-if="this.form.game == 'Kayak'"><div class="fieldName">Timing</div> <div class="input"><input class="options" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.timing" placeholder="in seconds"></div></div>
-        <div class="field" v-if="this.form.game == 'Kayak'"><div class="fieldName">Clairvoyance</div>
-        <div class="input check"><checkbox v-model="form.clair"/></div>
-    </div>
-        
-        <div class="field" v-if="this.form.game == 'Bingo'"><div class="fieldName">Completed</div> <div class="input"><input maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.bingoCompleted" max="10" default="0"></div></div>
-        
-        <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Found</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekFound" max="5"></div></div>
-        <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Buffed</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekBuffed" max="5" default="0"></div></div>
-        <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Bruce</div> <div class="input check">
-            <checkbox v-model="form.trekBonus"/>
-        </div></div>
-
-        <input type="submit" class="SUBMIT" value="SUBMIT"/>
-    </form>
 </div>
 </template>
 
@@ -68,15 +68,18 @@
 
 import axios from "axios"
 import checkbox from "@/components/checkbox.vue";
+import tabManager from "@/components/tabManager.vue";
 
 export default {
     name: "gameMaster",
     components: {
-        checkbox
+        checkbox,
+        tabManager
     },
     
     data () {
         return {
+            selectedTab : 'game',
             clans : null,
             teams : [],
             response: '',
@@ -127,6 +130,10 @@ export default {
 
     },
     methods : {
+        changeTab(tab) {
+            this.selectedTab = tab;
+            Object.keys(this.form).forEach((i) => this.form[i] = null);
+        },
         chosenGame(event) {
             let chosen = event.target.value
             this.game = chosen
@@ -147,9 +154,9 @@ export default {
                 }
             }
 
-            console.log(filtered)
-
-            return
+            if (!this.form.game) {
+                return
+            }
 
             axios.post(process.env.VUE_APP_API_NAME + '/' + this.form.game, filtered, {
                 headers: {
@@ -188,6 +195,7 @@ export default {
         }
     }
 }
+
 </script>
 
 <style scoped>
@@ -218,7 +226,7 @@ export default {
     justify-content: center;
     align-items: center;
 }
-.form {
+#form {
     width: 80vw;
 }
 
@@ -278,9 +286,8 @@ export default {
 }
 
 .bar {
-
 margin: 2em auto;
-
+margin-bottom: 0.5em;
 }
 .SUBMIT {
 position: relative;
