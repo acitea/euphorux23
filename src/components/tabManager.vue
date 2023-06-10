@@ -20,11 +20,12 @@
 </template>
 
 <script>
-import tabs from './tabs.vue';
 
     export default {
         name: 'tabManager',
-        components: { tabs },
+        components: {
+            
+        },
         data() {
             return {
                 selectedTab : 'game',
