@@ -4,15 +4,17 @@
         <div class="details">
             {{ content.long }}
             <div class="completed" v-if="!completed && $store.state.profile.role != 'ppnt'">
-                <checkbox style="display: inline-block; margin-left: 0.5em;" v-model="done"/>
-                    <div class="button" :class="{'disabled' : !done}" @click="submitbingo(boxno)">DONE? </div>
+                <div style="margin-left: 0.5em;">
+                    <checkbox v-model="done"/>
+                </div>
+                <div class="button" :class="{'disabled' : !done}" @click="submitbingo(boxno)"><p>DONE?</p></div>
             </div>
             <div class="completed" v-if="completed">
                 <p style="font-size: 1em; margin-top: 0.5em; color: rgb(0, 200, 0); filter: brightness(1.5);">COMPLETED!</p>
             </div>
         </div>
     </div>
-    <div :style="completed ? {'background' : 'green', 'filter' : 'brightness(1.5)'} : {}" class="short" v-html="content.short" @click.self="() => {console.log('i am clicked'); show = !show}"></div>
+    <div :style="completed ? {'background' : 'green', 'filter' : 'brightness(1.5)'} : {}" class="short" v-html="content.short" @click.self="show = !show"></div>
 </div>
 </template>
 
@@ -122,8 +124,9 @@ export default {
     font-family: 'Secular One';
     font-weight: bold;
     font-size: 0.7em;
-    text-align: center;
-    text-align: -webkit-center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
     background: #F37520;
     border: 0.05em white solid;

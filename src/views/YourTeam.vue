@@ -35,7 +35,7 @@
                 <div style="font-style: italic;" v-if="!activities" class="none">
                     Nothing Yet! <br>
                 </div>
-                <div style="margin-top: 0.5em;">Total &hairsp; <span style="color: #F37520">{{ $store.state.profile.teamPoints }}</span> &hairsp; pts</div>
+                <div style="margin-top: 0.5em;">Total &hairsp; <span style="color: #F37520">{{ teamPoints }}</span> &hairsp; pts</div>
             </div>
 
             <div v-if="$store.state.profile.role == 'orgc'" class="updates">
@@ -66,7 +66,8 @@ export default {
     data () {
         return {
             activities: null,
-            finalised: false
+            finalised: false,
+            teamPoints : null
         }
     },
     
@@ -87,10 +88,11 @@ export default {
             }
             ).then((res) => {
                 console.log(res.data)
-                if (res.data[0] == undefined) {
+                if (Object.keys(res.data).length == 0) {
                         this.activities = false;
                     } else {
                     this.activities = res.data;
+                    this.teamPoints = Object.keys(this.activities).reduce((sum, key) => {return sum + this.activities[key].points}, 0);
                 }
             });
 
