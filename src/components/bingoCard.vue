@@ -32,7 +32,6 @@
             <bingoBox :boxno="item" :content="boxes[item]" :completed="completed.includes(item)"/>
         </div>
     </div>
-    <button @click="calculateScore()">calculate</button>
     <div class="powers" v-if="$store.state.profile.role == 'faci'">
         <input class="button" :class="{'disabled' : swapped}" @click="showswap = true" type="button" value="SWAP">
         <input class="button" :class="{'disabled' : removed}" @click="showremove = true" type="button" value="ZAP">
