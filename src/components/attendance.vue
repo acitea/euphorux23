@@ -21,11 +21,9 @@
                     <th>Name</th>
                     <th>{{ finalised ? 'Handle' : 'Present' }}</th>
                 </tr>
-                <tr v-if="!finalised" v-for="row in participants" :class="{'absent' : row.day === 0}">
+                <tr v-if="!finalised" v-for="row in participants" :class="{'absent' : row.day === 0, 'faci' : row.role == 'faci'}">
                     <td><a target="_blank" style="margin: 0 auto; width: fit-content; text-decoration: none; color: white; display: flex; align-items: center; justify-content: center;" :href="(row.contact ? 'https://t.me/' + row.contact.slice(1) : 'about:blank') ">{{ row.name }} &nbsp; <img src="/teleiconwhite.png" alt="" height="32" width="32"></a></td>
                     <td>
-                        <!-- <checkbox v-model="present" :value="row.name" :checked="row.day"/> -->
-
                         <label class="checkbox">
                         <input type="checkbox" @click="tickPresent(row.name)" :value="row.name" :checked="row.day">
                         <svg viewBox="0 0 64 64" height="1em" width="1em">
@@ -283,6 +281,10 @@ button {
     stroke: #0FFF50;
     stroke-dasharray: 70.5096664428711 9999999;
     stroke-dashoffset: -262.2723388671875;
+}
+
+.faci {
+    outline: 3px solid pink;
 }
 
 </style>
