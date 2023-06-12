@@ -43,20 +43,20 @@ export default {
                 localStorage.setItem('token', res.data.token);
                 delete res.data.token
                 this.$store.commit('setUserInfo', res.data);
-                this.$store.state.showLogin = false;
                 this.$store.state.auth = true;
                 console.log('login successful. redirecting...')
                 setTimeout(() => {
+                    this.$store.state.showLogin = false;
                     if (res.data.role != 'game') {
-                        if (this.$route.path == '/yourteam') {
-                            this.$router.go()
-                        } else {
-                            this.$router.push('/yourteam')
-                        }
+                        this.$router.push('/yourteam')
+                        // if (this.$route.path == '/yourteam') {
+                        //     this.$router.go()
+                        // } else {
+                        // }
                     } else {
                         this.$router.push('/gamemaster')
                     }
-                }, 500)
+                }, 1000)
             }).catch((e) => {
                 console.log('somehow theres an error')
                 console.log(e)
