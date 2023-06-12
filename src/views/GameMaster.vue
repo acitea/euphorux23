@@ -53,13 +53,16 @@
                     <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Found</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekFound" max="5"></div></div>
                     <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Buffed</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekBuffed" max="5" default="0"></div></div>
                     <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Bruce</div> <div class="input check"><checkbox v-model="form.trekBonus"/></div></div>
-                
+                    
+                    <div v-if="selectedTab == 'power'" class="powertab">
+                        <label class="radiolabel" :class="{'selected' : form.power == name}" v-for="(name, power) in powers" :for="power">
+                            <input class="radio" type="radio" :value="name" v-model="form.power" :id="power">{{ power }}
+                        </label>
+                    </div>
+
                     <input type="submit" class="SUBMIT" value="SUBMIT"/>
                 </form>
             
-            <div v-if="selectedTab == 'power'">
-                POWERS WILL BE HERE
-            </div>
 
 </div>
 </template>
@@ -80,6 +83,8 @@ export default {
     data () {
         return {
             selectedTab : 'game',
+            powers : {'zap' : 'removed',
+            'swap' : 'swapped'},
             clans : null,
             teams : [],
             response: '',
@@ -98,6 +103,7 @@ export default {
                 trekFound : null,
                 trekBuffed : null,
                 trekBonus : null,
+                power : null,
             }
         }
     },
@@ -153,9 +159,10 @@ export default {
                     filtered[key] = this.form[key];
                 }
             }
+            console.log(filtered)
 
             if (!this.form.game) {
-                return
+                this.form.game = 'grantpower';
             }
 
             axios.post(process.env.VUE_APP_API_NAME + '/' + this.form.game, filtered, {
@@ -307,5 +314,28 @@ font-size: 2em;
 -webkit-text-stroke-width: 0.02em;
 text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 
+}
+
+.radio {
+    display: none;
+}
+
+.powertab {
+    font-family: 'Secular One';
+    font-size: 2em;
+}
+.radiolabel {
+    border: none 0.1em solid;
+    border-radius: 0.5em;
+    margin: 0 0.5em;
+    padding: 0 0.4em;
+    width: auto;
+    transition: all 0.2s ease-in-out;
+}
+
+.selected {
+    border: #F37520 0.1em solid;
+    border-radius: 0.5em;
+    box-shadow: 0px 0px 0.5em 0px #F37520, inset 0px 0px 0.5em 0px #F37520;
 }
 </style>
