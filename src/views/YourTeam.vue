@@ -19,6 +19,7 @@
             </div>
 
             <attendance />
+            <movement v-if="['faci', 'orgc'].includes($store.state.profile.role)"/>
 
             <!-- <div v-if="$store.state.profile.schedule" class="schedule">
                 <p>What's <span style="color: #F37520;">Up Next</span>?</p>
@@ -55,13 +56,15 @@ import axios from 'axios'
 import gamesCard from '@/components/gamesCard.vue'
 import attendance from '@/components/attendance.vue'
 import bingoCard from '@/components/bingoCard.vue'
+import movement from '@/components/movement.vue'
 
 export default {
     name: "yourTeam",
     components: {
         gamesCard,
         attendance,
-        bingoCard
+        bingoCard,
+        movement
     },
     data () {
         return {
@@ -87,7 +90,7 @@ export default {
                 }
             }
             ).then((res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 if (Object.keys(res.data).length == 0) {
                         this.activities = false;
                     } else {
@@ -135,6 +138,9 @@ export default {
 <style scoped>
 
 .profile {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     width: 92%;
     font-size: 2em;
     margin: 0 auto;
