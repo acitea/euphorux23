@@ -236,7 +236,10 @@ button {
 }
 
 .popup {
-    height: 100%;
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    z-index: 2;
     opacity: 1;
 }
 
