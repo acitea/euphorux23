@@ -1,15 +1,28 @@
 <template>
 <div class="attendance">
-    <div class="forfaci" v-if="this.$store.state.profile.role != 'ppnt' && show">
-        <div style="border-bottom: 0.1em solid #ccc; margin: 0.7em auto;" class="head" @click="show = !show">{{ !finalised ? 'Attendance for Today' : 'Your Members'}} </div>
+
+    <div class="noti" :class="{'dialog' : confirm}">
+        <p>Update Saved.</p>
+    </div>
+
+    <div v-if="finalise" class="popup noti" :class="{'finalise' : finalise}" @click.self="finalise = false;">
+        <div class="card">
+            <p>This will finalise current attendance.</p> <br>
+            <p>Unticked participants will be considered <span style="color: red;">ABSENT</span></p>
+            <button @click="confirmAttendance">YES, FINAL.</button>
+        </div>
+    </div>
+
+    <div class="forfaci" v-if="this.$store.state.profile.role != 'ppnt'" style="width: 90%;">
+        <div style="border-bottom: 0.1em solid #ccc; margin: 0.7em auto; " class="head" @click="toggleAttendance">{{ !finalised ? 'Attendance for Today' : 'Your Members'}} </div>
         <div class="toshow" v-if="show">
             <table border="2" style="margin: 0 auto; width: 100%;">
                 <tr>
                     <th>Name</th>
                     <th>{{ finalised ? 'Handle' : 'Present' }}</th>
                 </tr>
-                <tr v-if="!finalised" v-for="row in participants">
-                    <td>{{ row.name }}</td>
+                <tr v-if="!finalised" v-for="row in participants" :class="{'absent' : row.day === 0}">
+                    <td><a target="_blank" style="margin: 0 auto; width: fit-content; text-decoration: none; color: white; display: flex; align-items: center; justify-content: center;" :href="(row.contact ? 'https://t.me/' + row.contact.slice(1) : 'about:blank') ">{{ row.name }} &nbsp; <img src="/teleiconwhite.png" alt="" height="32" width="32"></a></td>
                     <td>
                         <!-- <checkbox v-model="present" :value="row.name" :checked="row.day"/> -->
 
@@ -28,7 +41,7 @@
                     </a></td>
                 </tr>
             </table>
-            <div class="submits" v-if="!finalised"><button @click="submitAttendance">Confirm</button> <button @click="confirmAttendance">Finalise</button></div>
+            <div class="submits" v-if="!finalised"><button @click="submitAttendance">Update</button> <button @click="finalise = true;">Finalise</button></div>
         </div>
         
     </div>
@@ -60,6 +73,8 @@ export default {
     },
     data() {
         return {
+            finalise : false,
+            confirm : false,
             participants: null,
             present: [],
             finalised: false,
@@ -117,7 +132,8 @@ export default {
                                 'authorization' : localStorage.getItem('token')
                             }
                         }).then((res) => {
-                                console.log(res.data);
+                                this.confirm = true;
+                                setTimeout(() => {this.confirm = false;}, 1000);
                             })
         },
 
@@ -155,6 +171,11 @@ export default {
                 this.present.splice(this.present.indexOf(person), 1)
             }
         },
+
+        toggleAttendance() {
+            this.show = !this.show;
+            console.log(this.show); 
+        }
     }
 }
 </script>
@@ -167,6 +188,66 @@ tr th {
 
 td {
     font-size: 0.7em;
+}
+
+button {
+    margin: 1em auto;
+    padding: 0.3em 0.6em;
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: 4vh;
+    font-family: 'Secular One';
+    font-weight: bold;
+    font-size: 0.7em;
+    color: white;
+    background: #F37520;
+    border: 0.05em white solid;
+    border-radius: 0.2em;
+}
+
+.submits {
+    display: flex;
+    flex-direction: row;
+}
+
+.attendance {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.absent {
+    background: rgba(255, 0, 0, 0.5);
+}
+
+
+.noti {
+    position: absolute;
+    width: 100%;
+    height: 6%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(21, 21, 21, 0.5);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.popup {
+    height: 100%;
+    opacity: 1;
+}
+
+.card {
+    width: 75%;
+}
+
+.dialog {
+    opacity: 1;
 }
 
 .contact {
