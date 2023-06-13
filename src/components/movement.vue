@@ -138,6 +138,7 @@ export default {
                     'authorization' : localStorage.getItem('token')
                 }
             }).then((res) => {
+                location.reload()
                 console.log('received update')
             })
         },
