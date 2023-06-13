@@ -157,9 +157,9 @@ export default {
                             }
                         }).then((res) => {
                                 console.log(res.data);
+                                location.reload()
                             })
 
-            location.reload()
         },
 
         tickPresent(person) {
