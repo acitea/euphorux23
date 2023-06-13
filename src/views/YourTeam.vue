@@ -26,7 +26,7 @@
                 {{ $store.state.profile.schedule[0] }}
             </div> -->
 
-            <bingoCard/>
+            <bingoCard v-if="['faci', 'ppnt'].includes($store.state.profile.role)"/>
 
             <div v-if="$store.state.profile.role != 'orgc'" class="played">
                 Activities <span style="color: #F37520;">Completed</span>
