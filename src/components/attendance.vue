@@ -157,7 +157,9 @@ export default {
                             }
                         }).then((res) => {
                                 console.log(res.data);
-                                location.reload()
+                                setTimeout(() => {
+                                    location.reload()
+                                }, 500)
                             })
 
         },
