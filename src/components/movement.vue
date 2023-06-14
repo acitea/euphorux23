@@ -1,9 +1,13 @@
 <template>
-<div class="movement">
-    <h3>Movement</h3>
+<div class="movement" style="width: 100%;">
+    <div style="border-bottom: 2px white solid; width: 90%; margin: 0 auto;">
+        <h4>Movement</h4>
+    </div>
 
     <form @submit="submitMovement" v-if="$store.state.profile.role == 'faci'">
-    <div class="fields">
+        <p v-if="arrived" style="margin: 0.5em auto; font-size: 0.8em;">Now @ <br> <span style="font-size: 1.5em;">{{ form.from.charAt(0).toUpperCase() + form.from.slice(1) }}</span></p>
+        <p v-if="!arrived" style="margin: 0.5em auto; font-size: 0.8em;">Now <span style="color: #F37520; font-weight: bold;">OTW</span> &hairsp; To: <br> <span style="font-size: 1.5em;">{{ form.to.charAt(0).toUpperCase() + form.to.slice(1) }}</span></p>
+    <div v-if="arrived" class="fields">
         <div class="col">
             <h5>From</h5>
 
@@ -12,7 +16,7 @@
                 <option v-for="(location, activity) in locations" :value="activity">{{ activity.charAt(0).toUpperCase() + activity.slice(1) }}</option>
             </select> -->
 
-            <p>{{ form.from }}</p>
+            <p>{{ form.from.charAt(0).toUpperCase() + form.from.slice(1) }}</p>
 
         </div>
             
@@ -20,14 +24,14 @@
             <p style="font-size: 1.5em; color: #F37520;">➤</p>
         </div>
             
-            <div class="col">
-                <h5>To</h5>
-                <select v-if="arrived" class="options" name="event" v-model="form.to" required>
-                    <option value="" selected disabled hidden></option>
-                    <option v-for="(location, activity) in locations" :value="activity">{{ activity.charAt(0).toUpperCase() + activity.slice(1) }}</option>
-                </select>
-                <p>{{ !arrived ? form.to : '' }}</p>
-            </div>
+        <div class="col">
+            <h5>To</h5>
+            <select v-if="arrived" class="options" name="event" v-model="form.to" required>
+                <option value="" selected disabled hidden></option>
+                <option v-for="(location, activity) in locations" :value="activity">{{ activity.charAt(0).toUpperCase() + activity.slice(1) }}</option>
+            </select>
+            <p>{{ !arrived ? form.to.charAt(0).toUpperCase() + form.to.slice(1) : '' }}</p>
+        </div>
     </div>
 
     <div v-if="form.to" style="margin-top: 0.5em;" class="remarks">
@@ -38,7 +42,7 @@
         <input v-if="locations[form.to] === ''" class="options" type="text" v-model="form.remarks" required>
     </div>
     <button type="submit">
-        <p v-if="arrived">On The Way...</p>
+        <p v-if="arrived">Be On The Way...</p>
         <p v-if="!arrived">Arrived!</p>
     </button>
     </form>
@@ -79,12 +83,13 @@ export default {
             locations : {
                 report : '',
                 school : 'SMU',
-                lunch : '',
+                lunchD1 : '',
+                lunchD2 : '',
                 biking : ['MBS→ECP', 'ECP→MBS'],
                 diving : 'SMU Admin Pool',
-                kayaking : 'SCF',
+                kayaking : 'Singapore Canoe Federation',
                 skating : 'CIS Plaza',
-                trekking : ['SMU→Maxwell', 'Maxwell→SMU'],
+                trekking : ['→ Maxwell', '→ SMU'],
                 xseed : 'Stadium - Gate 18',
             },
             form : {
@@ -103,7 +108,6 @@ export default {
                 }
             }).then((res) => {
                 console.log('retrieved movement')
-                console.log(res.data);
 
                 if (this.$store.state.profile.role != 'orgc') {
                     this.form.from = res.data.fromloc;
@@ -126,12 +130,12 @@ export default {
         return
     },
     methods : {
-        submitMovement() {
+        async submitMovement() {
             this.form.arrived = this.arrived;
             if (!this.form.remarks) {
                 this.form.remarks = this.locations[this.form.to];
             }
-            axios.put(process.env.VUE_APP_API_NAME + '/updatemovement', this.form, {
+            await axios.put(process.env.VUE_APP_API_NAME + '/updatemovement', this.form, {
                 withCredentials: true,
                 credentials: 'include',
                 headers : {
@@ -139,9 +143,8 @@ export default {
                 }
             }).then((res) => {
                 console.log('received update')
-                console.log(res)
                 setTimeout(() => {
-                    location.reload()
+                    this.$router.go()
                 }, 500)
             })
         },
@@ -182,16 +185,22 @@ td {
     font-size: 0.5em;
 }
 
+h5 {
+    text-decoration: #F37520 underline;
+}
+
 .fields {
     width: 90%;
     display: flex;
     flex-direction: row;
-    padding: 0 1em;
-
+    justify-content: center;
+    align-items: center;
+    padding: 0 2em;
+    position: relative;
+    left: 3%;
 }
 
 .options {
-    width: 100%;
     text-align: center;
     text-align: -webkit-center;
     font-family: "Secular One";
@@ -208,7 +217,7 @@ td {
 
 button {
     margin: 1em auto;
-    padding: 0.3em 0.6em;
+    padding: 1em 0.8em;
     display: flex;
     align-items: center;
     width: auto;
@@ -231,7 +240,7 @@ button {
     font-size: 0.8em;
     border: none 0.1em solid;
     border-radius: 0.5em;
-    margin: 0;
+    margin: 0 0.5em;
     padding: 0 0.4em;
     width: auto;
     transition: all 0.2s ease-in-out;
