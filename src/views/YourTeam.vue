@@ -13,8 +13,13 @@
             <div class="bar"></div>
             <div class="details">
                 Hi {{ $store.state.profile.name }},
-                <div class="handbook" v-if="$store.state.profile.role == 'faci'" @click="handbook">
-                    HANDBOOK
+                <div class="redirects">
+                    <div class="linkto" v-if="$store.state.profile.role == 'faci'" @click="handbook">
+                        <p>Handbook</p>
+                    </div>
+                    <div class="linkto" @click="$router.push('/gamemaster')">
+                        <p>Points</p>
+                    </div>
                 </div>
             </div>
 
@@ -76,14 +81,14 @@ export default {
     
     async mounted () {
         if(await this.$store.getters.hasValidToken) {
-            console.log('verified')
+            console.log('logging into account...')
             this.$store.state.auth = true;
 
             if (this.$store.state.profile.role == 'game') {
                 this.$router.push('/gamemaster')
             }
 
-            await axios.get(process.env.VUE_APP_API_NAME + '/results', {
+            let result = axios.get(process.env.VUE_APP_API_NAME + '/results', {
                 withCredentials: true,
                 headers : {
                     'authorization' : localStorage.getItem('token')
@@ -97,11 +102,13 @@ export default {
                     this.activities = res.data;
                     this.teamPoints = Object.keys(this.activities).reduce((sum, key) => {return sum + this.activities[key].points}, 0);
                 }
+                return true
             });
 
+            console.log(await result);
 
         } else {
-            console.log('not verified')
+            console.log('no saved account found')
             this.$store.state.showLogin = true;
             if(this.$store.state.auth) {
                 this.$store.state.auth = false
@@ -109,21 +116,22 @@ export default {
 
         }
 
-        if (localStorage.getItem('reloaded')) {
-    // The page was just reloaded. Clear the value from local storage
-    // so that it will reload the next time this page is visited.
-            localStorage.removeItem('reloaded');
-        } else {
-            // Set a flag so that we know not to reload the page twice.
-            localStorage.setItem('reloaded', '1');
-            console.log('reloading...')
-            location.reload();
 
-        }
+    //     if (localStorage.getItem('reloaded')) {
+    // // The page was just reloaded. Clear the value from local storage
+    // // so that it will reload the next time this page is visited.
+    //         localStorage.removeItem('reloaded');
+    //     } else {
+    //         // Set a flag so that we know not to reload the page twice.
+    //         localStorage.setItem('reloaded', '1');
+    //         console.log('reloading...')
+    //         location.reload();
+
+    //     }
     },
     methods: {
-        logOut() {
-            axios.get(process.env.VUE_APP_API_NAME + '/logout', {
+        async logOut() {
+            await axios.get(process.env.VUE_APP_API_NAME + '/logout', {
                         withCredentials: true,
                     })
             this.$store.commit('reset')
@@ -188,12 +196,18 @@ margin: 0.5em auto;
     display: flex;
     align-items: center;
 }
-.handbook {
-    font-size: 0.5em;
-    position: relative;
+
+.redirects {
     float: right;
+}
+.linkto {
+    font-size: 0.5em;
     background: #F37520;
-    padding: 0.2em 0.5em;
+    padding: 0.4em 0.5em;
     border-radius: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px rgb(172, 172, 172);
 }
 </style>
