@@ -8,6 +8,7 @@
     
                 <input id="user" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.matricId" placeholder=" Matriculation ID">
                 <input id="SUBMIT" type="submit" value="SUBMIT">
+                <h3 style="font-family: 'Secular One'; margin: 0.5em auto;" :class="[err.slice(0, 6) == 'Succes' ? 'pass' : 'fail']">{{ err }}</h3>
             </form>
             <div id="response"></div>
         </div>
@@ -26,20 +27,24 @@ export default {
         
     },
     data () {
-        return {form: {
-            matricId: ''
-        }}
+        return {
+            form: {
+                matricId: ''
+            },
+            err : '',
+    }
     },
     mounted () {
         return
     },
     methods: {
-        submitHandler() {
-            axios.post(process.env.VUE_APP_API_NAME + '/login', this.form, {
+        async submitHandler() {
+            await axios.post(process.env.VUE_APP_API_NAME + '/login', this.form, {
                 headers: {"Content-Type" : 'application/json'},
                 withCredentials: true,
                 credentials: 'include'
             }).then((res) => {
+                this.err = 'Success! Redirecting...'
                 localStorage.setItem('token', res.data.token);
                 delete res.data.token
                 this.$store.commit('setUserInfo', res.data);
@@ -48,18 +53,17 @@ export default {
                 setTimeout(() => {
                     this.$store.state.showLogin = false;
                     if (res.data.role != 'game') {
-                        this.$router.push('/yourteam')
-                        // if (this.$route.path == '/yourteam') {
-                        //     this.$router.go()
-                        // } else {
-                        // }
+                        if (this.$route.path == '/yourteam') {
+                            this.$router.go()
+                        } else {
+                            this.$router.push('/yourteam')
+                        }
                     } else {
                         this.$router.push('/gamemaster')
                     }
-                }, 1000)
+                }, 500)
             }).catch((e) => {
-                console.log('somehow theres an error')
-                console.log(e)
+                this.err = 'Failed. Account not registered yet.'
             }) ;
         }
     }
@@ -146,6 +150,14 @@ export default {
     width: 100%;
     margin-top: 10%;
 
+}
+
+.pass {
+    color: rgba(0, 215, 0);
+}
+
+.fail {
+    color: red;
 }
 
 </style>

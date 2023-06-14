@@ -24,7 +24,7 @@
         <div class="bar"></div>
 
         <button @click="redirect" class="cta"><p id="ctatext">READY TO EXPLORE?</p><span class="subtext">sign up here!</span></button>
-        <div style="font-family: 'Secular One'; font-size: 0.8em; margin-top: 1em; margin-bottom: -1em; width: fit-content;" @click="$store.state.showLogin = true">or login here</div>
+        <div style="font-family: 'Secular One'; font-size: 0.8em; margin-top: 1em; margin-bottom: -1em; width: fit-content;" @click="trylogin">or login here</div>
         <!-- <div class="subtext" style="font-size: 1em; margin-top: 0.5em; text-decoration: underline; font-style: italic; color: #ccc;">Already signed up?</div> -->
 
         <div class="bar"></div>
@@ -85,6 +85,13 @@ export default {
                     this.$router.push('/yourteam')
                 } else {
                 window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzycWtZzE7TA2Jm8vA5d6rNuqWdzThf-HkUgZt1aBW-Cqzug/viewform')
+            }
+        },
+        async trylogin() {
+            if (await this.$store.getters.hasValidToken) {
+                this.$router.push('/yourteam')
+            } else {
+                this.$store.state.showLogin = true
             }
         }
     },

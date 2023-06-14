@@ -20,25 +20,37 @@ export default createStore({
   getters: {
     async hasValidToken(state) {
         // CHECKS IF HAVE A VALID COOKIE ALREADY
-        return await axios.get(process.env.VUE_APP_API_NAME + '/verify', {
+
+        if (state.auth) {
+          console.log('logged in directly')
+          return true
+        }
+
+        if (localStorage.getItem('token')) {
+          console.log('found previous token')
+          return await axios.get(process.env.VUE_APP_API_NAME + '/verify', {
             withCredentials: true,
             headers : {
               'authorization' : localStorage.getItem('token')
             }
-        }).then((res) => {
-            console.log('found token!')
+          }).then((res) => {
+            console.log('token valid!')
             if (!state.auth) {
               console.log('setting userinfo...')
               state.profile = res.data;
               state.auth = true;
             }
             return true
-
+            
           }).catch((e) => {
-
+            
             console.log('No token found or invalid token')
             return false
-        })
+          })
+        }
+
+        console.log('no token found in local')
+        return false;
     },
 
     async refreshScore(state) {
@@ -101,16 +113,16 @@ export default createStore({
 
     setUserInfo(state, userinfo) {
       console.log('setting userinfo...')
-      console.log(userinfo);
       state.profile = userinfo;
     },
 
     reset(state) {
       state.profile = null
       state.auth = false
-      localStorage.removeItem('token')
+      localStorage.removeItem('token');
+      console.log('data cleared.');
+      location.assign(location.toString().slice(0, -8));
       location.reload()
-      console.log('data cleared.')
     }
   },
   actions: {
