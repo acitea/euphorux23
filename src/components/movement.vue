@@ -145,6 +145,7 @@ export default {
                 console.log('received update')
                 setTimeout(() => {
                     this.$router.go()
+                    location.reload()
                 }, 500)
             })
         },

@@ -89,7 +89,7 @@ export default {
 
 .card {
     outline: red dashed 1px;
-    height: 35vh;
+    height: auto;
     width: 70vw;
     display: flex;
     justify-content: center;
