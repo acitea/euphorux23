@@ -11,7 +11,7 @@
     -->
         <div class="overallScore">
             <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
-            <scoreBox class="inList" v-for="team in teams" :placement="team.position" :teamname="team.teamName" :points="team.teamPoints" :class="(($store.state.profile ? $store.state.profile.teamName : 'none') == team.teamName) ? 'yourTeam' : ''"/>
+            <scoreBox class="inList" v-for="team in teams" :placement="team.position" :teamname="team.teamName" :points="team.teamPoints" :clanname="team.clanName" />
         </div>
     <!-- </div> -->
     <div class="noTeams" v-if="teams === []">
@@ -54,18 +54,7 @@ export default {
             this.position = this.$store.state.profile.position;
             this.teamPoints = this.$store.state.profile.teamPoints;
             this.display = true;
-            // console.log('supposed to set display to true and other stuff...')
-            // console.log(this.display)
-            // console.log(this.position)
-            // console.log(this.teamPoints)
         }
-
-        // console.log('before setting all elements, the data to load is')
-        // console.log(this.display)
-        // console.log(this.teams)
-        // console.log(this.position)
-        // console.log(this.teamPoints)
-        // console.log('that is all.')
     }
 
 }
@@ -108,19 +97,14 @@ margin-bottom: 2em;
     height: auto;
     max-height: 80vh;
     overflow: scroll;
-    border: 2px solid #FFFFFF;
+    overflow: visible;
     display: flex;
     justify-content: start;
     flex-direction: column;
     align-items: center;
 }
 
-.yourTeam {
-    background: red;
-}
-
 .inList {
-    border: 1.5px solid #fff;
     border-left: 0;
     border-right: 0;
 }

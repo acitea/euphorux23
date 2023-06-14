@@ -1,7 +1,8 @@
 <template>
-<div class="scoreBox">
+<div class="scoreBox" :class="[clanname ? clanname : '', (($store.state.profile ? $store.state.profile.teamName : 'none') == teamname) ? 'yourTeam' : '']">
+    <!-- :class="(($store.state.profile ? $store.state.profile.teamName : 'none') == team.teamName) ? 'yourTeam' : ''" -->
     <!-- TODO: REFACTOR TO USE ROW/COLUMN THING -->
-    <div id="placement">
+    <div id="placement" :class="[['1st', '2nd', '3rd'].includes(ordinal) ? 'place' + ordinal : 'loss']">
         {{ ordinal }}
     <!-- <p id="numeric">{{ ordinal }}</p> -->
     </div>
@@ -40,9 +41,11 @@ export default {
             type : String,
             default: "TEAM HERE"
         },
+        clanname : String,
         points : Number
     },
     created () {
+        console.log(this.clanname)
         this.ordinal = this.placement in this.pos ? this.placement + this.pos[this.placement] : this.placement + "th";
     }
 }
@@ -60,12 +63,12 @@ export default {
 
     justify-content: space-around;
     align-items: center;
+    margin: 0.2em auto;
 }
 
 p {
     margin: 0 auto;
     text-align: center;
-    
 }
 
 #placement, #points {
@@ -82,6 +85,7 @@ p {
 
 #placement {
     margin-left: 0.5em;
+    font-size: 1.5em;
 }
 
 #points {
@@ -104,5 +108,45 @@ p {
     font-family: 'Secular One';
     font-size: 1.5em;
     width: 30vw;
+}
+
+.loss {
+    color: rgb(60, 60, 60);
+}
+
+
+.place1st {
+    color: yellow;
+}
+.place2nd {
+    color: white;
+    stroke: #bcbbbb;
+    stroke-width: 0.1px;
+    -webkit-text-stroke: 0.1px;
+    -webkit-text-stroke-color: #bcbbbb;
+}
+.place3rd {
+    color: brown;
+    -webkit-text-stroke: 0.1px;
+    -webkit-text-stroke-color: #661919;
+}
+
+.Trailblazers {
+    background: rgb(173, 255, 47, 0.5);
+    box-shadow: 0px 0px 48px 0px greenyellow, inset 0px 0px 48px 0px greenyellow;
+}
+.Wanderlusts {
+    background: rgba(153, 50, 204, 0.5);
+    box-shadow: 0px 0px 48px 0px darkorchid, inset 0px 0px 48px 0px darkorchid;
+}
+.Daredevils {
+    background: rgba(0, 255, 255, 0.3);
+    box-shadow: 0px 0px 48px 0px cyan, inset 0px 0px 48px 0px cyan;
+}
+
+.yourTeam {
+    transform: scale(1.13);
+    border: none;
+    outline: 4px solid #F37520;
 }
 </style>
