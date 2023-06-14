@@ -5,7 +5,7 @@
         <p style="width: 90%; margin: 0.5em auto; font-size: 1.2em; font-family: 'Secular One';">{{ response }}</p>
         <input @click="dismiss" style="position: absolute; bottom: 1em; margin: auto; left: 0; right: 0; width: 40%; height: 15%;" type="button" value="OK NOTED">
     </div>
-    <div class="gameMaster">
+    <div v-if="$store.state.auth" class="gameMaster">
         <h1 class="title">GAMEMASTER</h1>
         <div class="bar"></div>
 
@@ -18,7 +18,6 @@
                         <select class="options" name="event" v-model="form.game" required @change="chosenGame">
                             <option value="" selected disabled hidden></option>
                             <option value="Trek">Trek</option>
-                            <option value="Bingo">Bingo</option>
                             <option value="Kayak">Kayak</option>
                             <option value="Skate">Skate</option>
                         </select>
@@ -28,7 +27,8 @@
                 
                     <div class="field"><div class="fieldName">Clan</div>
                         <div class="input">
-                        <select class="options" v-model="form.clan" required @change="chosenClan">
+                        <p v-if="$store.state.profile.role == 'faci'"> {{ $store.state.profile.clanName }} </p>
+                        <select v-if="$store.state.profile.role != 'faci'" class="options" v-model="form.clan" required @change="chosenClan">
                             <option value="" selected disabled hidden></option>
                             <option v-for="(teams, clan) in $store.state.clansteams" :value="clan">{{ clan }}</option>
                         </select>
@@ -37,7 +37,8 @@
                 
                     <div class="field"><div class="fieldName">Team</div>
                         <div class="input">
-                        <select class="options" v-model="form.team" required>
+                        <p v-if="$store.state.profile.role == 'faci'"> {{ $store.state.profile.teamName }} </p>
+                        <select v-if="$store.state.profile.role != 'faci'" class="options" v-model="form.team" required>
                             <option value="" selected disabled hidden></option>
                             <option v-for="team in teams" :value="team">{{ team }}</option>
                         </select>
@@ -109,30 +110,56 @@ export default {
     },
     async mounted() {
 // if does not have valid token or the profile role is not one of those
-        var pass = await this.$store.getters.hasValidToken;
-        try {
-            if (['orgc', 'game', 'faci'].includes(this.$store.state.profile.role)) {
+        if (await this.$store.getters.hasValidToken) {
+            console.log('token found, entering gamemaster...')
+            if (['orgc', 'game'].includes(this.$store.state.profile.role)) {
                 console.log('role passed')
-            } else {
-                if (pass) {
-                    console.log('token passed')
-                    location.reload()
-                } else {
-                    console.log('token failed')
-                    this.$router.push('/');
+
+                if (!this.$store.state.clansteams) {
+                    await this.$store.commit('getClansTeams');
                 }
+
+            } else if (this.$store.state.profile.role == 'faci') {
+                this.form.clanName = this.$store.state.profile.clanName;
+                this.form.teamName = this.$store.state.profile.teamName;
+
+            } else {
                 this.$router.push('/');
             }
-            console.log(pass)
+
+        } else {
+            this.$router.push('/');
+        }
+
+        try {
+            // if (['orgc', 'game'].includes(this.$store.state.profile.role)) {
+            //     console.log('role passed')
+
+            //     if (!this.$store.state.clansteams) {
+            //         await this.$store.commit('getClansTeams');
+            //     }
+
+            // } else if (this.$store.state.profile.role == 'faci') {
+            //     this.form.clanName = this.$store.state.profile.clanName;
+            //     this.form.teamName = this.$store.state.profile.teamName;
+
+            // } else {
+            //     if (pass) {
+            //         console.log('token passed')
+            //         location.reload()
+            //     } else {
+            //         console.log('token failed')
+            //         this.$router.push('/');
+            //     }
+            //     this.$router.push('/');
+            // }
+            // console.log(pass)
 
 
         } catch (e) {
             this.$router.push('/');
         }
 
-        if (!this.$store.state.clansteams) {
-            await this.$store.commit('getClansTeams');
-        }
 
     },
     methods : {
@@ -181,13 +208,9 @@ export default {
                     var time = 3;
                     this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;
                     this.pass = "SUCCESS";
-                    setTimeout(() => {
-                        console.log('refreshing...')
-                        location.reload()}, 3000)
-                    // setInterval(() => {
-                    //     time--;
-                    //     this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;
-                    // }, 1000)
+                    // setTimeout(() => {
+                    //     console.log('refreshing...')
+                    //     location.reload()}, 3000)
                 }
             })
             
