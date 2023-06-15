@@ -188,6 +188,7 @@ export default {
 
 tr th {
     font-size: 0.8em;
+    min-width: 40vw;
 }
 
 td {
