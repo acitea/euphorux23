@@ -99,8 +99,8 @@ export default {
             }
         }
     },
-    mounted () {
-        axios.get(process.env.VUE_APP_API_NAME + '/getmovement', {
+    async mounted () {
+        await axios.get(process.env.VUE_APP_API_NAME + '/getmovement', {
                 withCredentials: true,
                 credentials: 'include',
                 headers : {
@@ -146,7 +146,7 @@ export default {
                 setTimeout(() => {
                     this.$router.go()
                     location.reload()
-                }, 500)
+                }, 700)
             })
         },
         filter() {
