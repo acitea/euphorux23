@@ -47,7 +47,7 @@
         // <p v-if="!arrived">Arrived!</p> -->
     </form>
 
-    <div class="orgc" v-if="$store.state.profile.role == 'orgc'">
+    <div class="orgc" v-if="$store.state.profile.role == 'orgc'" style="overflow-x: scroll;">
         <table border="1">
             <tr>
                 <th>Team</th>
@@ -57,8 +57,8 @@
             </tr>
             <tr v-for="record in recorded">
                 <td>{{record.teamName }}</td>
-                <td>{{ record.fromloc }} <br> {{ record.timeLeft ? '@' + record.timeLeft.slice(0, 5) + 'hrs': 'At Activity' }}</td>
-                <td>{{ record.toloc }} <br> {{ record.timeArr ? '@' + record.timeArr.slice(0, 5) + 'hrs' : '' }}</td>
+                <td>{{ record.fromloc }} <br> {{ record.timeLeft ? '@' + record.timeLeft.slice(0, 5).replace(':', ' ') + 'hrs': 'At Activity' }}</td>
+                <td>{{ record.toloc }} <br> {{ record.timeArr ? '@' + record.timeArr.slice(0, 5).replace(':', ' ') + 'hrs' : 'otw...' }}</td>
                 <td>{{ record.remarks }}</td>
             </tr>
         </table>
@@ -124,7 +124,7 @@ export default {
 
                 } else {
                     this.recorded = res.data
-                    console.log('orgc attendance retrieved.')
+                    console.log('orgc movement retrieved.')
                 }
             })
         return
@@ -186,6 +186,7 @@ th {
 
 td {
     font-size: 0.5em;
+    min-width: 20vw;
 }
 
 h5 {

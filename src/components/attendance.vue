@@ -14,9 +14,10 @@
     </div>
 
     <div class="forfaci" v-if="this.$store.state.profile.role != 'ppnt'" style="width: 90%;">
-        <div style="border-bottom: 0.1em solid #ccc; margin: 0.7em auto; " class="head" @click="toggleAttendance">{{ !finalised ? 'Attendance for Today' : 'Your Members'}} </div>
-        <div class="toshow" v-if="show">
-            <table border="2" style="margin: 0 auto; width: 100%;">
+        <div style="border-bottom: 0.1em solid #ccc; margin: 0.7em auto; height: auto;" class="head" @click="toggleAttendance">{{ !finalised ? 'Attendance for Today' : 'Your Members'}} <span class="caret" :class="{'hidden' : !show}">▼</span> </div>
+
+        <div class="toshow" v-if="show" style="max-width: 100%; overflow-x: scroll; overflow-y: hidden;">
+            <table border="2" style="margin: 0 auto; ">
                 <tr>
                     <th>Name</th>
                     <th>{{ finalised ? 'Handle' : 'Present' }}</th>
@@ -32,11 +33,13 @@
                         </label>
                     </td>
                 </tr>
-                <tr v-if="finalised" v-for="row in participants">
+                <tr v-if="finalised" v-for="row in participants" :class="{'absent' : row.day === 0, 'faci' : row.role == 'faci'}">
                     <td>{{ row.name }}</td>
-                    <td><a target="_blank" style="text-decoration: none; color: white;" :href="(row.contact ? 'https://t.me/' + row.contact.slice(1) : 'about:blank') ">
+                    <td><a v-if="row.contact" target="_blank"  style="text-decoration: none; color: white;" :href="'https://t.me/' + row.contact.slice(1) ">
                         <div class="contact"><div>@</div><div class="telecontact" style="text-decoration: underline; margin-right: 0.3em;" >{{ row.contact.slice(1) }}</div><img src="/teleiconwhite.png" alt="" height="32" width="32"></div>
-                    </a></td>
+                    </a>
+                    <span v-if="!row.contact">nil</span>
+                </td>
                 </tr>
             </table>
             <div class="submits" v-if="!finalised"><button @click="submitAttendance">Update</button> <button @click="finalise = true;">Finalise</button></div>
@@ -50,7 +53,7 @@
             <tr v-for="row in participants">
                 <td>{{ row.name }}</td>
                 <td><a target="_blank" style="float: right; color: white;" :href="(row.contact ? 'https://t.me/' + row.contact.slice(1) : 'about:blank') ">
-                        <div class="contact"><div class="telecontact" style=" margin-right: 0.3em;" >{{ row.contact }}</div><img src="/teleiconwhite.png" alt="" height="32" width="32"></div>
+                    <div class="contact"><div>@</div><div class="telecontact" style="text-decoration: underline; margin-right: 0.3em;" >{{ row.contact.slice(1) }}</div><img src="/teleiconwhite.png" alt="" height="32" width="32"></div>
                     </a></td>
             </tr>
         </table>
@@ -71,6 +74,7 @@ export default {
     },
     data() {
         return {
+            beforerun : true,
             finalise : false,
             confirm : false,
             participants: null,
@@ -88,6 +92,7 @@ export default {
                                     'authorization' : localStorage.getItem('token')
                                 }
                             }).then((res) => {
+                                console.log(res.data)
                                     this.participants = res.data;
                                     console.log('participants set')
                                 })
@@ -98,7 +103,7 @@ export default {
                 return
             }
             
-            if (this.$store.state.profile.role == 'faci' && this.participants.filter(participant => {
+            if (this.participants.filter(participant => {
                 return participant.day === null
             }).length == 0) {
                 console.log('attendance finalised.');
@@ -118,9 +123,9 @@ export default {
         }
     },
     methods : {
-        submitAttendance() {
+        async submitAttendance() {
             console.log('submitting attendance...')
-            axios.put(process.env.VUE_APP_API_NAME + '/submitattendance', {
+            await axios.put(process.env.VUE_APP_API_NAME + '/submitattendance', {
                         clanName : this.$store.state.profile.clanName,
                         teamName : this.$store.state.profile.teamName,
                         present : this.present,
@@ -135,7 +140,7 @@ export default {
                             })
         },
 
-        confirmAttendance() {
+        async confirmAttendance() {
             console.log('confirming attendance...')
 
             var absent = this.participants.filter(participant => {
@@ -145,7 +150,7 @@ export default {
             });
             console.log(absent)
 
-            axios.put(process.env.VUE_APP_API_NAME + '/confirmattendance', {
+            await axios.put(process.env.VUE_APP_API_NAME + '/confirmattendance', {
                         clanName : this.$store.state.profile.clanName,
                         teamName : this.$store.state.profile.teamName,
                         present : this.present,
@@ -174,7 +179,6 @@ export default {
 
         toggleAttendance() {
             this.show = !this.show;
-            console.log(this.show); 
         }
     }
 }
@@ -290,6 +294,18 @@ button {
 
 .faci {
     outline: 3px solid pink;
+}
+
+.caret {
+    display: inline-block;
+    position: relative;
+    top: 0.1em;
+    transition: all 0.3s ease-in-out;
+}
+
+.hidden {
+    top: -0.1em;
+    transform: scaleY(-1)
 }
 
 </style>
