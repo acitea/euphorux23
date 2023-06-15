@@ -4,7 +4,7 @@
         <h4>Movement</h4>
     </div>
 
-    <form @submit.prevent="async () => {await submitMovement}" v-if="$store.state.profile.role == 'faci'">
+    <form @submit.prevent="async () => {await submitMovement()}" v-if="$store.state.profile.role == 'faci'">
         <p v-if="arrived" style="margin: 0.5em auto; font-size: 0.8em;">Now @ <br> <span style="font-size: 1.5em;">{{ form.from.charAt(0).toUpperCase() + form.from.slice(1) }}</span></p>
         <p v-if="!arrived" style="margin: 0.5em auto; font-size: 0.8em;">Now <span style="color: #F37520; font-weight: bold;">OTW</span> &hairsp; To: <br> <span style="font-size: 1.5em;">{{ form.to.charAt(0).toUpperCase() + form.to.slice(1) }}</span></p>
     <div v-if="arrived" class="fields">
@@ -41,10 +41,10 @@
         </label>
         <input v-if="locations[form.to] === ''" class="options" type="text" v-model="form.remarks" required>
     </div>
-    <button type="submit">
-        <p v-if="arrived">Be On The Way...</p>
-        <p v-if="!arrived">Arrived!</p>
-    </button>
+    <input type="submit" style="display: none;" id="movement"/>
+    <label class="button" for="movement"> {{ arrived ? 'Be On The Way...' : 'Arrived!' }}</label>
+    <!--// <p v-if="arrived">Be On The Way...</p>
+        // <p v-if="!arrived">Arrived!</p> -->
     </form>
 
     <div class="orgc" v-if="$store.state.profile.role == 'orgc'">
@@ -131,6 +131,7 @@ export default {
     },
     methods : {
         async submitMovement() {
+            console.log('updating movement...')
             this.form.arrived = this.arrived;
             if (!this.form.remarks) {
                 this.form.remarks = this.locations[this.form.to];
@@ -148,6 +149,7 @@ export default {
                     location.reload()
                 }, 700)
             })
+            return
         },
         filter() {
             let filtered = {}, key;
@@ -216,9 +218,9 @@ h5 {
     flex: 1;
 }
 
-button {
+button, .button {
     margin: 1em auto;
-    padding: 1em 0.8em;
+    padding: 0.4em 0.8em;
     display: flex;
     align-items: center;
     width: auto;
