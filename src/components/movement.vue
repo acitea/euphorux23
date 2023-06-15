@@ -4,7 +4,7 @@
         <h4>Movement</h4>
     </div>
 
-    <form @submit="submitMovement" v-if="$store.state.profile.role == 'faci'">
+    <form @submit.prevent="async () => {await submitMovement}" v-if="$store.state.profile.role == 'faci'">
         <p v-if="arrived" style="margin: 0.5em auto; font-size: 0.8em;">Now @ <br> <span style="font-size: 1.5em;">{{ form.from.charAt(0).toUpperCase() + form.from.slice(1) }}</span></p>
         <p v-if="!arrived" style="margin: 0.5em auto; font-size: 0.8em;">Now <span style="color: #F37520; font-weight: bold;">OTW</span> &hairsp; To: <br> <span style="font-size: 1.5em;">{{ form.to.charAt(0).toUpperCase() + form.to.slice(1) }}</span></p>
     <div v-if="arrived" class="fields">
