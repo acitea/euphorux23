@@ -49,13 +49,10 @@ export default {
     async beforeMount() {
         await axios.get(process.env.VUE_APP_API_NAME+"/teams").then((res) => {
             this.teams = res.data;
-            console.log(res)
             if (["ECONNREFUSED", "ERR_NETWORK"].includes(res.data.code)) {
                 throw Error('CONNECTION REFUSED')
             }
         }).catch((error) => {
-            console.log('error occured.')
-            console.log(error)
             this.teams = false;
         });
 
