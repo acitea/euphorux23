@@ -14,11 +14,15 @@
             <scoreBox class="inList" v-for="team in teams" :placement="team.position" :teamname="team.teamName" :points="team.teamPoints" :clanname="team.clanName" />
         </div>
     <!-- </div> -->
-    <div class="noTeams" v-if="teams === []">
-        <h1>THERE ARE NO TEAMS PLAYING NOW</h1>
-    </div>
     <div class="noTeams" v-if="teams === null">
         <h1>Loading Data</h1>
+    </div>
+    <div class="overallScore" v-else-if="teams !== false">
+        <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
+        <scoreBox class="inList" v-for="team in teams" :placement="team.position" :teamname="team.teamName" :points="team.teamPoints" :clanname="team.clanName" />
+    </div>
+    <div class="noTeams" v-else>
+        <h1>THERE ARE NO TEAMS PLAYING NOW</h1>
     </div>
 </div>
 </template>
@@ -45,6 +49,8 @@ export default {
     async beforeMount() {
         await axios.get(process.env.VUE_APP_API_NAME+"/teams").then((res) => {
             this.teams = res.data;
+        }).catch((error) => {
+            this.teams = false;
         });
 
         // TODO: CLEANUP
