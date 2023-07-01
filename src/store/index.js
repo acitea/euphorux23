@@ -8,7 +8,7 @@ export default createStore({
       auth: false,
       showSideBar : false,
       showLogin : false,
-      upcomingRun: '6 July 2023',
+      upcomingRun: '3 August 2023',
       navLinks: {'HOME' : '/',
       // 'THE STORY' : '/story',
       'THE TEAMS' : '/theteams',
