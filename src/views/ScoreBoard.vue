@@ -3,23 +3,12 @@
     
     <h1 class="title">SCOREBOARD</h1>
     <div class="bar"></div>
-    
-    <!-- <div class="show" v-if="teams"> -->
-        <!-- BUG: WEIRD ASS BUG HERE -->
-        <!-- IT WAS RESOLVED BY HAVING V-IF FIRST BEFORE THIS SHIT. -->
-        <!-- <scoreBox v-if="display" :placement="position" :teamname="$store.state.profile.teamName" :points="teamPoints"/>
-    -->
-        <div class="overallScore">
-            <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
-            <scoreBox class="inList" v-for="team in teams" :placement="team.position" :teamname="team.teamName" :points="team.teamPoints" :clanname="team.clanName" />
-        </div>
-    <!-- </div> -->
     <div class="noTeams" v-if="teams === null">
-        <h1>Loading Data</h1>
+        <h1>Loading Teams...</h1>
     </div>
     <div class="overallScore" v-else-if="teams !== false">
         <!-- PLACE UPDATES ACCORDINGLY HERE, BUT DOESN'T UPDATE PROPERLY AT THAT TOP -->
-        <scoreBox class="inList" v-for="team in teams" :placement="team.position" :teamname="team.teamName" :points="team.teamPoints" :clanname="team.clanName" />
+        <scoreBox v-for="team in teams" :placement="team.position" :teamname="team.teamName" :points="team.teamPoints" :clanname="team.clanName" />
     </div>
     <div class="noTeams" v-else>
         <h1>THERE ARE NO TEAMS PLAYING NOW</h1>
@@ -82,7 +71,7 @@ p {
 }
 
 .scoreBoard {
-    height: 100vh;
+    height: auto;
 }
 
 .title {
@@ -103,18 +92,8 @@ margin-bottom: 2em;
 .overallScore {
     margin: 2em auto;
     width: 80vw;
-    height: auto;
-    max-height: 80vh;
-    overflow: scroll;
-    overflow: visible;
     display: flex;
-    justify-content: start;
     flex-direction: column;
-    align-items: center;
-}
-
-.inList {
-    border-left: 0;
-    border-right: 0;
+    justify-content: center;
 }
 </style>

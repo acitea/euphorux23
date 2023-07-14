@@ -1,29 +1,51 @@
 <template>
-<div class="scoreBox" :class="[clanname ? clanname : '', (($store.state.profile ? $store.state.profile.teamName : 'none') == teamname) ? 'yourTeam' : '']">
+<div class="scoreBox" :class="[clanname ? clanname : '', (($store.state.profile ? $store.state.profile.teamName : 'none') == teamname) ? (show ? 'showDetails yourTeam' : 'yourTeam') : (show ? 'showDetails' : '')]">
     <!-- :class="(($store.state.profile ? $store.state.profile.teamName : 'none') == team.teamName) ? 'yourTeam' : ''" -->
-    <!-- TODO: REFACTOR TO USE ROW/COLUMN THING -->
-    <div id="placement" :class="[['1st', '2nd', '3rd'].includes(ordinal) ? 'place' + ordinal : 'loss']">
-        {{ ordinal }}
-    <!-- <p id="numeric">{{ ordinal }}</p> -->
-    </div>
-    <div class="sep"></div>
-    <div id="team">{{ teamname }}</div>
-    <div class="sep"></div>
-    <div id="points">
-        <p style="text-align: center;">{{ points }}</p>
+    <div class="glance" @click="getLogs">
+        <div id="placement" :class="[['1st', '2nd', '3rd'].includes(ordinal) ? 'place' + ordinal : 'loss']">
+            {{ ordinal }}
+        </div>
+        <div class="sep"></div>
+        <div id="team">{{ teamname }}</div>
+        <div class="sep"></div>
+        <div id="points">
+            <p style="text-align: center;">{{ points }}</p>
+        </div>
     </div>
 
+    <svg @click="getLogs" class="dropdown" :class="{'active' : show}" viewBox="0 0 482 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M472 10L241 57.1895L10 10" stroke="white" stroke-width="19.6714" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M356 73.1895L240.5 94.1895L125 73.1895" stroke="white" stroke-width="19.6714" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <Transition name="dropdown">
+        <div class="details" v-if="show">
+            <div v-if="activities === null">LOADING DETAILS...</div>
+            <div class="logstable" v-else>
+                <div style="font-style: italic;" v-if="!activities">
+                    Nothing Yet!
+                </div>
+                <div v-else v-for="(activity, name) in activities">
+                    <gamesCard :name="name.toUpperCase()" :table="activity"/>
+                </div>
+            </div>
+        </div>
+    </Transition>
+    
+    <!--  width="482" height="115" -->
+    
 </div>
 </template>
 
 <script>
 
-//import
+import axios from 'axios';
+import gamesCard from './gamesCard.vue';
 
 export default {
     name: "scoreBox",
     components: {
-        
+        gamesCard
     },
     data () {
         return {pos: {
@@ -33,6 +55,8 @@ export default {
         },
         ordinal : '',
         points : 0,
+        show : false,
+        activities : null,
     }
     },
     props: {
@@ -45,25 +69,85 @@ export default {
         points : Number
     },
     created () {
-        console.log(this.clanname)
         this.ordinal = this.placement in this.pos ? this.placement + this.pos[this.placement] : this.placement + "th";
+    },
+    methods : {
+        async getLogs() {
+            this.show = !this.show;
+            if (!this.activities) {
+                axios.post(process.env.VUE_APP_API_NAME + '/results',
+                {teamName : this.teamname, clanName : this.clanname})
+                .then((res) => {
+                    if (Object.keys(res.data).length == 0) {
+                        this.activities = false;
+                    } else {
+                        this.activities = res.data;
+                    }
+                })
+            }
+
+        },
+
     }
 }
 </script>
 
 <style scoped>
+
 .scoreBox {
-    display: flex;
     background: #45454580;
     border: 2px solid #FFFFFF;
-
     width: 80vw;
-    min-height: 8vh;
-    flex-direction: row;
+    margin: 0.2em auto;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    max-height: 9vh;
+    border-left: 0;
+    border-right: 0;
+}
 
+
+.glance {
+    height: 8vh;
+    width: 100%;
+    display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 0.2em auto;
+}
+
+.dropdown {
+    position: relative;
+    transform: translateY(-75%) scaleX(100%) scaleY(75%);
+    opacity: 0.8;
+    height: 2vh;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+.active {
+    transform: translateY(-50%) scaleX(100%) scaleY(-75%);
+}
+
+.details {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    top: -0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Secular One';
+    font-size: 1.5em;
+    margin: 0.5em auto;
+    transition: all 0.5s ease-in-out;
+}
+
+.showDetails {
+    max-height: 200vh;
+}
+
+.logstable {
+    width: 80%;
 }
 
 p {
@@ -111,7 +195,7 @@ p {
 }
 
 .loss {
-    color: rgb(60, 60, 60);
+    color: rgb(163, 163, 163);
 }
 
 
@@ -145,7 +229,8 @@ p {
 }
 
 .yourTeam {
-    transform: scale(1.13);
+    margin: 1.5em auto;
+    transform: scaleX(1.05) scaleY(1.13);
     border: none;
     outline: 4px solid #F37520;
 }
