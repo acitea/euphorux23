@@ -2,24 +2,28 @@
     <div class="landingPage">
         <img id="logo" src="../../public/euphoruxlogo.png" alt="">
         <p id="title">Are You Ready For<br>Euphorux 2023?</p>
-        <div class="time">
-                <p>{{ days }} </p>
-                <p>:</p>
-                <p>{{ hours }} </p>
-                <p>:</p>
-                <p>{{ minutes }}</p>
-                <p>:</p>
-                <p>{{ seconds }}</p>
+        <div v-if="!ongoing">
+            <div class="time">
+                    <p>{{ days }} </p>
+                    <p>:</p>
+                    <p>{{ hours }} </p>
+                    <p>:</p>
+                    <p>{{ minutes }}</p>
+                    <p>:</p>
+                    <p>{{ seconds }}</p>
+            </div>
+            <div class="named">
+                <p id="days">DAYS</p>
+                <p id="hrs">HOURS</p>
+                <p id="mins">MINUTES</p>
+                <p id="secs">SECONDS</p>
+            </div>
+            <div class="upcoming"><span>TILL </span><span class="upcoming">{{ this.$store.state.upcomingRun }} </span></div>
         </div>
 
-        <div class="named">
-            <p id="days">DAYS</p>
-            <p id="hrs">HOURS</p>
-            <p id="mins">MINUTES</p>
-            <p id="secs">SECONDS</p>
+        <div v-else style="font-size: 3em;">
+            ! IT'S HAPPENING NOW !
         </div>
-
-        <div class="upcoming"><span>TILL </span><span class="upcoming">{{ this.$store.state.upcomingRun }} </span></div>
 
         <div class="bar"></div>
 
@@ -45,7 +49,9 @@ export default {
         return {days : "",
                 hours : "",
                 minutes : "",
-                seconds : ""}
+                seconds : "",
+                ongoing : false,
+            }
     },
     async mounted () {
         window.scrollTo(0, 0)
@@ -55,17 +61,20 @@ export default {
         const msleft = till - now - 1000 * 3600 * 8;
         const left = new Date(msleft);
 
+        if(msleft <= 0) {
+            this.ongoing = true;
+            return
+        }
+
         // ALL THIS TO PRELOAD FIRST
         this.days = String(Math.floor(msleft / (1000 * 3600 * 24))).padStart(2, '0');
         this.hours = String(left.getHours()).padStart(2, '0');
         this.minutes = String(left.getMinutes()).padStart(2, '0');
         this.seconds = String(left.getSeconds()).padStart(2, '0');
+        setInterval(() => {this.countdown();}, 1000)
         if (!this.$store.state.clansteams) {
             this.$store.commit('getClansTeams');
         }
-    },
-    created() {
-        setInterval(() => {this.countdown();}, 1000)
     },
     methods: {
         countdown() {
