@@ -26,9 +26,9 @@
         </div>
     </div>
     <!-- :style="completed.includes(item) ? {'background' : 'green', 'filter' : 'brightness(1.5)'} : {}" -->
-    <h1>BINGO</h1>
+    <h1>{{ teamName }}</h1>
     <div class="card">
-        <div v-for="item in combination" class="box" >
+        <div v-for="item in combination " class="box" >
             <bingoBox :boxno="item" :content="boxes[item]" :completed="completed.includes(item)"/>
         </div>
     </div>
@@ -67,7 +67,7 @@ export default {
                 long : 'Name the water-based Xseed events'},
                 {short : 'Cat-ch Me<br> If You Can',
                 long : 'Take a photo with a Buddha Tooth Temple Cat'},
-                {short : 'Enter the Dragon !',
+                {short : 'Enter the Dragon!',
                 long : 'Take a photo with Bruce Lee'},
                 {short : 'Cycle <br> Round & <br>Round',
                 long : 'Name 3 different rideout routes'},
@@ -90,7 +90,6 @@ export default {
             ],
             combination : [...Array(16).keys()],
             completed : [],
-            update : [],
             showswap : false,
             showremove : false,
             form : {
@@ -104,11 +103,39 @@ export default {
             removed : false,
         }
     },
+    props : {
+        combinationin : {
+            required: false
+        },
+        completedin : {
+            required: false
+        },
+        swappedin : {
+            required: false
+        },
+        removedin : {
+            required: false
+        },
+        teamName : {
+            default: 'BINGO'
+        },
+    },
     async mounted () {
+        // TODO: Probably don't need this but wtv
         if (!this.$store.state.clansteams) {
             await this.$store.commit('getClansTeams');
         }
+
+        if (this.$store.state.profile.role == 'orgc') {
+            console.log('orgc account')
+            this.combination = this.combinationin;
+            this.completed = this.completedin;
+            this.swapped = this.swappedin;
+            this.removed = this.removedin;
+            return true;
+        }
         
+        console.log('not orgc')
         let found = axios.get(process.env.VUE_APP_API_NAME + '/getbingo', {
             withCredentials: true,
             credentials: 'include',
@@ -268,15 +295,14 @@ export default {
 }
 
 .card {
-    width: 100%;
-    border: 2px solid white;
+    border: 1px solid white;
     display: flex;
     flex-wrap: wrap;
 }
 .box {
-    flex: 1 0 21%;
+    flex: 1 0 24%;
     aspect-ratio: 1 / 1;
-    border: 2px solid white;
+    border: 1px solid white;
 }
 
 .powers {

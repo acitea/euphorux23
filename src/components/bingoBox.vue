@@ -2,8 +2,9 @@
 <div class="bingoBox">
     <div v-if="show" class="detailsbg" @click.self="show = !show">
         <div class="details">
+            <div style="color: #F37520; margin-bottom: 0.5em; font-size: 1.2em; font-weight: bold;">{{ content.short.replaceAll('<br>', '') }}</div>
             {{ content.long }}
-            <div class="completed" v-if="!completed && $store.state.profile.role != 'ppnt'">
+            <div class="completed" v-if="!completed && !['ppnt', 'orgc'].includes($store.state.profile.role)">
                 <div style="margin-left: 0.5em;">
                     <checkbox v-model="done"/>
                 </div>
@@ -14,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div :style="completed ? {'background' : 'green', 'filter' : 'brightness(1.5)'} : {}" class="short" v-html="content.short" @click.self="show = !show"></div>
+    <div :style="completed ? {'background' : 'green', 'filter' : 'brightness(1.5)'} : {}" class="short"  v-html="content.short" @click.self="show = !show"></div>
 </div>
 </template>
 
@@ -102,7 +103,7 @@ export default {
 }
 
 .details {
-    font-size: 0.8em;
+    font-size: 0.7em;
     position: absolute;
     display: flex;
     flex-direction: column;

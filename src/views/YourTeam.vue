@@ -11,10 +11,15 @@
                 {{ $store.state.profile.teamName }}
             </p>
             <div class="bar"></div>
-            <div class="details">
-                Hi {{ $store.state.profile.name }},
-                <div class="redirects">
-                    <div class="linkto" v-if="$store.state.profile.role == 'faci'" @click="handbook">
+            <div style="width: 100%;">
+                <div class="details">
+                    <p >Hi {{ $store.state.profile.name }},</p>
+                    <p @click="logOut" style="font-size: 0.6em; opacity: 0.5; margin-top: -0.5em;">not you? <span style="font-size: 0.75em; text-decoration: underline; text-indent: 10%; font-style: italic; ">Log Out</span></p>
+                </div>
+
+                <!-- <div @click="logOut" style="font-size: 0.6em; opacity: 0.5;"><p>not you?</p> <p style="font-size: 0.75em; text-decoration: underline; text-indent: 10%; font-style: italic;">Log Out</p></div> -->
+                <div class="redirects" v-if="$store.state.profile.role == 'faci'">
+                    <div class="linkto" @click="handbook">
                         <p>Handbook</p>
                     </div>
                     <div class="linkto" @click="$router.push('/gamemaster')">
@@ -41,15 +46,15 @@
                 <div style="font-style: italic;" v-if="!activities" class="none">
                     Nothing Yet! <br>
                 </div>
-                <div style="margin-top: 0.5em;">Total &hairsp; <span style="color: #F37520">{{ teamPoints }}</span> &hairsp; pts</div>
+                <div style="margin-top: 0.5em;">Total &hairsp; <span style="color: #F37520">{{ teamPoints ?? 0 }}</span> &hairsp; pts</div>
             </div>
 
-            <div v-if="$store.state.profile.role == 'orgc'" class="updates">
-                Hello big boss
-                There will be some more shit here in the future
+            <div v-else class="bingosOC">
+                <div style="min-width: 90vw; scroll-snap-align: center;" v-for="bingo in bingos">
+                    <bingoCard :class="bingo.clanName" :team-name="bingo.teamName" :combinationin="bingo.combination.split(',')" :completedin="bingo.completed ? bingo.completed.split(',') : []" :swappedin="Boolean(bingo.swapped)" :removedin="Boolean(bingo.removed)"/>
+                </div>
             </div>
 
-            <button @click="logOut">Log Out</button>
         </div>
     </div>
 
@@ -75,7 +80,8 @@ export default {
         return {
             activities: null,
             finalised: false,
-            teamPoints : null
+            teamPoints : null,
+            bingos : null,
         }
     },
     
@@ -86,26 +92,32 @@ export default {
 
             if (this.$store.state.profile.role == 'game') {
                 this.$router.push('/gamemaster')
-            }
+            } else if (this.$store.state.profile.role == 'orgc') {
+                axios.get(process.env.VUE_APP_API_NAME + '/getbingooc').then((res) => {
+                    this.bingos = res.data;
+                    console.log(this.bingos);
+                })
+            } else {
 
-            let result = axios.get(process.env.VUE_APP_API_NAME + '/results', {
-                withCredentials: true,
-                headers : {
-                    'authorization' : localStorage.getItem('token')
+                let result = axios.get(process.env.VUE_APP_API_NAME + '/results', {
+                    withCredentials: true,
+                    headers : {
+                        'authorization' : localStorage.getItem('token')
+                    }
                 }
-            }
-            ).then((res) => {
+                ).then((res) => {
                 // console.log(res.data)
                 if (Object.keys(res.data).length == 0) {
-                        this.activities = false;
-                    } else {
+                    this.activities = false;
+                } else {
                     this.activities = res.data;
                     this.teamPoints = Object.keys(this.activities).reduce((sum, key) => {return sum + this.activities[key].points}, 0);
                 }
                 return true
             });
-
-            console.log(await result);
+            
+                console.log(await result);
+            }
 
         } else {
             console.log('no saved account found')
@@ -116,18 +128,6 @@ export default {
 
         }
 
-
-    //     if (localStorage.getItem('reloaded')) {
-    // // The page was just reloaded. Clear the value from local storage
-    // // so that it will reload the next time this page is visited.
-    //         localStorage.removeItem('reloaded');
-    //     } else {
-    //         // Set a flag so that we know not to reload the page twice.
-    //         localStorage.setItem('reloaded', '1');
-    //         console.log('reloading...')
-    //         location.reload();
-
-    //     }
     },
     methods: {
         async logOut() {
@@ -182,23 +182,20 @@ export default {
 }
 
 .details {
-    padding: 0 0.5em;
     text-align: left;
     float: left;
-    width: 100%;
+    position: relative;
+    left: 0.25em;
 }
 .bar {
 border: 0.08em solid #454545;
 margin: 0.5em auto;
 }
 
-.details {
-    display: flex;
-    align-items: center;
-}
-
 .redirects {
     float: right;
+    position: relative;
+    right: 0.25em;
 }
 .linkto {
     font-size: 0.5em;
@@ -208,6 +205,15 @@ margin: 0.5em auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 2px 2px rgb(172, 172, 172);
+    box-shadow: 1px 1px 2px 2px rgba(172, 172, 172, 0.5);
+}
+
+.bingosOC {
+    height: fit-content;
+    display: flex;
+    gap: 1em;
+    overflow-y: hidden;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
 }
 </style>
