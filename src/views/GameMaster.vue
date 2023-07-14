@@ -28,7 +28,7 @@
                     <div class="field"><div class="fieldName">Clan</div>
                         <div class="input">
                         <p v-if="$store.state.profile.role == 'faci'"> {{ $store.state.profile.clanName }} </p>
-                        <select v-if="$store.state.profile.role != 'faci'" class="options" v-model="form.clan" required @change="chosenClan">
+                        <select v-if="$store.state.profile.role != 'faci'" class="options" v-model="form.clanName" required @change="chosenClan">
                             <option value="" selected disabled hidden></option>
                             <option v-for="(teams, clan) in $store.state.clansteams" :value="clan">{{ clan }}</option>
                         </select>
@@ -38,7 +38,7 @@
                     <div class="field"><div class="fieldName">Team</div>
                         <div class="input">
                         <p v-if="$store.state.profile.role == 'faci'"> {{ $store.state.profile.teamName }} </p>
-                        <select v-if="$store.state.profile.role != 'faci'" class="options" v-model="form.team" required>
+                        <select v-if="$store.state.profile.role != 'faci'" class="options" v-model="form.teamName" required>
                             <option value="" selected disabled hidden></option>
                             <option v-for="team in teams" :value="team">{{ team }}</option>
                         </select>
@@ -171,6 +171,7 @@ export default {
             let chosen = event.target.value
             this.game = chosen
             this.form.trekBonus = chosen == 'Trek' ? false : null;
+            this.form.clair = chosen == 'Kayak' ? false : null;
         },
 
         chosenClan(event) {
@@ -186,7 +187,6 @@ export default {
                     filtered[key] = this.form[key];
                 }
             }
-            console.log(filtered)
 
             if (!this.form.game) {
                 this.form.game = 'grantpower';
@@ -200,9 +200,8 @@ export default {
                 withCredentials: true,
             })
             .then((res) => {
-                console.log(res.data)
                 if (res.data.code == "ER_DUP_ENTRY") {
-                    this.response = `DUPLICATE ENTRY FOUND OF ${filtered.team} FROM ${filtered.clan}`;
+                    this.response = `DUPLICATE ENTRY FOUND`;
                     this.pass = "ERROR";
                 } else {
                     var time = 3;
