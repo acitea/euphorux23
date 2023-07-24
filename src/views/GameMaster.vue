@@ -183,6 +183,10 @@ export default {
         async processSubmit() {
 
             let filtered = {}, key;
+            
+            if (!this.form.game) {
+                this.form.game = 'grantpower';
+            }
 
             for (key in this.form) {
                 if (this.form[key] !== null && key != 'game') {
@@ -190,9 +194,6 @@ export default {
                 }
             }
 
-            if (!this.form.game) {
-                this.form.game = 'grantpower';
-            }
 
             axios.post(process.env.VUE_APP_API_NAME + '/' + this.form.game, filtered, {
                 headers: {
@@ -206,6 +207,7 @@ export default {
                     this.response = `DUPLICATE ENTRY FOUND`;
                     this.pass = "ERROR";
                 } else {
+                    console.log(res.data)
                     var time = 3;
                     this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;
                     this.pass = "SUCCESS";

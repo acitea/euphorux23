@@ -76,7 +76,9 @@ export default {
                         break
 
                     case 'bonus':
-                        filter[key] = '+ ' + obj[key] + ' x 2 pts';
+                        if (obj[key] != 0) {
+                            filter[key] = '+ ' + obj[key] + ' x 2 pts';
+                        }
                         break
 
                     case 'bruce':
