@@ -68,7 +68,7 @@ export default {
                         break
 
                     case 'found':
-                        filter[key] = obj[key] + ' x 2 pts';
+                        filter[key] = obj[key] + ' x 3 pts';
                         break
 
                     case 'buffed':
@@ -76,6 +76,10 @@ export default {
                         break
 
                     case 'bonus':
+                        filter[key] = '+ ' + obj[key] + ' x 2 pts';
+                        break
+
+                    case 'bruce':
                         filter[key] = '+ ' + obj[key] + ' pts';
                         break
                         
@@ -105,6 +109,9 @@ export default {
                         break
                 }
 
+            }
+            if (this.name == 'TREK' && obj.points == 20) {
+                filter['CAPPED'] = '@ 20 pts'
             }
             return filter;
         }

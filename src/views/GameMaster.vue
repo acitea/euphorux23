@@ -53,7 +53,8 @@
                     <div class="field" v-if="this.form.game == 'Bingo'"><div class="fieldName">Completed</div> <div class="input"><input maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.bingoCompleted" max="10" default="0"></div></div>
                     <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Found</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekFound" max="5"></div></div>
                     <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Buffed</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekBuffed" max="5" default="0"></div></div>
-                    <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Bruce</div> <div class="input check"><checkbox v-model="form.trekBonus"/></div></div>
+                    <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">BONUS</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekBonus" max="3" default="0"></div></div>
+                    <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Bruce</div> <div class="input check"><checkbox v-model="form.trekBruce"/></div></div>
                     
                     <div v-if="selectedTab == 'power'" class="powertab">
                         <label class="radiolabel" :class="{'selected' : form.power == name}" v-for="(name, power) in powers" :for="power">
@@ -104,6 +105,7 @@ export default {
                 trekFound : null,
                 trekBuffed : null,
                 trekBonus : null,
+                trekBruce : null,
                 power : null,
             }
         }
@@ -170,7 +172,7 @@ export default {
         chosenGame(event) {
             let chosen = event.target.value
             this.game = chosen
-            this.form.trekBonus = chosen == 'Trek' ? false : null;
+            this.form.trekBruce = chosen == 'Trek' ? false : null;
             this.form.clair = chosen == 'Kayak' ? false : null;
         },
 
