@@ -167,7 +167,7 @@ export default {
     methods : {
         changeTab(tab) {
             this.selectedTab = tab;
-            Object.keys(this.form).forEach((i) => this.form[i] = null);
+            Object.keys(this.form).forEach((i) => {if(!['teamName', 'clanName'].includes(i)) {this.form[i] = null;}});
         },
         chosenGame(event) {
             let chosen = event.target.value
