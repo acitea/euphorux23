@@ -6,7 +6,7 @@
                 <p>GAMES</p>
                 <div class="bottom" :class="{'selectedTab' : selectedTab == 'game'}"></div>
             </div>
-            <div class="tabs" @click="selectedTab = 'power'; $emit('selectedTab', 'power')" :style="selectedTab != 'power' ? {'filter' : 'brightness(0.5)', 'flex' : '2', 'font-size' : '1em'} : {}">
+            <div v-if="['orgc', 'game'].includes($store.state.profile.role)" class="tabs" @click="selectedTab = 'power'; $emit('selectedTab', 'power')" :style="selectedTab != 'power' ? {'filter' : 'brightness(0.5)', 'flex' : '2', 'font-size' : '1em'} : {}">
                 <p>POWERS</p>
                 <div class="bottom" :class="{'selectedTab' : selectedTab == 'power'}"></div>
             </div>

@@ -101,6 +101,7 @@ export default {
             teams : [],
             swapped : false,
             removed : false,
+            points : 0
         }
     },
     props : {
@@ -158,6 +159,7 @@ export default {
                 this.completed = data.completed ? data.completed.split(',') : [];
                 this.removed = data.removed ? true : false; 
                 this.swapped = data.swapped ? true : false; 
+                this.points = data.points;
             })
         } else {
             this.shuffle(this.combination)
@@ -195,12 +197,11 @@ export default {
             return array;
         },
         swapbingo(data) {
-            console.log('swap clicked')
             data.combination = this.combination.join(',');
             data.completed = this.completed.join(',');
             data.clanName = this.$store.state.profile.clanName;
             data.teamName = this.$store.state.profile.teamName;
-            console.log(data)
+            data.points = this.points;
             axios.post(process.env.VUE_APP_API_NAME + '/swapbingo', data, {
                 withCredentials: true,
                 headers : {
@@ -214,7 +215,6 @@ export default {
             console.log('removal clicked')
             data.clanName = this.$store.state.profile.clanName;
             data.teamName = this.$store.state.profile.teamName;
-            console.log(data)
             axios.put(process.env.VUE_APP_API_NAME + '/zapbingo', data, {
                 withCredentials: true,
                 headers : {

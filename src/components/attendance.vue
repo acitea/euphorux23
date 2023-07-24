@@ -92,7 +92,7 @@ export default {
                                     'authorization' : localStorage.getItem('token')
                                 }
                             }).then((res) => {
-                                console.log(res.data)
+                                // console.log(res.data)
                                     this.participants = res.data;
                                     console.log('participants set')
                                 })
