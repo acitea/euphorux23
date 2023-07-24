@@ -76,7 +76,13 @@ export default {
             this.show = !this.show;
             if (!this.activities) {
                 axios.post(process.env.VUE_APP_API_NAME + '/results',
-                {teamName : this.teamname, clanName : this.clanname})
+                {teamName : this.teamname, clanName : this.clanname}, {
+            headers: {
+                "Content-Type" : 'application/json',
+                'authorization' : localStorage.getItem('token')
+                },
+                withCredentials: true,
+            })
                 .then((res) => {
                     if (Object.keys(res.data).length == 0) {
                         this.activities = false;
