@@ -109,6 +109,13 @@ export default {
                             filter[key] = '+ ' + obj[key] * 3 + ' pts';
                         }
                         break
+                        
+                    case 'won':
+                        if(obj[key]) {
+                            filter['Won?'] = 'YESSIR'
+                        } else {
+                            filter['Won?'] = 'L taken...'
+                        }
                 }
 
             }

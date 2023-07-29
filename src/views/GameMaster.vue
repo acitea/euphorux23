@@ -20,6 +20,7 @@
                             <option value="Trek">Trek</option>
                             <option value="Kayak">Kayak</option>
                             <option value="Skate">Skate</option>
+                            <option value="XSeed">XSeed</option>
                         </select>
                         </div>
                     </div>
@@ -56,6 +57,28 @@
                     <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">BONUS</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekBonus" max="3" default="0"></div></div>
                     <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Bruce</div> <div class="input check"><checkbox v-model="form.trekBruce"/></div></div>
                     
+                    <div v-if="this.form.game == 'XSeed'">
+                        <p class="title" style="font-family: 'Secular One'; font-size: 2em;">Won Against</p>
+                            <div class="field"><div class="fieldName">L Clan</div>
+                            <div class="input">
+                            <select class="options" v-model="form.clanNamelost" required @change="chosenClan">
+                                <option value="" selected disabled hidden></option>
+                                <option v-for="(teams, clan) in $store.state.clansteams" :value="clan">{{ clan }}</option>
+                            </select>
+                            </div>
+                        </div>
+                    
+                        <div class="field"><div class="fieldName">L Team</div>
+                            <div class="input">
+
+                            <select class="options" v-model="form.teamNamelost" required>
+                                <option value="" selected disabled hidden></option>
+                                <option v-for="team in teamslost" :value="team">{{ team }}</option>
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div v-if="selectedTab == 'power'" class="powertab">
                         <label class="radiolabel" :class="{'selected' : form.power == name}" v-for="(name, power) in powers" :for="power">
                             <input class="radio" type="radio" :value="name" v-model="form.power" :id="power">{{ power }}
@@ -89,12 +112,15 @@ export default {
             'swap' : 'swapped'},
             clans : null,
             teams : [],
+            teamslost : [],
             response: '',
             pass: '',
             form : {
                 game : null,
                 clanName : null,
                 teamName : null,
+                clanNamelost : null,
+                teamNamelost : null,
                 players : null,
                 survivors : null,
                 skill : null,
@@ -107,6 +133,7 @@ export default {
                 trekBonus : null,
                 trekBruce : null,
                 power : null,
+                won : null,
             }
         }
     },
@@ -133,36 +160,6 @@ export default {
             this.$router.push('/');
         }
 
-        try {
-            // if (['orgc', 'game'].includes(this.$store.state.profile.role)) {
-            //     console.log('role passed')
-
-            //     if (!this.$store.state.clansteams) {
-            //         await this.$store.commit('getClansTeams');
-            //     }
-
-            // } else if (this.$store.state.profile.role == 'faci') {
-            //     this.form.clanName = this.$store.state.profile.clanName;
-            //     this.form.teamName = this.$store.state.profile.teamName;
-
-            // } else {
-            //     if (pass) {
-            //         console.log('token passed')
-            //         location.reload()
-            //     } else {
-            //         console.log('token failed')
-            //         this.$router.push('/');
-            //     }
-            //     this.$router.push('/');
-            // }
-            // console.log(pass)
-
-
-        } catch (e) {
-            this.$router.push('/');
-        }
-
-
     },
     methods : {
         changeTab(tab) {
@@ -177,7 +174,11 @@ export default {
         },
 
         chosenClan(event) {
-            this.teams = this.$store.state.clansteams[event.target.value]
+            if (this.teams.length == 0) {
+                this.teams = this.$store.state.clansteams[event.target.value]
+            } else {
+                this.teamslost = this.$store.state.clansteams[event.target.value]
+            }
         },
 
         async processSubmit() {
