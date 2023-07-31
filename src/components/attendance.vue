@@ -1,7 +1,7 @@
 <template>
 <div class="attendance">
 
-    <div class="noti" :class="{'dialog' : confirm}">
+    <div class="noti unselectable" :class="{'dialog' : confirm}">
         <p>Update Saved.</p>
     </div>
 
@@ -225,6 +225,14 @@ button {
 
 .absent {
     background: rgba(255, 0, 0, 0.5);
+}
+
+.unselectable {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 
