@@ -64,25 +64,25 @@ export default {
                         }
                         let rank = obj['pos'];
                         let ordinal = rank in pos ? rank + pos[rank] : rank + "th";
-                        filter[key] = ordinal + ' | ' + obj[key] + ' sec';
+                        if (this.name == 'TREK') {
+                            filter[key] = ordinal + ' | ' + obj[key] + ' min';
+                        } else {
+                            filter[key] = ordinal + ' | ' + obj[key] + ' sec';
+                        }
                         break
 
                     case 'found':
-                        filter[key] = obj[key] + ' x 3 pts';
+                        filter[key] = obj[key] + ' pts';
                         break
 
                     case 'buffed':
                         filter[key] = '+ ' + obj[key] + ' pts';
                         break
 
-                    case 'bonus':
-                        if (obj[key] != 0) {
-                            filter[key] = '+ ' + obj[key] + ' x 2 pts';
-                        }
-                        break
-
                     case 'bruce':
-                        filter[key] = '+ ' + obj[key] + ' pts';
+                        if (obj[key]) {
+                            filter[key] = '+ ' + obj[key] + ' pts';
+                        }
                         break
                         
                     case 'survivors':

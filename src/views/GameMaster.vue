@@ -52,10 +52,11 @@
                     <div class="field" v-if="this.form.game == 'Kayak'"><div class="fieldName">Timing</div> <div class="input"><input class="options" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.timing" placeholder="in seconds"></div></div>
                     <div class="field" v-if="this.form.game == 'Kayak'"><div class="fieldName">Clairvoyance</div><div class="input check"><checkbox v-model="form.clair"/></div></div>
                     <div class="field" v-if="this.form.game == 'Bingo'"><div class="fieldName">Completed</div> <div class="input"><input maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.bingoCompleted" max="10" default="0"></div></div>
-                    <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Found</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekFound" max="5"></div></div>
+                    <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Found</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekFound" max="8"></div></div>
                     <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Buffed</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekBuffed" max="5" default="0"></div></div>
-                    <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">BONUS</div> <div class="input"><input required maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.trekBonus" max="3" default="0"></div></div>
                     <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Bruce</div> <div class="input check"><checkbox v-model="form.trekBruce"/></div></div>
+                    <div class="field" v-if="this.form.game == 'Trek'"><div class="fieldName">Timing</div> <div class="input"><input class="options" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.timing" placeholder="in minutes"></div></div>
+
                     
                     <div v-if="this.form.game == 'XSeed'">
                         <p class="title" style="font-family: 'Secular One'; font-size: 2em;">Won Against</p>
@@ -130,7 +131,6 @@ export default {
                 bingoCompleted : null,
                 trekFound : null,
                 trekBuffed : null,
-                trekBonus : null,
                 trekBruce : null,
                 power : null,
                 won : null,
@@ -149,9 +149,12 @@ export default {
                 }
 
             } else if (this.$store.state.profile.role == 'faci') {
+                if (!this.$store.state.clansteams) {
+                    await this.$store.commit('getClansTeams');
+                }
                 this.form.clanName = this.$store.state.profile.clanName;
                 this.form.teamName = this.$store.state.profile.teamName;
-
+                this.teams = ['placeholder']
             } else {
                 this.$router.push('/');
             }
@@ -211,9 +214,9 @@ export default {
                     var time = 3;
                     this.response = `SUCCESSFULLY ADDED. THIS PAGE WILL REFRESH IN ${time} SECONDS.`;
                     this.pass = "SUCCESS";
-                    // setTimeout(() => {
-                    //     console.log('refreshing...')
-                    //     location.reload()}, 3000)
+                    setTimeout(() => {
+                        console.log('refreshing...')
+                        location.reload()}, 3000)
                 }
             })
             
