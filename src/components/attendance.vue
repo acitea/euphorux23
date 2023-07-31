@@ -233,6 +233,7 @@ button {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    z-index: -2;
 }
 
 
@@ -264,6 +265,7 @@ button {
 
 .dialog {
     opacity: 1;
+    z-index: 2;
 }
 
 .contact {
