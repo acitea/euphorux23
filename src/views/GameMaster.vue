@@ -48,7 +48,6 @@
                     <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Players</div> <div class="input"><input class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.players" required></div></div>
                     <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Survivors</div> <div class="input"><input class="options num" type="number" inputmode="numeric" pattern="[0-9]" v-model="form.survivors" required></div></div>
                     <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Skilled</div><div class="input check"><checkbox v-model="form.skill"/></div></div>
-                    <div class="field" v-if="this.form.game == 'Skate'"><div class="fieldName">Double</div><div class="input check"><checkbox v-model="form.double"/></div> </div>
                     <div class="field" v-if="this.form.game == 'Kayak'"><div class="fieldName">Timing</div> <div class="input"><input class="options" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.timing" placeholder="in seconds"></div></div>
                     <div class="field" v-if="this.form.game == 'Kayak'"><div class="fieldName">Clairvoyance</div><div class="input check"><checkbox v-model="form.clair"/></div></div>
                     <div class="field" v-if="this.form.game == 'Bingo'"><div class="fieldName">Completed</div> <div class="input"><input maxlength="1" class="options num" type="number" inputmode="numeric" pattern="[0-9]*" v-model="form.bingoCompleted" max="10" default="0"></div></div>
@@ -125,7 +124,6 @@ export default {
                 players : null,
                 survivors : null,
                 skill : null,
-                double : null,
                 timing : null,
                 clair : null,
                 bingoCompleted : null,

@@ -72,16 +72,18 @@ export default {
                         break
 
                     case 'found':
-                        filter[key] = obj[key] + ' pts';
+                        filter[key] = obj[key];
                         break
 
                     case 'buffed':
-                        filter[key] = '+ ' + obj[key] + ' pts';
+                        if (obj[key]) {
+                            filter[key] = obj[key];
+                        }
                         break
 
                     case 'bruce':
                         if (obj[key]) {
-                            filter[key] = '+ ' + obj[key] + ' pts';
+                            filter['Bruce Lee'] = 'FOUND!';
                         }
                         break
                         
@@ -90,7 +92,7 @@ export default {
                         break
 
                     case 'players':
-                        filter['Out Of'] = obj[key] + ` players (${(obj['survivors'] / obj['players'] * 10).toFixed(2)})`;
+                        filter['Out Of'] = obj[key] + ` players`;
                         break
 
                     case 'skill':
@@ -98,11 +100,6 @@ export default {
                             filter[key] = '+ 3 pts';
                         }
                         break
-
-                    case 'doublePts':
-                        filter[key] = 'x2';
-                        break
-
 
                     case 'clair':
                         if (obj[key]) {
@@ -118,9 +115,6 @@ export default {
                         }
                 }
 
-            }
-            if (this.name == 'TREK' && obj.points == 20) {
-                filter['CAPPED'] = '@ 20 pts'
             }
             return filter;
         }

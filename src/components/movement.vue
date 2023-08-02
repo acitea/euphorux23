@@ -47,7 +47,7 @@
         // <p v-if="!arrived">Arrived!</p> -->
     </form>
 
-    <div class="orgc" v-if="$store.state.profile.role == 'orgc'" style="overflow-x: scroll;">
+    <div class="orgc" v-if="$store.state.profile.role == 'orgc'" style="overflow-x: scroll; overflow-y: scroll; max-height: 40vh;">
         <table border="1">
             <tr>
                 <th>Team</th>
