@@ -172,6 +172,7 @@ export default {
             this.game = chosen
             this.form.trekBruce = chosen == 'Trek' ? false : null;
             this.form.clair = chosen == 'Kayak' ? false : null;
+            this.form.skill = chosen == 'Skate' ? 0 : null;
         },
 
         chosenClan(event) {
