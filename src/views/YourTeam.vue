@@ -29,7 +29,7 @@
             </div>
 
             <attendance />
-            <movement v-if="['faci', 'orgc'].includes($store.state.profile.role)"/>
+            <!-- <movement v-if="['faci', 'orgc'].includes($store.state.profile.role)"/> -->
 
             <!-- <div v-if="$store.state.profile.schedule" class="schedule">
                 <p>What's <span style="color: #F37520;">Up Next</span>?</p>
