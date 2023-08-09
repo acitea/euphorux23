@@ -71,9 +71,9 @@ Built Using
 
 Tech Stack – Vue JS, Express JS, CSS3, MySQL
 
-> Frontend hosted on Vercel
-> Backend ExpressJS client hosted on Google Cloud Run
-> Database hosted on Google Cloud SQL
+>Frontend hosted on Vercel\
+>Backend ExpressJS client hosted on Google Cloud Run\
+>Database hosted on Google Cloud SQL
 
 #### Setup
 
