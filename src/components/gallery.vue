@@ -13,14 +13,12 @@
 
 <script>
 import { Stack, StackItem } from 'vue-stack-grid';
-import Lightgallery from 'lightgallery/vue';
 
 export default {
     name: "gallery",
     components: {
         Stack,
         StackItem,
-        Lightgallery
     },
     data() {
         return {
