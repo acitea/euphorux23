@@ -72,11 +72,11 @@ Some Demos
 
 |Landing Page|<span id="scoreboard">Scoreboard</span>|<span id="attendance">Attendance</span>|
 |:---:|:---:|:---:|
-|https://github.com/acitea/euphorux23/assets/108735127/8fc937c5-1f90-4b10-81c1-c517ec1c473c|https://github.com/acitea/euphorux23/assets/108735127/cfae6cd9-f24f-4dd8-8935-9746ae43ca1b|https://github.com/acitea/euphorux23/assets/108735127/5e238d17-dfcf-45a2-a69c-d19b844e15e4|
+|<video width="390" height="844" src="https://github.com/acitea/euphorux23/assets/108735127/8fc937c5-1f90-4b10-81c1-c517ec1c473c"></video>|<video width="390" height="844" src="https://github.com/acitea/euphorux23/assets/108735127/cfae6cd9-f24f-4dd8-8935-9746ae43ca1b"></video>|<video width="390" height="844" src="https://github.com/acitea/euphorux23/assets/108735127/5e238d17-dfcf-45a2-a69c-d19b844e15e4"></video>|
 
 |<span id="movementupdating">Movement Updating</span>|<span id="bingo">Bingo</span>|<span id="bingooverview">Bingo Overview</span>|
 |:---:|:---:|:---:|
-|https://github.com/acitea/euphorux23/assets/108735127/5aba3647-6ef9-4046-beb1-c4910dc1ea6b|https://github.com/acitea/euphorux23/assets/108735127/3408b5f2-ad71-49ea-b09d-72e0de001c44|https://github.com/acitea/euphorux23/assets/108735127/ab32c846-c334-4326-b3fd-10c257888da7|
+|<video width="390" height="844" src="https://github.com/acitea/euphorux23/assets/108735127/5aba3647-6ef9-4046-beb1-c4910dc1ea6b"></video>|<video width="390" height="844" src="https://github.com/acitea/euphorux23/assets/108735127/3408b5f2-ad71-49ea-b09d-72e0de001c44"></video>|<video width="390" height="884" src="https://github.com/acitea/euphorux23/assets/108735127/be015605-1ed6-4dc0-85a3-b4c18ace7bdb"></video>|
 
 Built Using
 -----------
