@@ -24,7 +24,7 @@ PPNT - Participants ONLY
 >
 + **Account-Based Tailoring** _(OC, GM, FC, PPNT)_ 
 >
-+ **Scoreboard for Teams**
++ [**Scoreboard for Teams**](#scoreboard)
     - Highlighted rankings & positions _(FC, PPNT)_
     - Breakdown of activities with attained points
         - Addiional context of submitted results used to compute points
@@ -33,7 +33,7 @@ PPNT - Participants ONLY
     - Default View
         - Lists the participants _(OC, FC)_
         - Lists the facilitators _(OC, PPNT)_
-    - Attendance Taking _(OC, FC)_
+    - [Attendance Taking](#attendance) _(OC, FC)_
         - Mark down present participants
         - Save changes
         - Visual cue for absentees
@@ -41,12 +41,13 @@ PPNT - Participants ONLY
     _For those listed, a direct hyperlink to their telegram profile will be shown_
 + **Bingo**
     - Randomly generated for the team upon creation _(FC, PPNT)_
-    - View challenges _(OC, FC, PPNT)_
-    - Submit challenges _(FC)_
+    - [View challenges](#bingo) _(OC, FC, PPNT)_
+    - [Submit challenges](#bingo) _(FC)_
     - Additional game-related 'power-ups' i.e. zap/swap with other teams _(FC)_
+    - [See overview](#bingooverview) _(OC)_
     - Auto scoring
 >
-+ **Movement Tracking**
++ [**Movement Tracking**](#movementupdating)
     - Display current activity _(FC)_
     - Update next acticity _(FC)_
     - Movement summary _(OC)_
@@ -65,6 +66,18 @@ PPNT - Participants ONLY
         - Duplicate submission prevention
     - Granting powers _(excluding FC)_
         - Enable Bingo power-ups to be used by teams
+
+Some Demos
+----------
+
+|Landing Page|<span id="scoreboard">Scoreboard</span>|<span id="attendance">Attendance</span>|
+|:---:|:---:|:---:|
+|![landingPageDemo](demos/landingPageDemo.mov)|![scoreboardDemo](demos/scoreboardDemo.mov)|![attendanceDemo](demos/attendanceDemo.mov)|
+
+|<span id="movementupdating">Movement Updating</span>|<span id="bingo">Bingo</span>|<span id="bingooverview">Bingo Overview</span>|
+|:---:|:---:|:---:|
+|![movementUpdateDemo](demos/movementUpdateDemo.mov)|![bingoDemo](demos/bingoDemo.mov)|![bingoOverviewDemo](demos/bingoScrollDemo.mov)|
+
 
 Built Using
 -----------
